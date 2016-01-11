@@ -9,8 +9,10 @@ LIBS += -lopengl32 -lglu32
 
 SOURCES += main.cpp \
     OpenGL/myglwidget.cpp \
-    OpenGL/mywindow.cpp
+    OpenGL/mywindow.cpp \
+    geometrie/vector2d.cpp
 
 HEADERS += OpenGL/myglwidget.h \
-    OpenGL/mywindow.h
+    OpenGL/mywindow.h \
+    geometrie/vector2d.h
 
