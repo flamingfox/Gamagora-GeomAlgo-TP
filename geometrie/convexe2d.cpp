@@ -45,6 +45,7 @@ Convexe2D::Convexe2D(const Vector2D& point0, const Vector2D& point1, const Vecto
     }
 }
 
+/*
 Convexe2D::operator +(Convexe2D convexe)
 {
     QVector<Vector2D> listInit;
@@ -66,7 +67,7 @@ Convexe2D::operator *(float scale)
     for(int i=0; i<_points.length(); i++){
         _points[i]*= scale;
     }
-}
+}*/
 
 bool Convexe2D::inHalfSpaceDroit(const Vector2D& extrem0, const Vector2D& extrem1, const Vector2D& p)
 {
@@ -76,4 +77,25 @@ bool Convexe2D::inHalfSpaceDroit(const Vector2D& extrem0, const Vector2D& extrem
         return true;
 
     return false;
+}
+
+
+
+Convexe2D Convexe2D::operator+(const Convexe2D& convexe) const
+{
+    QVector<Vector2D> pointsAdd;
+    for(const Vector2D& p1 : this->_points)
+        for(const Vector2D& p2 : convexe._points)
+            pointsAdd.push_back(p1+p2);
+
+
+    return Convexe2D(pointsAdd);
+}
+
+Convexe2D Convexe2D::operator*(float scale) const
+{
+    Convexe2D res(*this);
+    for(Vector2D& p : res._points)
+        p*=scale;
+    return res;
 }

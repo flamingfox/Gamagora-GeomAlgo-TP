@@ -9,6 +9,7 @@ class Polygone
 {
 public:
     Polygone();
+    Polygone(QVector<Vector2D> points): _points(points) {}
     inline bool isLinked(){return _linked;}
     inline void setLinked(bool linked){_linked = linked;}
     inline QVector<Vector2D> getPoints(){return _points;}

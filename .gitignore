@@ -82,3 +82,4 @@ Makefile*
 *.qmlproject.user
 *.qmlproject.user.*
 *.user
+*.user
