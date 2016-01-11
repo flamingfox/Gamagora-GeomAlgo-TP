@@ -2,6 +2,7 @@
 #define MYWINDOW_H
 
 #include "myGLWidget.h"
+#include "geometrie/polygone.h"
 #include <QImage>
 
 class myWindow : public myGLWidget
@@ -39,6 +40,7 @@ private:
     float _angle;
     float _hauteurcam;
     bool meshUpToDate;
+    Polygone _poly;
 };
 
 #endif // MYWINDOW_H
