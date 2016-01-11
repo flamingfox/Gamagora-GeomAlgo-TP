@@ -11,10 +11,14 @@ SOURCES += main.cpp \
     OpenGL/myglwidget.cpp \
     OpenGL/mywindow.cpp \
     geometrie/vector2d.cpp \
-    geometrie/unionconvex.cpp
+    geometrie/unionconvex.cpp \
+    geometrie/convexe2d.cpp \
+    geometrie/polygone.cpp
 
 HEADERS += OpenGL/myglwidget.h \
     OpenGL/mywindow.h \
     geometrie/vector2d.h \
-    geometrie/unionconvex.h
+    geometrie/unionconvex.h \
+    geometrie/convexe2d.h \
+    geometrie/polygone.h
 

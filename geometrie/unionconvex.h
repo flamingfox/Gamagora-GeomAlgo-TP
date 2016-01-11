@@ -10,7 +10,7 @@ public:
     UnionConvex();
     void add(const Convexe2D& c);
 
-    friend Convexe2D;
+    //friend Convexe2D;
     friend UnionConvex Morph(const UnionConvex& c1, const UnionConvex& c2, float t);
 
 protected:

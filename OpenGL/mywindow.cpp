@@ -21,6 +21,11 @@ void myWindow::_draw_text(double x, double y, double z, QString txt)
 
 void myWindow::initializeGL()
 {
+    /*
+    _poly._points.append(Vector2D(0,0));
+    _poly._points.append(Vector2D(0,1));
+    _poly._points.append(Vector2D(0,0.5));
+    _poly._points.append(Vector2D(0.2,0));*/
     _fx = 0.0;
     _speed =0.1;
     _angle = -50.0;
@@ -232,14 +237,19 @@ void myWindow::paintGL()
     //************* Création Mesh ***********//
     //***************************************//
 
-    if(!meshUpToDate){
-
-
+    if(!meshUpToDate){ 
         meshUpToDate = true;
     }
+
     glEnable(GL_LIGHTING);
-
-
     glDisable(GL_LIGHTING);
+    glPointSize(5.0f);
+    glBegin(GL_POINTS);
+    for(int i=0; i<_poly.getPoints().size();i++){
+        glVertex2f(_poly.getPoints().at(i).x,_poly.getPoints().at(i).y);
+    }
+    glEnd();
+
+
     //_draw_text(_par.hauteurEtageLePlusHaut.x,_par.hauteurEtageLePlusHaut.y,_par.hauteurEtageLePlusHaut.z,QString(QString::number(_par.etageLePlusHaut)));
 }
