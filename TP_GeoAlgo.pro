@@ -10,9 +10,11 @@ LIBS += -lopengl32 -lglu32
 SOURCES += main.cpp \
     OpenGL/myglwidget.cpp \
     OpenGL/mywindow.cpp \
-    geometrie/vector2d.cpp
+    geometrie/vector2d.cpp \
+    geometrie/unionconvex.cpp
 
 HEADERS += OpenGL/myglwidget.h \
     OpenGL/mywindow.h \
-    geometrie/vector2d.h
+    geometrie/vector2d.h \
+    geometrie/unionconvex.h
 
