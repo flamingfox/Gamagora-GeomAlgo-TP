@@ -3,6 +3,7 @@
 
 #include "myGLWidget.h"
 #include "geometrie/polygone.h"
+#include "geometrie/convexe2d.h"
 #include <QImage>
 
 class myWindow : public myGLWidget

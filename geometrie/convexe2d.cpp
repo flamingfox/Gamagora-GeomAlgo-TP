@@ -7,14 +7,17 @@ Convexe2D::Convexe2D(QVector<Vector2D> points)
     for(int i=3; i< points.length(); i++){
         tmp = Convexe2D(tmp, points[i]);
     }
+
+    _points = tmp._points;
+    setLinked(true);
 }
 
-Convexe2D::Convexe2D(Convexe2D convexe, Vector2D point)
+Convexe2D::Convexe2D(const Convexe2D& convexe, const Vector2D& point)
 {
-    bool debutCoupe = 1;
+    bool debutCoupe = 0;
 
     for(int i=0; i<convexe._points.length(); i++){
-        if(inHalfSpaceDroit(convexe._points[i],convexe._points[(i+1)%_points.length()], point)){
+        if(inHalfSpaceDroit(convexe._points[i],convexe._points[(i+1)%convexe._points.length()], point)){
             if(debutCoupe){
                 _points.push_back(convexe._points[i]);
                 _points.push_back(point);
@@ -22,13 +25,14 @@ Convexe2D::Convexe2D(Convexe2D convexe, Vector2D point)
         }
         else{
             _points.push_back(convexe._points[i]);
-            debutCoupe = 0;
+            debutCoupe = 1;
         }
     }
 
     if(_points.empty()){
         _points = convexe._points;
     }
+    setLinked(true);
 }
 
 Convexe2D::Convexe2D(const Vector2D& point0, const Vector2D& point1, const Vector2D& point2)
@@ -43,6 +47,7 @@ Convexe2D::Convexe2D(const Vector2D& point0, const Vector2D& point1, const Vecto
         addPoint(point1);
         addPoint(point2);
     }
+    setLinked(true);
 }
 
 /*
@@ -73,7 +78,7 @@ bool Convexe2D::inHalfSpaceDroit(const Vector2D& extrem0, const Vector2D& extrem
 {
     Vector2D orthoDir = (extrem1 - extrem0).crossProduct();
 
-    if( (p-extrem0).dotProduct(orthoDir) > 0 )
+    if( (p-extrem0).dotProduct(orthoDir) <= 0 )
         return true;
 
     return false;
