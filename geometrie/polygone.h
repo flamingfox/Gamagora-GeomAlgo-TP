@@ -12,8 +12,7 @@ public:
     inline bool isLinked(){return _linked;}
     inline void setLinked(bool linked){_linked = linked;}
     inline QVector<Vector2D> getPoints(){return _points;}
-
-
+    inline void addPoint(const Vector2D& point){_points.push_back(point);}
 
 protected:
     QVector<Vector2D> _points;

@@ -45,18 +45,30 @@ OBJECTS_DIR   = release
 
 SOURCES       = ..\main.cpp \
 		..\OpenGL\myglwidget.cpp \
-		..\OpenGL\mywindow.cpp release\moc_myglwidget.cpp \
+		..\OpenGL\mywindow.cpp \
+		..\geometrie\vector2d.cpp \
+		..\geometrie\convexe2d.cpp \
+		..\geometrie\polygone.cpp release\moc_myglwidget.cpp \
 		release\moc_mywindow.cpp
 OBJECTS       = release/main.o \
 		release/myglwidget.o \
 		release/mywindow.o \
+		release/vector2d.o \
+		release/convexe2d.o \
+		release/polygone.o \
 		release/moc_myglwidget.o \
 		release/moc_mywindow.o
 
 DIST          =  ..\OpenGL\myglwidget.h \
-		..\OpenGL\mywindow.h ..\main.cpp \
+		..\OpenGL\mywindow.h \
+		..\geometrie\vector2d.h \
+		..\geometrie\convexe2d.h \
+		..\geometrie\polygone.h ..\main.cpp \
 		..\OpenGL\myglwidget.cpp \
-		..\OpenGL\mywindow.cpp
+		..\OpenGL\mywindow.cpp \
+		..\geometrie\vector2d.cpp \
+		..\geometrie\convexe2d.cpp \
+		..\geometrie\polygone.cpp
 QMAKE_TARGET  = TP_GeoAlgo
 DESTDIR        = release\ #avoid trailing-slash linebreak
 TARGET         = TP_GeoAlgo.exe
@@ -95,7 +107,7 @@ dist:
 	$(ZIP) TP_GeoAlgo.zip $(SOURCES) $(DIST) ..\TP_GeoAlgo.pro "C:\Program Files (x86)\Qt\5.5\mingw492_32\mkspecs\features\spec_pre.prf" "C:\Program Files (x86)\Qt\5.5\mingw492_32\mkspecs\qdevice.pri" "C:\Program Files (x86)\Qt\5.5\mingw492_32\mkspecs\features\device_config.prf" "C:\Program Files (x86)\Qt\5.5\mingw492_32\mkspecs\qconfig.pri" "C:\Program Files (x86)\Qt\5.5\mingw492_32\mkspecs\modules\qt_lib_3dcore.pri" "C:\Program Files (x86)\Qt\5.5\mingw492_32\mkspecs\modules\qt_lib_3dcore_private.pri" "C:\Program Files (x86)\Qt\5.5\mingw492_32\mkspecs\modules\qt_lib_3dinput.pri" "C:\Program Files (x86)\Qt\5.5\mingw492_32\mkspecs\modules\qt_lib_3dinput_private.pri" "C:\Program Files (x86)\Qt\5.5\mingw492_32\mkspecs\modules\qt_lib_3dquick.pri" "C:\Program Files (x86)\Qt\5.5\mingw492_32\mkspecs\modules\qt_lib_3dquick_private.pri" "C:\Program Files (x86)\Qt\5.5\mingw492_32\mkspecs\modules\qt_lib_3dquickrenderer.pri" "C:\Program Files (x86)\Qt\5.5\mingw492_32\mkspecs\modules\qt_lib_3dquickrenderer_private.pri" "C:\Program Files (x86)\Qt\5.5\mingw492_32\mkspecs\modules\qt_lib_3drenderer.pri" "C:\Program Files (x86)\Qt\5.5\mingw492_32\mkspecs\modules\qt_lib_3drenderer_private.pri" "C:\Program Files (x86)\Qt\5.5\mingw492_32\mkspecs\modules\qt_lib_axbase.pri" "C:\Program Files (x86)\Qt\5.5\mingw492_32\mkspecs\modules\qt_lib_axbase_private.pri" "C:\Program Files (x86)\Qt\5.5\mingw492_32\mkspecs\modules\qt_lib_axcontainer.pri" "C:\Program Files (x86)\Qt\5.5\mingw492_32\mkspecs\modules\qt_lib_axcontainer_private.pri" "C:\Program Files (x86)\Qt\5.5\mingw492_32\mkspecs\modules\qt_lib_axserver.pri" "C:\Program Files (x86)\Qt\5.5\mingw492_32\mkspecs\modules\qt_lib_axserver_private.pri" "C:\Program Files (x86)\Qt\5.5\mingw492_32\mkspecs\modules\qt_lib_bluetooth.pri" "C:\Program Files (x86)\Qt\5.5\mingw492_32\mkspecs\modules\qt_lib_bluetooth_private.pri" "C:\Program Files (x86)\Qt\5.5\mingw492_32\mkspecs\modules\qt_lib_bootstrap_private.pri" "C:\Program Files (x86)\Qt\5.5\mingw492_32\mkspecs\modules\qt_lib_clucene_private.pri" "C:\Program Files (x86)\Qt\5.5\mingw492_32\mkspecs\modules\qt_lib_concurrent.pri" "C:\Program Files (x86)\Qt\5.5\mingw492_32\mkspecs\modules\qt_lib_concurrent_private.pri" "C:\Program Files (x86)\Qt\5.5\mingw492_32\mkspecs\modules\qt_lib_core.pri" "C:\Program Files (x86)\Qt\5.5\mingw492_32\mkspecs\modules\qt_lib_core_private.pri" "C:\Program Files (x86)\Qt\5.5\mingw492_32\mkspecs\modules\qt_lib_dbus.pri" "C:\Program Files (x86)\Qt\5.5\mingw492_32\mkspecs\modules\qt_lib_dbus_private.pri" "C:\Program Files (x86)\Qt\5.5\mingw492_32\mkspecs\modules\qt_lib_declarative.pri" "C:\Program Files (x86)\Qt\5.5\mingw492_32\mkspecs\modules\qt_lib_declarative_private.pri" "C:\Program Files (x86)\Qt\5.5\mingw492_32\mkspecs\modules\qt_lib_designer.pri" "C:\Program Files (x86)\Qt\5.5\mingw492_32\mkspecs\modules\qt_lib_designer_private.pri" "C:\Program Files (x86)\Qt\5.5\mingw492_32\mkspecs\modules\qt_lib_designercomponents_private.pri" "C:\Program Files (x86)\Qt\5.5\mingw492_32\mkspecs\modules\qt_lib_enginio.pri" "C:\Program Files (x86)\Qt\5.5\mingw492_32\mkspecs\modules\qt_lib_enginio_private.pri" "C:\Program Files (x86)\Qt\5.5\mingw492_32\mkspecs\modules\qt_lib_gui.pri" "C:\Program Files (x86)\Qt\5.5\mingw492_32\mkspecs\modules\qt_lib_gui_private.pri" "C:\Program Files (x86)\Qt\5.5\mingw492_32\mkspecs\modules\qt_lib_help.pri" "C:\Program Files (x86)\Qt\5.5\mingw492_32\mkspecs\modules\qt_lib_help_private.pri" "C:\Program Files (x86)\Qt\5.5\mingw492_32\mkspecs\modules\qt_lib_location.pri" "C:\Program Files (x86)\Qt\5.5\mingw492_32\mkspecs\modules\qt_lib_location_private.pri" "C:\Program Files (x86)\Qt\5.5\mingw492_32\mkspecs\modules\qt_lib_multimedia.pri" "C:\Program Files (x86)\Qt\5.5\mingw492_32\mkspecs\modules\qt_lib_multimedia_private.pri" "C:\Program Files (x86)\Qt\5.5\mingw492_32\mkspecs\modules\qt_lib_multimediawidgets.pri" "C:\Program Files (x86)\Qt\5.5\mingw492_32\mkspecs\modules\qt_lib_multimediawidgets_private.pri" "C:\Program Files (x86)\Qt\5.5\mingw492_32\mkspecs\modules\qt_lib_network.pri" "C:\Program Files (x86)\Qt\5.5\mingw492_32\mkspecs\modules\qt_lib_network_private.pri" "C:\Program Files (x86)\Qt\5.5\mingw492_32\mkspecs\modules\qt_lib_nfc.pri" "C:\Program Files (x86)\Qt\5.5\mingw492_32\mkspecs\modules\qt_lib_nfc_private.pri" "C:\Program Files (x86)\Qt\5.5\mingw492_32\mkspecs\modules\qt_lib_opengl.pri" "C:\Program Files (x86)\Qt\5.5\mingw492_32\mkspecs\modules\qt_lib_opengl_private.pri" "C:\Program Files (x86)\Qt\5.5\mingw492_32\mkspecs\modules\qt_lib_openglextensions.pri" "C:\Program Files (x86)\Qt\5.5\mingw492_32\mkspecs\modules\qt_lib_openglextensions_private.pri" "C:\Program Files (x86)\Qt\5.5\mingw492_32\mkspecs\modules\qt_lib_platformsupport_private.pri" "C:\Program Files (x86)\Qt\5.5\mingw492_32\mkspecs\modules\qt_lib_positioning.pri" "C:\Program Files (x86)\Qt\5.5\mingw492_32\mkspecs\modules\qt_lib_positioning_private.pri" "C:\Program Files (x86)\Qt\5.5\mingw492_32\mkspecs\modules\qt_lib_printsupport.pri" "C:\Program Files (x86)\Qt\5.5\mingw492_32\mkspecs\modules\qt_lib_printsupport_private.pri" "C:\Program Files (x86)\Qt\5.5\mingw492_32\mkspecs\modules\qt_lib_qml.pri" "C:\Program Files (x86)\Qt\5.5\mingw492_32\mkspecs\modules\qt_lib_qml_private.pri" "C:\Program Files (x86)\Qt\5.5\mingw492_32\mkspecs\modules\qt_lib_qmldevtools_private.pri" "C:\Program Files (x86)\Qt\5.5\mingw492_32\mkspecs\modules\qt_lib_qmltest.pri" "C:\Program Files (x86)\Qt\5.5\mingw492_32\mkspecs\modules\qt_lib_qmltest_private.pri" "C:\Program Files (x86)\Qt\5.5\mingw492_32\mkspecs\modules\qt_lib_qtmultimediaquicktools_private.pri" "C:\Program Files (x86)\Qt\5.5\mingw492_32\mkspecs\modules\qt_lib_quick.pri" "C:\Program Files (x86)\Qt\5.5\mingw492_32\mkspecs\modules\qt_lib_quick_private.pri" "C:\Program Files (x86)\Qt\5.5\mingw492_32\mkspecs\modules\qt_lib_quickparticles_private.pri" "C:\Program Files (x86)\Qt\5.5\mingw492_32\mkspecs\modules\qt_lib_quickwidgets.pri" "C:\Program Files (x86)\Qt\5.5\mingw492_32\mkspecs\modules\qt_lib_quickwidgets_private.pri" "C:\Program Files (x86)\Qt\5.5\mingw492_32\mkspecs\modules\qt_lib_script.pri" "C:\Program Files (x86)\Qt\5.5\mingw492_32\mkspecs\modules\qt_lib_script_private.pri" "C:\Program Files (x86)\Qt\5.5\mingw492_32\mkspecs\modules\qt_lib_scripttools.pri" "C:\Program Files (x86)\Qt\5.5\mingw492_32\mkspecs\modules\qt_lib_scripttools_private.pri" "C:\Program Files (x86)\Qt\5.5\mingw492_32\mkspecs\modules\qt_lib_sensors.pri" "C:\Program Files (x86)\Qt\5.5\mingw492_32\mkspecs\modules\qt_lib_sensors_private.pri" "C:\Program Files (x86)\Qt\5.5\mingw492_32\mkspecs\modules\qt_lib_serialport.pri" "C:\Program Files (x86)\Qt\5.5\mingw492_32\mkspecs\modules\qt_lib_serialport_private.pri" "C:\Program Files (x86)\Qt\5.5\mingw492_32\mkspecs\modules\qt_lib_sql.pri" "C:\Program Files (x86)\Qt\5.5\mingw492_32\mkspecs\modules\qt_lib_sql_private.pri" "C:\Program Files (x86)\Qt\5.5\mingw492_32\mkspecs\modules\qt_lib_svg.pri" "C:\Program Files (x86)\Qt\5.5\mingw492_32\mkspecs\modules\qt_lib_svg_private.pri" "C:\Program Files (x86)\Qt\5.5\mingw492_32\mkspecs\modules\qt_lib_testlib.pri" "C:\Program Files (x86)\Qt\5.5\mingw492_32\mkspecs\modules\qt_lib_testlib_private.pri" "C:\Program Files (x86)\Qt\5.5\mingw492_32\mkspecs\modules\qt_lib_uiplugin.pri" "C:\Program Files (x86)\Qt\5.5\mingw492_32\mkspecs\modules\qt_lib_uitools.pri" "C:\Program Files (x86)\Qt\5.5\mingw492_32\mkspecs\modules\qt_lib_uitools_private.pri" "C:\Program Files (x86)\Qt\5.5\mingw492_32\mkspecs\modules\qt_lib_webchannel.pri" "C:\Program Files (x86)\Qt\5.5\mingw492_32\mkspecs\modules\qt_lib_webchannel_private.pri" "C:\Program Files (x86)\Qt\5.5\mingw492_32\mkspecs\modules\qt_lib_webkit.pri" "C:\Program Files (x86)\Qt\5.5\mingw492_32\mkspecs\modules\qt_lib_webkit_private.pri" "C:\Program Files (x86)\Qt\5.5\mingw492_32\mkspecs\modules\qt_lib_webkitwidgets.pri" "C:\Program Files (x86)\Qt\5.5\mingw492_32\mkspecs\modules\qt_lib_webkitwidgets_private.pri" "C:\Program Files (x86)\Qt\5.5\mingw492_32\mkspecs\modules\qt_lib_websockets.pri" "C:\Program Files (x86)\Qt\5.5\mingw492_32\mkspecs\modules\qt_lib_websockets_private.pri" "C:\Program Files (x86)\Qt\5.5\mingw492_32\mkspecs\modules\qt_lib_widgets.pri" "C:\Program Files (x86)\Qt\5.5\mingw492_32\mkspecs\modules\qt_lib_widgets_private.pri" "C:\Program Files (x86)\Qt\5.5\mingw492_32\mkspecs\modules\qt_lib_winextras.pri" "C:\Program Files (x86)\Qt\5.5\mingw492_32\mkspecs\modules\qt_lib_winextras_private.pri" "C:\Program Files (x86)\Qt\5.5\mingw492_32\mkspecs\modules\qt_lib_xml.pri" "C:\Program Files (x86)\Qt\5.5\mingw492_32\mkspecs\modules\qt_lib_xml_private.pri" "C:\Program Files (x86)\Qt\5.5\mingw492_32\mkspecs\modules\qt_lib_xmlpatterns.pri" "C:\Program Files (x86)\Qt\5.5\mingw492_32\mkspecs\modules\qt_lib_xmlpatterns_private.pri" "C:\Program Files (x86)\Qt\5.5\mingw492_32\mkspecs\features\qt_functions.prf" "C:\Program Files (x86)\Qt\5.5\mingw492_32\mkspecs\features\qt_config.prf" "C:\Program Files (x86)\Qt\5.5\mingw492_32\mkspecs\features\win32\qt_config.prf" "C:\Program Files (x86)\Qt\5.5\mingw492_32\mkspecs\win32-g++\qmake.conf" "C:\Program Files (x86)\Qt\5.5\mingw492_32\mkspecs\features\spec_post.prf" "C:\Program Files (x86)\Qt\5.5\mingw492_32\mkspecs\features\exclusive_builds.prf" "C:\Program Files (x86)\Qt\5.5\mingw492_32\mkspecs\features\default_pre.prf" "C:\Program Files (x86)\Qt\5.5\mingw492_32\mkspecs\features\win32\default_pre.prf" "C:\Program Files (x86)\Qt\5.5\mingw492_32\mkspecs\features\resolve_config.prf" "C:\Program Files (x86)\Qt\5.5\mingw492_32\mkspecs\features\exclusive_builds_post.prf" "C:\Program Files (x86)\Qt\5.5\mingw492_32\mkspecs\features\default_post.prf" "C:\Program Files (x86)\Qt\5.5\mingw492_32\mkspecs\features\build_pass.prf" "C:\Program Files (x86)\Qt\5.5\mingw492_32\mkspecs\features\qt.prf" "C:\Program Files (x86)\Qt\5.5\mingw492_32\mkspecs\features\resources.prf" "C:\Program Files (x86)\Qt\5.5\mingw492_32\mkspecs\features\moc.prf" "C:\Program Files (x86)\Qt\5.5\mingw492_32\mkspecs\features\win32\opengl.prf" "C:\Program Files (x86)\Qt\5.5\mingw492_32\mkspecs\features\uic.prf" "C:\Program Files (x86)\Qt\5.5\mingw492_32\mkspecs\features\c++11.prf" "C:\Program Files (x86)\Qt\5.5\mingw492_32\mkspecs\features\win32\console.prf" "C:\Program Files (x86)\Qt\5.5\mingw492_32\mkspecs\features\win32\rtti.prf" "C:\Program Files (x86)\Qt\5.5\mingw492_32\mkspecs\features\precompile_header.prf" "C:\Program Files (x86)\Qt\5.5\mingw492_32\mkspecs\features\warn_on.prf" "C:\Program Files (x86)\Qt\5.5\mingw492_32\mkspecs\features\testcase_targets.prf" "C:\Program Files (x86)\Qt\5.5\mingw492_32\mkspecs\features\exceptions.prf" "C:\Program Files (x86)\Qt\5.5\mingw492_32\mkspecs\features\yacc.prf" "C:\Program Files (x86)\Qt\5.5\mingw492_32\mkspecs\features\lex.prf" ..\TP_GeoAlgo.pro "C:/Program Files (x86)/Qt/5.5/mingw492_32/lib/Qt5OpenGL.prl" "C:/Program Files (x86)/Qt/5.5/mingw492_32/lib/Qt5Widgets.prl" "C:/Program Files (x86)/Qt/5.5/mingw492_32/lib/Qt5Gui.prl" "C:/Program Files (x86)/Qt/5.5/mingw492_32/lib/Qt5Core.prl"  RESOURCES HEADERS SOURCES OBJECTIVE_SOURCES FORMS NO_PCH_SOURCES YACCSOURCES YACCSOURCES LEXSOURCES 
 
 clean: compiler_clean 
-	-$(DEL_FILE) release\main.o release\myglwidget.o release\mywindow.o release\moc_myglwidget.o release\moc_mywindow.o
+	-$(DEL_FILE) release\main.o release\myglwidget.o release\mywindow.o release\vector2d.o release\convexe2d.o release\polygone.o release\moc_myglwidget.o release\moc_mywindow.o
 
 distclean: clean 
 	-$(DEL_FILE) $(DESTDIR_TARGET)
@@ -1052,6 +1064,9 @@ release/moc_mywindow.cpp: ../OpenGL/myGLWidget.h \
 		C:/Program\ Files\ (x86)/Qt/5.5/mingw492_32/include/QtOpenGL/qtopenglversion.h \
 		C:/Program\ Files\ (x86)/Qt/5.5/mingw492_32/include/QtOpenGL/QGLWidget \
 		C:/Program\ Files\ (x86)/Qt/5.5/mingw492_32/include/QtGui/QOpenGLFunctions \
+		../geometrie/polygone.h \
+		C:/Program\ Files\ (x86)/Qt/5.5/mingw492_32/include/QtCore/QVector \
+		../geometrie/vector2d.h \
 		../OpenGL/mywindow.h
 	"C:\Program Files (x86)\Qt\5.5\mingw492_32\bin\moc.exe" $(DEFINES) -D__GNUC__ -DWIN32 -I"C:/Program Files (x86)/Qt/5.5/mingw492_32/mkspecs/win32-g++" -I"C:/Users/etu/workspace/code/Geometrie Algorithmique" -I"C:/Program Files (x86)/Qt/5.5/mingw492_32/include" -I"C:/Program Files (x86)/Qt/5.5/mingw492_32/include/QtOpenGL" -I"C:/Program Files (x86)/Qt/5.5/mingw492_32/include/QtWidgets" -I"C:/Program Files (x86)/Qt/5.5/mingw492_32/include/QtGui" -I"C:/Program Files (x86)/Qt/5.5/mingw492_32/include/QtANGLE" -I"C:/Program Files (x86)/Qt/5.5/mingw492_32/include/QtCore" -I. ..\OpenGL\mywindow.h -o release\moc_mywindow.cpp
 
@@ -1542,7 +1557,10 @@ release/main.o: ../main.cpp ../OpenGL/mywindow.h \
 		C:/Program\ Files\ (x86)/Qt/5.5/mingw492_32/include/QtOpenGL/qglshaderprogram.h \
 		C:/Program\ Files\ (x86)/Qt/5.5/mingw492_32/include/QtOpenGL/qtopenglversion.h \
 		C:/Program\ Files\ (x86)/Qt/5.5/mingw492_32/include/QtOpenGL/QGLWidget \
-		C:/Program\ Files\ (x86)/Qt/5.5/mingw492_32/include/QtGui/QOpenGLFunctions
+		C:/Program\ Files\ (x86)/Qt/5.5/mingw492_32/include/QtGui/QOpenGLFunctions \
+		../geometrie/polygone.h \
+		C:/Program\ Files\ (x86)/Qt/5.5/mingw492_32/include/QtCore/QVector \
+		../geometrie/vector2d.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o release\main.o ..\main.cpp
 
 release/myglwidget.o: ../OpenGL/myglwidget.cpp ../OpenGL/myGLWidget.h \
@@ -2486,8 +2504,113 @@ release/mywindow.o: ../OpenGL/mywindow.cpp ../OpenGL/myWindow.h \
 		C:/Program\ Files\ (x86)/Qt/5.5/mingw492_32/include/QtOpenGL/qtopenglversion.h \
 		C:/Program\ Files\ (x86)/Qt/5.5/mingw492_32/include/QtOpenGL/QGLWidget \
 		C:/Program\ Files\ (x86)/Qt/5.5/mingw492_32/include/QtGui/QOpenGLFunctions \
+		../geometrie/polygone.h \
+		C:/Program\ Files\ (x86)/Qt/5.5/mingw492_32/include/QtCore/QVector \
+		../geometrie/vector2d.h \
 		C:/Program\ Files\ (x86)/Qt/5.5/mingw492_32/include/QtCore/QDebug
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o release\mywindow.o ..\OpenGL\mywindow.cpp
+
+release/vector2d.o: ../geometrie/vector2d.cpp ../geometrie/vector2d.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o release\vector2d.o ..\geometrie\vector2d.cpp
+
+release/convexe2d.o: ../geometrie/convexe2d.cpp ../geometrie/convexe2d.h \
+		C:/Program\ Files\ (x86)/Qt/5.5/mingw492_32/include/QtCore/QVector \
+		C:/Program\ Files\ (x86)/Qt/5.5/mingw492_32/include/QtCore/qvector.h \
+		C:/Program\ Files\ (x86)/Qt/5.5/mingw492_32/include/QtCore/qalgorithms.h \
+		C:/Program\ Files\ (x86)/Qt/5.5/mingw492_32/include/QtCore/qglobal.h \
+		C:/Program\ Files\ (x86)/Qt/5.5/mingw492_32/include/QtCore/qconfig.h \
+		C:/Program\ Files\ (x86)/Qt/5.5/mingw492_32/include/QtCore/qfeatures.h \
+		C:/Program\ Files\ (x86)/Qt/5.5/mingw492_32/include/QtCore/qsystemdetection.h \
+		C:/Program\ Files\ (x86)/Qt/5.5/mingw492_32/include/QtCore/qprocessordetection.h \
+		C:/Program\ Files\ (x86)/Qt/5.5/mingw492_32/include/QtCore/qcompilerdetection.h \
+		C:/Program\ Files\ (x86)/Qt/5.5/mingw492_32/include/QtCore/qtypeinfo.h \
+		C:/Program\ Files\ (x86)/Qt/5.5/mingw492_32/include/QtCore/qtypetraits.h \
+		C:/Program\ Files\ (x86)/Qt/5.5/mingw492_32/include/QtCore/qsysinfo.h \
+		C:/Program\ Files\ (x86)/Qt/5.5/mingw492_32/include/QtCore/qlogging.h \
+		C:/Program\ Files\ (x86)/Qt/5.5/mingw492_32/include/QtCore/qflags.h \
+		C:/Program\ Files\ (x86)/Qt/5.5/mingw492_32/include/QtCore/qatomic.h \
+		C:/Program\ Files\ (x86)/Qt/5.5/mingw492_32/include/QtCore/qbasicatomic.h \
+		C:/Program\ Files\ (x86)/Qt/5.5/mingw492_32/include/QtCore/qatomic_bootstrap.h \
+		C:/Program\ Files\ (x86)/Qt/5.5/mingw492_32/include/QtCore/qgenericatomic.h \
+		C:/Program\ Files\ (x86)/Qt/5.5/mingw492_32/include/QtCore/qatomic_cxx11.h \
+		C:/Program\ Files\ (x86)/Qt/5.5/mingw492_32/include/QtCore/qatomic_gcc.h \
+		C:/Program\ Files\ (x86)/Qt/5.5/mingw492_32/include/QtCore/qatomic_msvc.h \
+		C:/Program\ Files\ (x86)/Qt/5.5/mingw492_32/include/QtCore/qatomic_armv7.h \
+		C:/Program\ Files\ (x86)/Qt/5.5/mingw492_32/include/QtCore/qatomic_armv6.h \
+		C:/Program\ Files\ (x86)/Qt/5.5/mingw492_32/include/QtCore/qatomic_armv5.h \
+		C:/Program\ Files\ (x86)/Qt/5.5/mingw492_32/include/QtCore/qatomic_ia64.h \
+		C:/Program\ Files\ (x86)/Qt/5.5/mingw492_32/include/QtCore/qatomic_mips.h \
+		C:/Program\ Files\ (x86)/Qt/5.5/mingw492_32/include/QtCore/qatomic_x86.h \
+		C:/Program\ Files\ (x86)/Qt/5.5/mingw492_32/include/QtCore/qatomic_unix.h \
+		C:/Program\ Files\ (x86)/Qt/5.5/mingw492_32/include/QtCore/qglobalstatic.h \
+		C:/Program\ Files\ (x86)/Qt/5.5/mingw492_32/include/QtCore/qmutex.h \
+		C:/Program\ Files\ (x86)/Qt/5.5/mingw492_32/include/QtCore/qnumeric.h \
+		C:/Program\ Files\ (x86)/Qt/5.5/mingw492_32/include/QtCore/qiterator.h \
+		C:/Program\ Files\ (x86)/Qt/5.5/mingw492_32/include/QtCore/qlist.h \
+		C:/Program\ Files\ (x86)/Qt/5.5/mingw492_32/include/QtCore/qrefcount.h \
+		C:/Program\ Files\ (x86)/Qt/5.5/mingw492_32/include/QtCore/qarraydata.h \
+		C:/Program\ Files\ (x86)/Qt/5.5/mingw492_32/include/QtCore/qbytearraylist.h \
+		C:/Program\ Files\ (x86)/Qt/5.5/mingw492_32/include/QtCore/qbytearray.h \
+		C:/Program\ Files\ (x86)/Qt/5.5/mingw492_32/include/QtCore/qnamespace.h \
+		C:/Program\ Files\ (x86)/Qt/5.5/mingw492_32/include/QtCore/qstring.h \
+		C:/Program\ Files\ (x86)/Qt/5.5/mingw492_32/include/QtCore/qchar.h \
+		C:/Program\ Files\ (x86)/Qt/5.5/mingw492_32/include/QtCore/qstringbuilder.h \
+		C:/Program\ Files\ (x86)/Qt/5.5/mingw492_32/include/QtCore/qstringlist.h \
+		C:/Program\ Files\ (x86)/Qt/5.5/mingw492_32/include/QtCore/qregexp.h \
+		C:/Program\ Files\ (x86)/Qt/5.5/mingw492_32/include/QtCore/qstringmatcher.h \
+		C:/Program\ Files\ (x86)/Qt/5.5/mingw492_32/include/QtCore/qpoint.h \
+		../geometrie/vector2d.h \
+		../geometrie/polygone.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o release\convexe2d.o ..\geometrie\convexe2d.cpp
+
+release/polygone.o: ../geometrie/polygone.cpp ../geometrie/polygone.h \
+		C:/Program\ Files\ (x86)/Qt/5.5/mingw492_32/include/QtCore/QVector \
+		C:/Program\ Files\ (x86)/Qt/5.5/mingw492_32/include/QtCore/qvector.h \
+		C:/Program\ Files\ (x86)/Qt/5.5/mingw492_32/include/QtCore/qalgorithms.h \
+		C:/Program\ Files\ (x86)/Qt/5.5/mingw492_32/include/QtCore/qglobal.h \
+		C:/Program\ Files\ (x86)/Qt/5.5/mingw492_32/include/QtCore/qconfig.h \
+		C:/Program\ Files\ (x86)/Qt/5.5/mingw492_32/include/QtCore/qfeatures.h \
+		C:/Program\ Files\ (x86)/Qt/5.5/mingw492_32/include/QtCore/qsystemdetection.h \
+		C:/Program\ Files\ (x86)/Qt/5.5/mingw492_32/include/QtCore/qprocessordetection.h \
+		C:/Program\ Files\ (x86)/Qt/5.5/mingw492_32/include/QtCore/qcompilerdetection.h \
+		C:/Program\ Files\ (x86)/Qt/5.5/mingw492_32/include/QtCore/qtypeinfo.h \
+		C:/Program\ Files\ (x86)/Qt/5.5/mingw492_32/include/QtCore/qtypetraits.h \
+		C:/Program\ Files\ (x86)/Qt/5.5/mingw492_32/include/QtCore/qsysinfo.h \
+		C:/Program\ Files\ (x86)/Qt/5.5/mingw492_32/include/QtCore/qlogging.h \
+		C:/Program\ Files\ (x86)/Qt/5.5/mingw492_32/include/QtCore/qflags.h \
+		C:/Program\ Files\ (x86)/Qt/5.5/mingw492_32/include/QtCore/qatomic.h \
+		C:/Program\ Files\ (x86)/Qt/5.5/mingw492_32/include/QtCore/qbasicatomic.h \
+		C:/Program\ Files\ (x86)/Qt/5.5/mingw492_32/include/QtCore/qatomic_bootstrap.h \
+		C:/Program\ Files\ (x86)/Qt/5.5/mingw492_32/include/QtCore/qgenericatomic.h \
+		C:/Program\ Files\ (x86)/Qt/5.5/mingw492_32/include/QtCore/qatomic_cxx11.h \
+		C:/Program\ Files\ (x86)/Qt/5.5/mingw492_32/include/QtCore/qatomic_gcc.h \
+		C:/Program\ Files\ (x86)/Qt/5.5/mingw492_32/include/QtCore/qatomic_msvc.h \
+		C:/Program\ Files\ (x86)/Qt/5.5/mingw492_32/include/QtCore/qatomic_armv7.h \
+		C:/Program\ Files\ (x86)/Qt/5.5/mingw492_32/include/QtCore/qatomic_armv6.h \
+		C:/Program\ Files\ (x86)/Qt/5.5/mingw492_32/include/QtCore/qatomic_armv5.h \
+		C:/Program\ Files\ (x86)/Qt/5.5/mingw492_32/include/QtCore/qatomic_ia64.h \
+		C:/Program\ Files\ (x86)/Qt/5.5/mingw492_32/include/QtCore/qatomic_mips.h \
+		C:/Program\ Files\ (x86)/Qt/5.5/mingw492_32/include/QtCore/qatomic_x86.h \
+		C:/Program\ Files\ (x86)/Qt/5.5/mingw492_32/include/QtCore/qatomic_unix.h \
+		C:/Program\ Files\ (x86)/Qt/5.5/mingw492_32/include/QtCore/qglobalstatic.h \
+		C:/Program\ Files\ (x86)/Qt/5.5/mingw492_32/include/QtCore/qmutex.h \
+		C:/Program\ Files\ (x86)/Qt/5.5/mingw492_32/include/QtCore/qnumeric.h \
+		C:/Program\ Files\ (x86)/Qt/5.5/mingw492_32/include/QtCore/qiterator.h \
+		C:/Program\ Files\ (x86)/Qt/5.5/mingw492_32/include/QtCore/qlist.h \
+		C:/Program\ Files\ (x86)/Qt/5.5/mingw492_32/include/QtCore/qrefcount.h \
+		C:/Program\ Files\ (x86)/Qt/5.5/mingw492_32/include/QtCore/qarraydata.h \
+		C:/Program\ Files\ (x86)/Qt/5.5/mingw492_32/include/QtCore/qbytearraylist.h \
+		C:/Program\ Files\ (x86)/Qt/5.5/mingw492_32/include/QtCore/qbytearray.h \
+		C:/Program\ Files\ (x86)/Qt/5.5/mingw492_32/include/QtCore/qnamespace.h \
+		C:/Program\ Files\ (x86)/Qt/5.5/mingw492_32/include/QtCore/qstring.h \
+		C:/Program\ Files\ (x86)/Qt/5.5/mingw492_32/include/QtCore/qchar.h \
+		C:/Program\ Files\ (x86)/Qt/5.5/mingw492_32/include/QtCore/qstringbuilder.h \
+		C:/Program\ Files\ (x86)/Qt/5.5/mingw492_32/include/QtCore/qstringlist.h \
+		C:/Program\ Files\ (x86)/Qt/5.5/mingw492_32/include/QtCore/qregexp.h \
+		C:/Program\ Files\ (x86)/Qt/5.5/mingw492_32/include/QtCore/qstringmatcher.h \
+		C:/Program\ Files\ (x86)/Qt/5.5/mingw492_32/include/QtCore/qpoint.h \
+		../geometrie/vector2d.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o release\polygone.o ..\geometrie\polygone.cpp
 
 release/moc_myglwidget.o: release/moc_myglwidget.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o release\moc_myglwidget.o release\moc_myglwidget.cpp
