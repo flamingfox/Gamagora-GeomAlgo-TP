@@ -5,6 +5,7 @@
 #include "geometrie/polygone.h"
 #include "geometrie/convexe2d.h"
 #include <QImage>
+#include <QVector>
 
 class myWindow : public myGLWidget
 {
@@ -34,14 +35,17 @@ private:
     bool _deplonger = false;
     bool _monter = false;
     bool _demonter = false;
-    float _zoom = -20.0;
+    float _zoom = -5.0;
+    bool _movingAlongXRight = false;
+    bool _movingAlongXLeft = false;
+    float _positionX = 0.0f;
     GLuint texture[1];
     float _fx;
     float _speed;
     float _angle;
     float _hauteurcam;
     bool meshUpToDate;
-    Polygone _poly;
+    QVector<Polygone> _polyList;
 };
 
 #endif // MYWINDOW_H

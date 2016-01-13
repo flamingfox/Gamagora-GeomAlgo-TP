@@ -10,39 +10,60 @@ myWindow::myWindow(QWidget *parent)
 
 void myWindow::_draw_text(double x, double y, double z, QString txt)
 {
-    glDisable(GL_LIGHTING);
     glDisable(GL_DEPTH_TEST);
     glColor3f(1.0,1.0,1.0);
-    renderText(x, y, z, txt, QFont("Arial", 12, QFont::Bold, false) );
+    int coeefzoom = std::abs(_zoom)/3;
+    if(coeefzoom <= 1)coeefzoom = 1;
+    renderText(x, y, z, txt, QFont("Arial", 12/coeefzoom, QFont::Bold, false) );
     glEnable(GL_DEPTH_TEST);
-    glEnable(GL_LIGHTING);
 }
 
 
 void myWindow::initializeGL()
 {
 
-
+/*
     _poly._points.append(Vector2D(0,0));
     _poly._points.append(Vector2D(0,1));
     _poly._points.append(Vector2D(0,0.5));
     _poly._points.append(Vector2D(0.2,0));
+*/
 
+    Polygone poly1;
     /*
-    _poly.addPoint(Vector2D(0,0));
-    _poly.addPoint(Vector2D(1,0));
-    _poly.addPoint(Vector2D(1,1));
-    _poly.addPoint(Vector2D(0,1));
-    _poly.addPoint(Vector2D(0.5,0.5));
-    _poly.addPoint(Vector2D(0.2,0.2));
-
-
-    _poly = Convexe2D(_poly.getPoints());
-
+    poly1.addPoint(Vector2D(0,0));
+    poly1.addPoint(Vector2D(1,0));
+    poly1.addPoint(Vector2D(1,1));
+    poly1.addPoint(Vector2D(0,1));
+    poly1.addPoint(Vector2D(0.5,0.5));
+    poly1.addPoint(Vector2D(0.2,0.2));
     */
 
+    for(int i=0;i<20;i++){
+        poly1.addPoint(Vector2D((rand()%1000)/1000.0f,(rand()%1000)/1000.0f));
+    }
+
+    poly1.name = QString("Non Convex");
+
+    Polygone poly2;
+    poly2 = Convexe2D(poly1.getPoints());
+
+    /*
+    poly2.addPoint(Vector2D(0,0));
+    poly2.addPoint(Vector2D(1,0));
+    poly2.addPoint(Vector2D(1,1));
+    poly2.addPoint(Vector2D(0,1));
+    poly2.addPoint(Vector2D(0.5,0.5));
+    poly2.addPoint(Vector2D(0.2,0.2));
+    */
+
+    poly2.name = QString("Convex");
+
+    _polyList.append(poly1);
+    _polyList.append(poly2);
 
 
+    _zoom = -2.0f;
     _fx = 0.0;
     _speed =0.1;
     _angle = 0.0;
@@ -82,10 +103,6 @@ void myWindow::keyReleaseEvent(QKeyEvent *keyEvent){
         case Qt::Key_Z:
             _zooming = false;
         break;
-        case Qt::Key_P:
-            if(_poly.isLinked())_poly.setLinked(false);
-            else{_poly.setLinked(true);}
-        break;
         case Qt::Key_S:
             _dezooming = false;
         break;
@@ -109,6 +126,13 @@ void myWindow::keyReleaseEvent(QKeyEvent *keyEvent){
         break;
         case Qt::Key_A:
             _demonter = false;
+        break;
+
+        case Qt::Key_Q:
+            _movingAlongXLeft = false;
+        break;
+        case Qt::Key_D:
+            _movingAlongXRight = false;
         break;
     }
 }
@@ -134,7 +158,16 @@ void myWindow::keyPressEvent(QKeyEvent *keyEvent)
         case Qt::Key_S:
             _dezooming = true;
         break;
-            //zoom       
+            //zoom
+
+        case Qt::Key_Q:
+            _movingAlongXLeft = true;
+        break;
+        case Qt::Key_D:
+            _movingAlongXRight = true;
+        break;
+
+
             //rotation
         case Qt::Key_Left:
             _turningright = true;
@@ -219,6 +252,14 @@ void myWindow::paintGL()
     }else{
         multiplicateurovertimezoom = 1.0;
     }
+    //déplacmeent axe X
+    if(_movingAlongXRight){
+        _positionX -= _zoomspeed * deltaTime;
+    }
+    if(_movingAlongXLeft){
+        _positionX += _zoomspeed * deltaTime;
+    }
+
     //rotation
     if(_turningleft){
         multiplicateurovertimerotation += 0.15;
@@ -229,6 +270,7 @@ void myWindow::paintGL()
     }else{
         multiplicateurovertimerotation = 1.0;
     }
+
     /*
     //angle
     if(_plonger){
@@ -240,6 +282,8 @@ void myWindow::paintGL()
     }else{
         multiplicateurovertimeplonger = 1.0;
     }*/
+
+
     //hauteur camera
     if(_monter){
         multiplicateurovertimemonter += 0.15;
@@ -252,8 +296,9 @@ void myWindow::paintGL()
     }
 
     glTranslatef(0.f, _hauteurcam, _zoom);
+    glTranslatef(_positionX, 0.0f, 0.0f);
     glRotated(_angle,1,0,0);
-    glRotated(_fx,0,0,1);
+    //glRotated(_fx,0,0,1);
 
     //***************************************//
     //************* Création Mesh ***********//
@@ -267,25 +312,28 @@ void myWindow::paintGL()
     glDisable(GL_LIGHTING);
     glPointSize(5.0f);
 
-    if(_poly.isLinked()){
-        glPointSize(3.0f);
-        glBegin(GL_POINTS);
-        for(int i=0; i<_poly.getPoints().size();i++){
-            glVertex2f(_poly.getPoints().at(i).x,_poly.getPoints().at(i).y);
-        }
-        glEnd();
-    }else{
-        glLineWidth(3.0f);
-        for(int i=0; i<_poly.getPoints().size()-1;i++){
-            glBegin(GL_LINES);
-            glVertex2f(_poly.getPoints().at(i).x,_poly.getPoints().at(i).y);
-            glVertex2f(_poly.getPoints().at(i+1).x,_poly.getPoints().at(i+1).y);
+    foreach(Polygone p, _polyList){
+        if(p.isLinked()){
+            glPointSize(3.0f);
+            glBegin(GL_LINE_LOOP);
+            for(int i=0; i<p.getPoints().size();i++){
+                glVertex2f(p.getPoints().at(i).x,p.getPoints().at(i).y);
+            }
             glEnd();
+            _draw_text(0.0f,-1.0f,0.0f,QString(p.name));
+        }else{
+            glLineWidth(3.0f);
+            glBegin(GL_POINTS);
+            for(int i=0; i<p.getPoints().size();i++){
+                glVertex2f(p.getPoints().at(i).x,p.getPoints().at(i).y);
+            }
+            glEnd();
+            _draw_text(0.0f,-1.0f,0.0f,QString(p.name));
         }
+        glTranslatef(2.f, 0.0f, 0.0f);
     }
 
 
 
 
-    //_draw_text(_par.hauteurEtageLePlusHaut.x,_par.hauteurEtageLePlusHaut.y,_par.hauteurEtageLePlusHaut.z,QString(QString::number(_par.etageLePlusHaut)));
 }

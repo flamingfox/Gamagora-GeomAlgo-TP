@@ -15,15 +15,14 @@ public:
     inline QVector<Vector2D> getPoints(){return _points;}
 
     
-
     inline void addPoint(const Vector2D& point){_points.push_back(point);}
-
+    QString name;
 
 protected:
     QVector<Vector2D> _points;
 
 private:
-    bool _linked;
+    bool _linked = false;
 };
 
 #endif // POLYGONE_H
