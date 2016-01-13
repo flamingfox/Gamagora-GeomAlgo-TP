@@ -1,10 +1,10 @@
-#include "myWindow.h"
+﻿#include "myWindow.h"
 #include <QDebug>
 #include "stdio.h"
 
 
 myWindow::myWindow(QWidget *parent)
-    : myGLWidget(60, parent, "Génération ville")
+    : myGLWidget(60, parent, "Polygone Convexe")
 {
 }
 
@@ -22,10 +22,27 @@ void myWindow::_draw_text(double x, double y, double z, QString txt)
 void myWindow::initializeGL()
 {
 
+
     _poly._points.append(Vector2D(0,0));
     _poly._points.append(Vector2D(0,1));
     _poly._points.append(Vector2D(0,0.5));
     _poly._points.append(Vector2D(0.2,0));
+
+    /*
+    _poly.addPoint(Vector2D(0,0));
+    _poly.addPoint(Vector2D(1,0));
+    _poly.addPoint(Vector2D(1,1));
+    _poly.addPoint(Vector2D(0,1));
+    _poly.addPoint(Vector2D(0.5,0.5));
+    _poly.addPoint(Vector2D(0.2,0.2));
+
+
+    _poly = Convexe2D(_poly.getPoints());
+
+    */
+
+
+
     _fx = 0.0;
     _speed =0.1;
     _angle = 0.0;
