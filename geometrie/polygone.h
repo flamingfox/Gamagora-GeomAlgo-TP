@@ -12,11 +12,11 @@ public:
     inline bool isLinked(){return _linked;}
     inline void setLinked(bool linked){_linked = linked;}
     inline QVector<Vector2D> getPoints(){return _points;}
-
+    QVector<Vector2D> _points;
 
 
 protected:
-    QVector<Vector2D> _points;
+
 
 private:
     bool _linked;

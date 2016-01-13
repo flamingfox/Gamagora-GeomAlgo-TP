@@ -21,15 +21,15 @@ void myWindow::_draw_text(double x, double y, double z, QString txt)
 
 void myWindow::initializeGL()
 {
-    /*
+
     _poly._points.append(Vector2D(0,0));
     _poly._points.append(Vector2D(0,1));
     _poly._points.append(Vector2D(0,0.5));
-    _poly._points.append(Vector2D(0.2,0));*/
+    _poly._points.append(Vector2D(0.2,0));
     _fx = 0.0;
     _speed =0.1;
-    _angle = -50.0;
-    _hauteurcam = -2.0;
+    _angle = 0.0;
+    _hauteurcam = 0.0;
     glEnable(GL_LIGHTING);
     glEnable(GL_LIGHT0);
     glEnable(GL_LIGHT1);
@@ -65,6 +65,10 @@ void myWindow::keyReleaseEvent(QKeyEvent *keyEvent){
         case Qt::Key_Z:
             _zooming = false;
         break;
+        case Qt::Key_P:
+            if(_poly.isLinked())_poly.setLinked(false);
+            else{_poly.setLinked(true);}
+        break;
         case Qt::Key_S:
             _dezooming = false;
         break;
@@ -77,10 +81,10 @@ void myWindow::keyReleaseEvent(QKeyEvent *keyEvent){
         break;
             //angle
         case Qt::Key_Up:
-            _plonger = false;
+            //_plonger = false;
         break;
         case Qt::Key_Down:
-            _deplonger = false;
+            //_deplonger = false;
         break;
             //hauteur camera
         case Qt::Key_E:
@@ -208,6 +212,7 @@ void myWindow::paintGL()
     }else{
         multiplicateurovertimerotation = 1.0;
     }
+    /*
     //angle
     if(_plonger){
         multiplicateurovertimeplonger += 0.15;
@@ -217,7 +222,7 @@ void myWindow::paintGL()
         _angle -= _rotationspeed* multiplicateurovertimeplonger *deltaTime;
     }else{
         multiplicateurovertimeplonger = 1.0;
-    }
+    }*/
     //hauteur camera
     if(_monter){
         multiplicateurovertimemonter += 0.15;
@@ -244,11 +249,25 @@ void myWindow::paintGL()
     glEnable(GL_LIGHTING);
     glDisable(GL_LIGHTING);
     glPointSize(5.0f);
-    glBegin(GL_POINTS);
-    for(int i=0; i<_poly.getPoints().size();i++){
-        glVertex2f(_poly.getPoints().at(i).x,_poly.getPoints().at(i).y);
+
+    if(_poly.isLinked()){
+        glPointSize(3.0f);
+        glBegin(GL_POINTS);
+        for(int i=0; i<_poly.getPoints().size();i++){
+            glVertex2f(_poly.getPoints().at(i).x,_poly.getPoints().at(i).y);
+        }
+        glEnd();
+    }else{
+        glLineWidth(3.0f);
+        for(int i=0; i<_poly.getPoints().size()-1;i++){
+            glBegin(GL_LINES);
+            glVertex2f(_poly.getPoints().at(i).x,_poly.getPoints().at(i).y);
+            glVertex2f(_poly.getPoints().at(i+1).x,_poly.getPoints().at(i+1).y);
+            glEnd();
+        }
     }
-    glEnd();
+
+
 
 
     //_draw_text(_par.hauteurEtageLePlusHaut.x,_par.hauteurEtageLePlusHaut.y,_par.hauteurEtageLePlusHaut.z,QString(QString::number(_par.etageLePlusHaut)));
