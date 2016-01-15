@@ -4,6 +4,7 @@
 #include "myGLWidget.h"
 #include "geometrie/polygone.h"
 #include "geometrie/convexe2d.h"
+#include "geometrie/unionconvex.h"
 #include <QImage>
 #include <QVector>
 
@@ -19,6 +20,10 @@ public:
     void keyReleaseEvent(QKeyEvent *keyEvent);
     void loadTexture(QString textureName);
     void _draw_text(double x, double y, double z, QString txt);
+
+    void addPoly(const Polygone& poly);
+    void addUnionConvex(const UnionConvex& convex);
+    void addUnionConvexMorph(const UnionConvex& convex);
 
 private:
     float multiplicateurovertimezoom=1.0;
@@ -46,6 +51,9 @@ private:
     float _hauteurcam;
     bool meshUpToDate;
     QVector<Polygone> _polyList;
+    QVector<UnionConvex> _unionConvexList;
+    QVector<UnionConvex> _unionConvexMorphList;
+
 };
 
 #endif // MYWINDOW_H

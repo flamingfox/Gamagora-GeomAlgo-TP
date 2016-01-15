@@ -4,9 +4,17 @@ Convexe2D::Convexe2D(QVector<Vector2D> points)
 {
     Convexe2D tmp = Convexe2D(points[0], points[1], points[2]);
 
+
     for(int i=3; i< points.length(); i++){
         tmp = Convexe2D(tmp, points[i]);
     }
+
+    for(const Vector2D& p: points)    {
+        _centre += p;
+        _min = min(_min,p);
+        _max = max(_max,p);
+    }
+    _centre /= points.size();
 
     _points = tmp._points;
     setLinked(true);

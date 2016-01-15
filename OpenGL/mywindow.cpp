@@ -22,45 +22,7 @@ void myWindow::_draw_text(double x, double y, double z, QString txt)
 void myWindow::initializeGL()
 {
 
-/*
-    _poly._points.append(Vector2D(0,0));
-    _poly._points.append(Vector2D(0,1));
-    _poly._points.append(Vector2D(0,0.5));
-    _poly._points.append(Vector2D(0.2,0));
-*/
 
-    Polygone poly1;
-    /*
-    poly1.addPoint(Vector2D(0,0));
-    poly1.addPoint(Vector2D(1,0));
-    poly1.addPoint(Vector2D(1,1));
-    poly1.addPoint(Vector2D(0,1));
-    poly1.addPoint(Vector2D(0.5,0.5));
-    poly1.addPoint(Vector2D(0.2,0.2));
-    */
-
-    for(int i=0;i<20;i++){
-        poly1.addPoint(Vector2D((rand()%1000)/1000.0f,(rand()%1000)/1000.0f));
-    }
-
-    poly1.name = QString("Non Convex");
-
-    Polygone poly2;
-    poly2 = Convexe2D(poly1.getPoints());
-
-    /*
-    poly2.addPoint(Vector2D(0,0));
-    poly2.addPoint(Vector2D(1,0));
-    poly2.addPoint(Vector2D(1,1));
-    poly2.addPoint(Vector2D(0,1));
-    poly2.addPoint(Vector2D(0.5,0.5));
-    poly2.addPoint(Vector2D(0.2,0.2));
-    */
-
-    poly2.name = QString("Convex");
-
-    _polyList.append(poly1);
-    _polyList.append(poly2);
 
 
     _zoom = -2.0f;
@@ -312,28 +274,69 @@ void myWindow::paintGL()
     glDisable(GL_LIGHTING);
     glPointSize(5.0f);
 
-    foreach(Polygone p, _polyList){
-        if(p.isLinked()){
-            glPointSize(3.0f);
+
+    glPointSize(3.0f);
+    foreach(const Polygone& poly, _polyList){
+        if(poly.isLinked())
             glBegin(GL_LINE_LOOP);
-            for(int i=0; i<p.getPoints().size();i++){
-                glVertex2f(p.getPoints().at(i).x,p.getPoints().at(i).y);
-            }
-            glEnd();
-            _draw_text(0.0f,-1.0f,0.0f,QString(p.name));
-        }else{
-            glLineWidth(3.0f);
+        else
             glBegin(GL_POINTS);
-            for(int i=0; i<p.getPoints().size();i++){
-                glVertex2f(p.getPoints().at(i).x,p.getPoints().at(i).y);
-            }
-            glEnd();
-            _draw_text(0.0f,-1.0f,0.0f,QString(p.name));
-        }
-        glTranslatef(2.f, 0.0f, 0.0f);
+        for(const Vector2D& p: poly.getPoints())
+            glVertex2f(XY(p));
+        glEnd();
+        _draw_text(poly.getCentre().x,poly.getMin().y-0.5f,0.0f,QString(poly.name));
     }
 
 
+    foreach(const UnionConvex& uC, _unionConvexList)
+    {
+        foreach(const Convexe2D& poly, uC.getConvexes())
+        {
+            glBegin(GL_LINE_LOOP);
+            for(const Vector2D& p: poly.getPoints())
+                glVertex2f(XY(p));
+            glEnd();
+        }
+    }
+
+    //morph
+    int nbMorph = _unionConvexMorphList.size();
+    if(nbMorph == 1)    {
+        foreach(const Convexe2D& poly, _unionConvexMorphList[0].getConvexes())
+        {
+            glBegin(GL_LINE_LOOP);
+            for(const Vector2D& p: poly.getPoints())
+                glVertex2f(XY(p));
+            glEnd();
+        }
+    }
+    else if(nbMorph > 1)    {
+        float t = fmodf(deltaTime, nbMorph);
+        int i = floor(t);
+        t -= i;
+
+        UnionConvex uCMorph = Morph(_unionConvexMorphList[i],_unionConvexMorphList[(i+1)%nbMorph],t);
+
+        foreach(const Convexe2D& poly, uCMorph.getConvexes())
+        {
+            glBegin(GL_LINE_LOOP);
+            for(const Vector2D& p: poly.getPoints())
+                glVertex2f(XY(p));
+            glEnd();
+        }
+    }
+}
 
 
+void myWindow::addPoly(const Polygone& poly){
+    _polyList.push_back(poly);
+}
+
+void myWindow::addUnionConvex(const UnionConvex& convex){
+    _unionConvexList.push_back(convex);
+}
+
+
+void myWindow::addUnionConvexMorph(const UnionConvex& convex){
+    _unionConvexMorphList.push_back(convex);
 }
