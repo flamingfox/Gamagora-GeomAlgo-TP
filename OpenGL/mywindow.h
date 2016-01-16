@@ -18,6 +18,7 @@ public:
     void paintGL();
     void keyPressEvent( QKeyEvent *keyEvent );
     void keyReleaseEvent(QKeyEvent *keyEvent);
+    void mousePressEvent( QMouseEvent *mouseEvent );
     void loadTexture(QString textureName);
     void _draw_text(double x, double y, double z, QString txt);
 

@@ -55,6 +55,12 @@ void myWindow::loadTexture(QString textureName){
     glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR );
 }
 
+void myWindow::mousePressEvent( QMouseEvent *mouseEvent ){
+    if(mouseEvent->button() == Qt::LeftButton){
+        meshUpToDate = false;
+    }
+}
+
 void myWindow::keyReleaseEvent(QKeyEvent *keyEvent){
     switch(keyEvent->key())
     {
@@ -67,9 +73,11 @@ void myWindow::keyReleaseEvent(QKeyEvent *keyEvent){
         break;
             //rotation
         case Qt::Key_Left:
+            _movingAlongXLeft = false;
             _turningright = false;
         break;
         case Qt::Key_Right:
+            _movingAlongXRight = false;
             _turningleft = false;
         break;
             //angle
@@ -130,9 +138,11 @@ void myWindow::keyPressEvent(QKeyEvent *keyEvent)
 
             //rotation
         case Qt::Key_Left:
+            _movingAlongXLeft = true;
             _turningright = true;
         break;
         case Qt::Key_Right:
+            _movingAlongXRight = true;
             _turningleft = true;
         break;
             //angle
@@ -302,10 +312,13 @@ void myWindow::paintGL()
             for(const Vector2D& p: poly.getPoints())
                 glVertex2f(p.x,p.y);
             glEnd();
+            _draw_text(0.0f,-0.5f,0.0f,QString(poly.name));
         }
+
         glTranslatef(2.0f, 0.0f, 0.0f);
     }
 
+    glTranslatef(1.0f, 0.0f, 0.0f);
     //morph
     int nbMorph = _unionConvexMorphList.size();
     if(nbMorph == 1)    {
@@ -334,18 +347,20 @@ void myWindow::paintGL()
             glEnd();
         }
     }
+
+    _draw_text(0.0f,-0.5f,0.0f,QString("Morphing"));
 }
 
 
 void myWindow::addPoly(const Polygone& poly){
-    _polyList.append(poly);
+    _polyList.push_back(poly);
 }
 
 void myWindow::addUnionConvex(const UnionConvex& convex){
-    _unionConvexList.append(convex);
+    _unionConvexList.push_back(convex);
 }
 
 
 void myWindow::addUnionConvexMorph(const UnionConvex& convex){
-    _unionConvexMorphList.append(convex);
+    _unionConvexMorphList.push_back(convex);
 }

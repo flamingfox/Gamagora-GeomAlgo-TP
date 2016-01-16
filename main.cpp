@@ -17,24 +17,6 @@ int main(int argc, char *argv[])
     for(int i=0; i < 20; i++){
         poly1.addPoint(Vector2D((rand()%1000)/1000.0f,(rand()%1000)/1000.0f));
     }
-/*
-    poly1.addPoint(Vector2D(0,0));
-    poly1.addPoint(Vector2D(1,0));
-    poly1.addPoint(Vector2D(1,1));
-    poly1.addPoint(Vector2D(0,1));
-    poly1.addPoint(Vector2D(0.5,0.5));
-    poly1.addPoint(Vector2D(0.2,0.2));
-*/
-
-    /*poly1.addPoint(Vector2D(0.4,1.4));
-    poly1.addPoint(Vector2D(-0.4,-0.4));
-    poly1.addPoint(Vector2D(-0.4,1.4));
-    poly1.addPoint(Vector2D(0.5,-0.5));
-    poly1.addPoint(Vector2D(1.4,-0.4));
-    poly1.addPoint(Vector2D(0.5,1.5));
-    poly1.addPoint(Vector2D(1.5,0.5));
-    poly1.addPoint(Vector2D(1.4,1.4));
-    poly1.addPoint(Vector2D(-0.5,0.5));*/
 
     poly1.name = QString("Non Convex");
 
@@ -49,7 +31,7 @@ int main(int argc, char *argv[])
     Polygone carre;
     Polygone triangle;
     Polygone cercle;
-    UnionConvex uc1, uc2, uc3;
+    UnionConvex uc1, uc2, uc3, uc4, uc5;
 
     carre.addPoint(Vector2D(0,0));
     carre.addPoint(Vector2D(1,0));
@@ -57,27 +39,45 @@ int main(int argc, char *argv[])
     carre.addPoint(Vector2D(0,1));
 
     triangle.addPoint(Vector2D(0,0));
-    triangle.addPoint(Vector2D(1,0));
-    triangle.addPoint(Vector2D(0.5,1));
+    triangle.addPoint(Vector2D(0.4,0));
+    triangle.addPoint(Vector2D(0.2,0.4));
 
     for(int i = 0; i< 360; i+=9){
         cercle.addPoint(Vector2D((std::cos((i*2*PI)/360)/1.5f)+0.5f,(std::sin((i*2*PI)/360)/1.5f)+0.5f));
     }
+
     Convexe2D carreConv(carre.getPoints());
     Convexe2D triangleConv(triangle.getPoints());
     Convexe2D cercleConv(cercle.getPoints());
 
+    cercleConv.scale(0.8);
+    cercleConv.name = QString("Cercle Convexe");
+    triangleConv.name = QString("Triangle Convexe");
+    carreConv.name = QString("Carre Convexe");
+
+    Convexe2D carrePtriangle = carreConv + triangleConv;
+    Convexe2D carrePcercle = carreConv + cercleConv;
+
+    carrePtriangle.name = QString("Carre + Triangle");
+    carrePcercle.name = QString("Carre + Cercle");
+
     uc1.add(carreConv);
     uc2.add(cercleConv);
     uc3.add(triangleConv);
+    uc4.add(carrePtriangle);
+    uc5.add(carrePcercle);
 
     glWin.addUnionConvex(uc1);
     glWin.addUnionConvex(uc2);
     glWin.addUnionConvex(uc3);
+    glWin.addUnionConvex(uc4);
+    glWin.addUnionConvex(uc5);
 
     glWin.addUnionConvexMorph(uc1);
     glWin.addUnionConvexMorph(uc2);
     glWin.addUnionConvexMorph(uc3);
+    glWin.addUnionConvexMorph(uc4);
+    glWin.addUnionConvexMorph(uc5);
 
 
 
