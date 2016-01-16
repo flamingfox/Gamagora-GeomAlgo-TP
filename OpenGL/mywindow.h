@@ -54,11 +54,6 @@ private:
     QVector<UnionConvex> _unionConvexList;
     QVector<UnionConvex> _unionConvexMorphList;
 
-    Polygone carre;
-    Polygone triangle;
-    Polygone cercle;
-    UnionConvex uc1, uc2, uc3;
-
 };
 
 #endif // MYWINDOW_H

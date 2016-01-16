@@ -1,7 +1,7 @@
 #include <iostream>
 
 #include "OpenGL/mywindow.h"
-
+#define PI 3.14159265359
 
 int main(int argc, char *argv[])
 {
@@ -45,6 +45,41 @@ int main(int argc, char *argv[])
 
     glWin.addPoly(poly1);
     glWin.addPoly(poly2);
+
+    Polygone carre;
+    Polygone triangle;
+    Polygone cercle;
+    UnionConvex uc1, uc2, uc3;
+
+    carre.addPoint(Vector2D(0,0));
+    carre.addPoint(Vector2D(1,0));
+    carre.addPoint(Vector2D(1,1));
+    carre.addPoint(Vector2D(0,1));
+
+    triangle.addPoint(Vector2D(0,0));
+    triangle.addPoint(Vector2D(1,0));
+    triangle.addPoint(Vector2D(0.5,1));
+
+    for(int i = 0; i< 360; i+=9){
+        cercle.addPoint(Vector2D((std::cos((i*2*PI)/360)/1.5f)+0.5f,(std::sin((i*2*PI)/360)/1.5f)+0.5f));
+    }
+    Convexe2D carreConv(carre.getPoints());
+    Convexe2D triangleConv(triangle.getPoints());
+    Convexe2D cercleConv(cercle.getPoints());
+
+    uc1.add(carreConv);
+    uc2.add(cercleConv);
+    uc3.add(triangleConv);
+
+    glWin.addUnionConvex(uc1);
+    glWin.addUnionConvex(uc2);
+    glWin.addUnionConvex(uc3);
+
+    glWin.addUnionConvexMorph(uc1);
+    glWin.addUnionConvexMorph(uc2);
+    glWin.addUnionConvexMorph(uc3);
+
+
 
 #elif TEST == 1
     //Morph

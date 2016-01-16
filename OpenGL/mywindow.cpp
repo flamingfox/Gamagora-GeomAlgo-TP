@@ -22,35 +22,6 @@ void myWindow::_draw_text(double x, double y, double z, QString txt)
 void myWindow::initializeGL()
 {
 
-    carre.addPoint(Vector2D(0,0));
-    carre.addPoint(Vector2D(1,0));
-    carre.addPoint(Vector2D(1,1));
-    carre.addPoint(Vector2D(0,1));
-
-    triangle.addPoint(Vector2D(0,0));
-    triangle.addPoint(Vector2D(1,0));
-    triangle.addPoint(Vector2D(0.5,1));
-
-    for(int i = 0; i< 360; i+=9){
-        cercle.addPoint(Vector2D((std::cos((i*2*PI)/360)/1.5f)+0.5f,(std::sin((i*2*PI)/360)/1.5f)+0.5f));
-    }
-    Convexe2D carreConv(carre.getPoints());
-    Convexe2D triangleConv(triangle.getPoints());
-    Convexe2D cercleConv(cercle.getPoints());
-
-    uc1.add(carreConv);
-    uc2.add(cercleConv);
-    uc3.add(triangleConv);
-
-    addUnionConvex(uc1);
-    addUnionConvex(uc2);
-    addUnionConvex(uc3);
-
-    addUnionConvexMorph(uc1);
-    addUnionConvexMorph(uc2);
-    addUnionConvexMorph(uc3);
-
-
     _zoom = -2.0f;
     _fx = 0.0;
     _speed =0.1;
@@ -298,20 +269,6 @@ void myWindow::paintGL()
         meshUpToDate = true;
     }
 
-
-    Convexe2D carreConv(carre.getPoints());
-    Convexe2D triangleConv(triangle.getPoints());
-
-    uc1.getConvexes().clear();
-    uc2.getConvexes().clear();
-    uc1.add(carreConv);
-    uc2.add(triangleConv);
-
-
-
-
-
-
     glEnable(GL_LIGHTING);
     glDisable(GL_LIGHTING);
 
@@ -382,16 +339,13 @@ void myWindow::paintGL()
 
 void myWindow::addPoly(const Polygone& poly){
     _polyList.append(poly);
-    //_polyList.push_back(poly);
 }
 
 void myWindow::addUnionConvex(const UnionConvex& convex){
     _unionConvexList.append(convex);
-    //_unionConvexList.push_back(convex);
 }
 
 
 void myWindow::addUnionConvexMorph(const UnionConvex& convex){
     _unionConvexMorphList.append(convex);
-    //_unionConvexMorphList.push_back(convex);
 }
