@@ -56,7 +56,8 @@ private:
 
     Polygone carre;
     Polygone triangle;
-    UnionConvex uc1, uc2;
+    Polygone cercle;
+    UnionConvex uc1, uc2, uc3;
 
 };
 
