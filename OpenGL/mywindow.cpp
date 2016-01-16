@@ -22,7 +22,26 @@ void myWindow::_draw_text(double x, double y, double z, QString txt)
 void myWindow::initializeGL()
 {
 
+    carre.addPoint(Vector2D(0,0));
+    carre.addPoint(Vector2D(1,0));
+    carre.addPoint(Vector2D(1,1));
+    carre.addPoint(Vector2D(0,1));
 
+    triangle.addPoint(Vector2D(0,0));
+    triangle.addPoint(Vector2D(1,0));
+    triangle.addPoint(Vector2D(0.5,2));
+
+    Convexe2D carreConv(carre.getPoints());
+    Convexe2D triangleConv(triangle.getPoints());
+
+    uc1.add(carreConv);
+    uc2.add(triangleConv);
+
+    addUnionConvex(uc1);
+    addUnionConvex(uc2);
+
+    addUnionConvexMorph(uc1);
+    addUnionConvexMorph(uc2);
 
 
     _zoom = -2.0f;
@@ -62,10 +81,10 @@ void myWindow::keyReleaseEvent(QKeyEvent *keyEvent){
     switch(keyEvent->key())
     {
             //zoom
-        case Qt::Key_Z:
+        case Qt::Key_Up:
             _zooming = false;
         break;
-        case Qt::Key_S:
+        case Qt::Key_Down:
             _dezooming = false;
         break;
             //rotation
@@ -76,17 +95,18 @@ void myWindow::keyReleaseEvent(QKeyEvent *keyEvent){
             _turningleft = false;
         break;
             //angle
+            /*
         case Qt::Key_Up:
             //_plonger = false;
         break;
         case Qt::Key_Down:
             //_deplonger = false;
-        break;
+        break;*/
             //hauteur camera
-        case Qt::Key_E:
+        case Qt::Key_Z:
             _monter = false;
         break;
-        case Qt::Key_A:
+        case Qt::Key_S:
             _demonter = false;
         break;
 
@@ -114,10 +134,10 @@ void myWindow::keyPressEvent(QKeyEvent *keyEvent)
             _speed -= 0.05;
         break;
             //zoom
-        case Qt::Key_Z:
+        case Qt::Key_Up:
             _zooming = true;
         break;
-        case Qt::Key_S:
+        case Qt::Key_Down:
             _dezooming = true;
         break;
             //zoom
@@ -138,6 +158,7 @@ void myWindow::keyPressEvent(QKeyEvent *keyEvent)
             _turningleft = true;
         break;
             //angle
+            /*
         case Qt::Key_Up:
             _plonger = true;
             //_angle -= 5.0;
@@ -145,12 +166,12 @@ void myWindow::keyPressEvent(QKeyEvent *keyEvent)
         case Qt::Key_Down:
             _deplonger = true;
             //_angle += 5.0;
-        break;
+        break;*/
             //hauteur camera
-        case Qt::Key_E:
+        case Qt::Key_Z:
             _monter = true;
         break;
-        case Qt::Key_A:
+        case Qt::Key_S:
             _demonter = true;
         break;
     }
@@ -270,27 +291,44 @@ void myWindow::paintGL()
         meshUpToDate = true;
     }
 
+
+    Convexe2D carreConv(carre.getPoints());
+    Convexe2D triangleConv(triangle.getPoints());
+
+    uc1.getConvexes().clear();
+    uc2.getConvexes().clear();
+    uc1.add(carreConv);
+    uc2.add(triangleConv);
+
+
+
+
+
+
     glEnable(GL_LIGHTING);
     glDisable(GL_LIGHTING);
+
+
     glPointSize(5.0f);
+    glLineWidth(5.0f);
 
 
-    glPointSize(3.0f);
     foreach(const Polygone& poly, _polyList){
         if(poly.isLinked()) {
             glBegin(GL_LINE_LOOP);
             glColor3f(0,1,0);
         }
-        else    {
+        else{
             glBegin(GL_POINTS);
             glColor3f(1,0,0);
         }
-        for(const Vector2D& p: poly.getPoints())
-            glVertex2f(XY(p));
+        for(const Vector2D& p: poly.getPoints()){
+            glVertex2f(p.x,p.y);
+        }
         glEnd();
-        _draw_text(poly.getCentre().x,poly.getMin().y-0.5f,0.0f,QString(poly.name));
+        _draw_text(0.0f,-0.5f,0.0f,QString(poly.name));
+        glTranslatef(2.0f, 0.0f, 0.0f);
     }
-
 
     foreach(const UnionConvex& uC, _unionConvexList)
     {
@@ -298,9 +336,10 @@ void myWindow::paintGL()
         {
             glBegin(GL_LINE_LOOP);
             for(const Vector2D& p: poly.getPoints())
-                glVertex2f(XY(p));
+                glVertex2f(p.x,p.y);
             glEnd();
         }
+        glTranslatef(2.0f, 0.0f, 0.0f);
     }
 
     //morph
@@ -335,14 +374,17 @@ void myWindow::paintGL()
 
 
 void myWindow::addPoly(const Polygone& poly){
-    _polyList.push_back(poly);
+    _polyList.append(poly);
+    //_polyList.push_back(poly);
 }
 
 void myWindow::addUnionConvex(const UnionConvex& convex){
-    _unionConvexList.push_back(convex);
+    _unionConvexList.append(convex);
+    //_unionConvexList.push_back(convex);
 }
 
 
 void myWindow::addUnionConvexMorph(const UnionConvex& convex){
-    _unionConvexMorphList.push_back(convex);
+    _unionConvexMorphList.append(convex);
+    //_unionConvexMorphList.push_back(convex);
 }
