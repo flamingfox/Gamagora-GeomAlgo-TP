@@ -26,7 +26,7 @@ Convexe2D::Convexe2D(const QVector<Vector2D>& points)
         ajoutPointConvex(points[i]);
 
 #ifdef DEBUG_PROBLEME
-        if(i == 1000000)    //pour le débug, retrouver un indice précis où il y a un problème
+        if(i == 3)    //pour le débug, retrouver un indice précis où il y a un problème
             std::cout << "ici" << std::endl;
         else
             for(int i3 = 0; i3 < getNbPoints();  i3++)
@@ -198,9 +198,9 @@ bool Convexe2D::findIndicesCoupe(const Vector2D& p, int& deb, int& fin)
         if(cote2 == 0)
             return false;  //le point à ajouter est sur l'enveloppe convexe. Il n'y a pas à l'ajouter à l'enveloppe.
         else if(cote2 == -1)
-            startOut = true;
-        else
             startOut = false;
+        else
+            startOut = true;
     }
     else if(cote == GAUCHE)
         startOut = true;

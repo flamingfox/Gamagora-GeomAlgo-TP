@@ -29,3 +29,15 @@ UnionConvex Morph(const UnionConvex& conv1, const UnionConvex& conv2, float t)
     }
     return res;
 }
+
+void UnionConvex::translate(const Vector2D& trans)
+{
+    for(Convexe2D& conv:  this->convexs)
+        conv.translate(trans);
+}
+
+void UnionConvex::scale(float s)
+{
+    for(Convexe2D& conv:  this->convexs)
+        conv.scale(s);
+}

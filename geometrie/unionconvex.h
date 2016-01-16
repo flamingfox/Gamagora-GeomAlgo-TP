@@ -12,8 +12,13 @@ public:
 
     std::vector<Convexe2D> getConvexes() const {    return convexs; }
 
+    void translate(const Vector2D& trans);
+    void scale(float s);
+
     //friend Convexe2D;
     friend UnionConvex Morph(const UnionConvex& c1, const UnionConvex& c2, float t);
+
+
 
 protected:
     std::vector<Convexe2D> convexs;

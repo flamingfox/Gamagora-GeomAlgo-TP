@@ -315,7 +315,9 @@ void myWindow::paintGL()
         }
     }
     else if(nbMorph > 1)    {
-        float t = fmodf(deltaTime, nbMorph);
+        static float temps = 0.f;
+        temps += deltaTime;
+        float t = fmodf(temps, nbMorph);
         int i = floor(t);
         t -= i;
 
