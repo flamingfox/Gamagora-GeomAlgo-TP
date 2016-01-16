@@ -18,7 +18,7 @@ public:
     inline void addPoint(const Vector2D& point){_points.push_back(point);}
 
     void translate(const Vector2D& trans);
-    void scale(float s);
+    virtual void scale(float s);
 
     QString name;
 

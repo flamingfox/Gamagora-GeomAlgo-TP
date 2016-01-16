@@ -15,6 +15,8 @@ public:
     Convexe2D operator+(const Convexe2D& convexe) const;
     Convexe2D operator*(float scale) const;
 
+    void scale(float s);
+
 
     void ajoutPointConvex(const Vector2D& p);
 

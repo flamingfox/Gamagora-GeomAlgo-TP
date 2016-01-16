@@ -306,7 +306,18 @@ Convexe2D Convexe2D::operator+(const Convexe2D& convexe) const
 Convexe2D Convexe2D::operator*(float scale) const
 {
     Convexe2D res(*this);
-    for(Vector2D& p : res._points)
-        p*=scale;
+    res.scale(scale);
     return res;
+}
+
+void Convexe2D::scale(float s)
+{
+    for(Vector2D& p: this->_points)
+        p *= s;
+    _centre *= s;
+    _min *= s;
+    _max *= s;
+    if(s < 0)
+        std::reverse(_points.begin(), _points.end());
+
 }

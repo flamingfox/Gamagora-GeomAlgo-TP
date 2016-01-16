@@ -9,12 +9,12 @@ int main(int argc, char *argv[])
 
     myWindow glWin;
 
-#define TEST 1
+#define TEST 0
 
 #if TEST == 0
     Polygone poly1;
 
-    for(int i=0; i < 100000; i++){
+    for(int i=0; i < 500000; i++){
         poly1.addPoint(Vector2D((rand()%1000)/1000.0f,(rand()%1000)/1000.0f));
     }
 
@@ -42,12 +42,12 @@ int main(int argc, char *argv[])
     poly1.name = QString("Non Convex");
 
     Polygone poly2 = Convexe2D(poly1.getPoints());
+    std::cout << "nombre de points du polygone : " << poly1.getNbPoints() << std::endl;
+    std::cout << "nombre de points de l'enveloppe convexe : " << poly2.getNbPoints() << std::endl;
     //poly2.translate(Vector2D(1.5,0));
 
     poly2.name = QString("Convex");
 
-
-    myWindow glWin;
     glWin.addPoly(poly1);
     glWin.addPoly(poly2);
 
