@@ -20,7 +20,7 @@ int main(int argc, char *argv[])
     //enveloppe convexe normale
     Polygone poly1;
 
-    int nb = 10000000;
+    int nb = 50000000;
     poly1.reservePoints(nb);
     for(int i=0; i < nb; i++){
         poly1.addPoint(Vector2D((rand()%1000)/1000.0f,(rand()%1000)/1000.0f));
@@ -38,7 +38,7 @@ int main(int argc, char *argv[])
     Polygone poly2 = Convexe2D(poly1.getPoints());
 
     int time = timer.elapsed();
-    std::cout << time/1000 << "." << time%1000<< " secondes" << std::endl;
+    std::cout << time << " ms" << std::endl;
 
 
     std::cout << "nombre de points du polygone : " << poly1.getNbPoints() << std::endl;
@@ -240,7 +240,7 @@ int main(int argc, char *argv[])
 
     Polygone poly1;
 
-    int nb = 10000000;
+    int nb = 50000000;
     poly1.reservePoints(nb);
     for(int i=0; i < nb; i++){
         poly1.addPoint(Vector2D((rand()%1000)/1000.0f,(rand()%1000)/1000.0f));
@@ -257,7 +257,7 @@ int main(int argc, char *argv[])
     Polygone poly2 = JarvisConvex(poly1.getPoints());
 
     int time = timer.elapsed();
-    std::cout << std::endl << time/1000 << "." << time%1000<< " secondes" << std::endl;
+    std::cout<< time << " ms" << std::endl;
 
 
     std::cout << "nombre de points du polygone : " << poly1.getNbPoints() << std::endl;

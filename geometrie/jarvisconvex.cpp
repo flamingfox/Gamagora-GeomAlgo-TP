@@ -86,10 +86,11 @@ JarvisConvex::JarvisConvex(const QVector<Vector2D>& points)
         _points.push_back(ps.last());
 
     if(ps2.size() > 1)    {
-        std::reverse(ps2.begin(), ps2.end());  //les points on été inséré dans l'ordre lexicographique dans ps2. En les inversant, on pourra le parcourir dans l'autre sans.
-        _points.push_back(ps2.first());
+        //std::reverse(ps2.begin(), ps2.end());  //les points on été inséré dans l'ordre lexicographique dans ps2. En les inversant, on pourra le parcourir dans l'autre sans.
+        int nbDemiBas = _points.size();
+        _points.push_back(ps2.last());
         //construction de la seconde moitié de l'enveloppe convexe dans sa partie haute
-        for(int i = 1;  i < ps2.size(); i++)
+        for(int i = ps2.size()-2;  i >= 0; i--)
         {
             const Vector2D& p = ps2[i];
             int cote = inHalfSpaceDroit(_points[_points.size()-2],_points.last(),p);
@@ -100,7 +101,7 @@ JarvisConvex::JarvisConvex(const QVector<Vector2D>& points)
             else    //DROIT
             {
                 _points.removeLast();
-                while(_points.size() > 1 && inHalfSpaceDroit(_points[_points.size()-2], _points.last(), p) != GAUCHE)
+                while(_points.size() > nbDemiBas && inHalfSpaceDroit(_points[_points.size()-2], _points.last(), p) != GAUCHE)
                     _points.removeLast();
                 _points.push_back(p);
             }
