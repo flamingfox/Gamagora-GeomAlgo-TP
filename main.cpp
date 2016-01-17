@@ -65,20 +65,23 @@ int main(int argc, char *argv[])
 
     poly1.name = QString("Non Convex");
 
-    double sampletest = 10.0; //nombre de creations de convexe pour la comparaison entre les 2 algos
+    ///////////////////////////////////////////
+    //calcul du temps de génération moyenne.
+    int sampletest = 10; //nombre de creations de convexe pour la comparaison entre les 2 algos
 
     t.start();
-    for(double i=0; i<sampletest; i++){
+    for(int i=0; i<sampletest; i++){
         poly00 = Convexe2D(poly0.getPoints());
     }
-    qDebug()<<t.elapsed()/sampletest << " secondes";
+    qDebug()<< "Convexe : " << t.elapsed()/(float)sampletest << " ms";
 
     t.start();
-    for(double i=0; i<sampletest; i++){
+    for(int i=0; i<sampletest; i++){
         poly00 = JarvisConvex(poly0.getPoints());
     }
-    qDebug()<<t.elapsed()/sampletest << " secondes";
+    qDebug()<< "Jarvis : " << t.elapsed()/(float)sampletest << " ms";
 
+    //////////////////////////////////////////
 
     Polygone poly2 = Convexe2D(poly1.getPoints());
     std::cout << "nombre de points du polygone : " << poly1.getNbPoints() << std::endl;
