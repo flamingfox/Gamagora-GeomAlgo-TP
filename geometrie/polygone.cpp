@@ -11,13 +11,16 @@ Polygone::Polygone(QVector<Vector2D> points): _points(points) {
 
 void Polygone::initMinMaxCentre()
 {
-    _min = _points.first();
-    _max = _points.last();
-    for(const Vector2D& p:  _points)    {
-        _min = min(_min,p);
-        _max = max(_max,p);
+    if(!_points.empty())
+    {
+        _min = _points.first();
+        _max = _points.last();
+        for(const Vector2D& p:  _points)    {
+            _min = min(_min,p);
+            _max = max(_max,p);
+        }
+        _centre = (_min+_max)/2;
     }
-    _centre = (_min+_max)/2;
 }
 
 void Polygone::translate(const Vector2D& trans)
