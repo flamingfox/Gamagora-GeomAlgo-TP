@@ -287,7 +287,6 @@ Convexe2D Convexe2D::operator+(const Convexe2D& convexe) const
         for(const Vector2D& p2 : convexe._points)
             pointsAdd.push_back(p1+p2);
 
-
     return Convexe2D(pointsAdd);
 }
 

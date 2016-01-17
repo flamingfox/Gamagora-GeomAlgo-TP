@@ -300,10 +300,10 @@ void myWindow::paintGL()
             glVertex2f(p.x,p.y);
         }
         glEnd();
-        _draw_text(0.0f,-0.5f,0.0f,QString(poly.name));
-
-        //if(poly.isLinked()) //on affiche l'enveloppe convexe par dessus les points. problème, les draw_text se superpose
-            glTranslatef(2.0f, 0.0f, 0.0f);
+        if(poly.isLinked())
+            _draw_text(poly.getCentre().x,poly.getMin().y-0.5f,0.0f,QString(poly.name));
+        else
+            _draw_text(poly.getCentre().x,poly.getMin().y-1.f,0.0f,QString(poly.name));
     }
 
     foreach(const UnionConvex& uC, _unionConvexList)
@@ -314,13 +314,10 @@ void myWindow::paintGL()
             for(const Vector2D& p: poly.getPoints())
                 glVertex2f(p.x,p.y);
             glEnd();
-            _draw_text(0.0f,-0.5f,0.0f,QString(poly.name));
         }
-
-        glTranslatef(2.0f, 0.0f, 0.0f);
+        _draw_text(uC.getCentre().x, uC.getMin().y-0.5,0.0f,QString(uC.name));
     }
 
-    glTranslatef(1.0f, 0.0f, 0.0f);
     //morph
     int nbMorph = _unionConvexMorphList.size();
     if(nbMorph == 1)    {
@@ -331,6 +328,7 @@ void myWindow::paintGL()
                 glVertex2f(XY(p));
             glEnd();
         }
+        _draw_text(_unionConvexMorphList[0].getCentre().x, _unionConvexMorphList[0].getMin().y-0.5,0.0f,QString("Morphing"));
     }
     else if(nbMorph > 1)    {
         static float temps = 0.f;
@@ -348,9 +346,10 @@ void myWindow::paintGL()
                 glVertex2f(XY(p));
             glEnd();
         }
+        //_draw_text(uCMorph.getCentre().x, uCMorph.getMin().y-0.5,0.0f,QString("Morphing"));
+        _draw_text(uCMorph.getCentre().x, uCMorph.getMin().y-0.5,0.0f,QString("Morphing"));
     }
 
-    _draw_text(0.0f,-0.5f,0.0f,QString("Morphing"));
 }
 
 

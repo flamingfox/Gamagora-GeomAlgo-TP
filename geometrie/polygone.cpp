@@ -11,6 +11,8 @@ Polygone::Polygone(QVector<Vector2D> points): _points(points) {
 
 void Polygone::initMinMaxCentre()
 {
+    _min = _points.first();
+    _max = _points.last();
     for(const Vector2D& p:  _points)    {
         _min = min(_min,p);
         _max = max(_max,p);
@@ -25,6 +27,10 @@ void Polygone::translate(const Vector2D& trans)
     _centre += trans;
     _min += trans;
     _max += trans;
+}
+void Polygone::translate(float x, float y)
+{
+    translate(Vector2D(x,y));
 }
 
 void Polygone::scale(float s)

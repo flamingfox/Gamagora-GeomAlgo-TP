@@ -11,7 +11,7 @@ int main(int argc, char *argv[])
 
     myWindow glWin;
 
-#define TEST 0
+#define TEST 1
 
 #if TEST == 0
     //enveloppe convexe normale
@@ -86,11 +86,23 @@ int main(int argc, char *argv[])
     carrePtriangle.name = QString("Carre + Triangle");
     carrePcercle.name = QString("Carre + Cercle");
 
+    carreConv.translate(2,0);
+    triangleConv.translate(4,0);
+    cercleConv.translate(6,0);
+    carrePtriangle.translate(8,0);
+    carrePcercle.translate(10,0);
+
     uc1.add(carreConv);
     uc2.add(cercleConv);
     uc3.add(triangleConv);
     uc4.add(carrePtriangle);
     uc5.add(carrePcercle);
+
+    uc1.name = carreConv.name;
+    uc2.name = cercleConv.name;
+    uc3.name = triangleConv.name;
+    uc4.name = carrePtriangle.name;
+    uc5.name = carrePcercle.name;
 
     glWin.addUnionConvex(uc1);
     glWin.addUnionConvex(uc2);
@@ -113,17 +125,20 @@ int main(int argc, char *argv[])
     carre.addPoint(Vector2D(1,0));
     carre.addPoint(Vector2D(1,1));
     carre.addPoint(Vector2D(0,1));
+    carre.translate(-0.5,-0.5);
 
     Polygone triangle;
     triangle.addPoint(Vector2D(0,0));
     triangle.addPoint(Vector2D(1,0));
     triangle.addPoint(Vector2D(0.5,1));
+    triangle.translate(-0.5,-0.5);
 
     Polygone carre2;
     carre2.addPoint(Vector2D(0.5,0));
     carre2.addPoint(Vector2D(1,0.5));
     carre2.addPoint(Vector2D(0.5,1));
     carre2.addPoint(Vector2D(0,0.5));
+    carre2.translate(-0.5,-0.5);
 
     Polygone octogone;
     octogone.addPoint(Vector2D(1.0,1.0));

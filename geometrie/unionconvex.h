@@ -18,10 +18,19 @@ public:
     //friend Convexe2D;
     friend UnionConvex Morph(const UnionConvex& c1, const UnionConvex& c2, float t);
 
+
+    Vector2D getCentre() const {return _centre;}
+    Vector2D getMin() const {return _min;}
+    Vector2D getMax() const {return _max;}
+
     QString name;
 
 protected:
     std::vector<Convexe2D> convexs;
+
+    Vector2D _centre;    //peut aussi servir à afficher le nom au bon endroit.
+    Vector2D _min;
+    Vector2D _max;
 };
 
 
