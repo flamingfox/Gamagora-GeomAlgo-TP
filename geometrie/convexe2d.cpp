@@ -2,6 +2,7 @@
 
 Convexe2D::Convexe2D(const QVector<Vector2D>& points)
 {
+
     if(points.size() < 3)
     {
         _points = points;
@@ -39,7 +40,6 @@ Convexe2D::Convexe2D(const QVector<Vector2D>& points)
     }
 
     initMinMaxCentre();
-
     setLinked(true);
 }
 

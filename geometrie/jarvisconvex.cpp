@@ -1,5 +1,6 @@
 #include "jarvisconvex.h"
 
+
 bool cmpVec2Xless(const Vector2D& l, const Vector2D& r)
 {
     if(l.x < r.x)
@@ -24,6 +25,7 @@ bool cmpVec2Xmore(const Vector2D& l, const Vector2D& r)
 
 JarvisConvex::JarvisConvex(const QVector<Vector2D>& points)
 {
+
     if(points.size() < 3)    {
         _points = points;
         initMinMaxCentre();

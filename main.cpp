@@ -3,6 +3,9 @@
 #include "OpenGL/mywindow.h"
 #include "geometrie/jarvisconvex.h"
 
+#include <QTime>
+#include <QDebug>
+
 #define PI 3.14159265359
 
 int main(int argc, char *argv[])
@@ -46,16 +49,38 @@ int main(int argc, char *argv[])
     glWin.addPoly(poly2);
 
 #elif TEST == 1
+    QTime t;
+    Polygone poly0;
+    Polygone poly00;
+
     Polygone poly1;
 
-    for(int i=0; i < 20; i++){
+    for(int i=0; i < 1000000; i++){
+        poly0.addPoint(Vector2D((rand()%1000)/1000.0f,(rand()%1000)/1000.0f));
+    }
+
+    for(int i=0; i < 100; i++){
         poly1.addPoint(Vector2D((rand()%1000)/1000.0f,(rand()%1000)/1000.0f));
     }
 
     poly1.name = QString("Non Convex");
 
-    Polygone poly2 = Convexe2D(poly1.getPoints());
+    double sampletest = 10.0; //nombre de creations de convexe pour la comparaison entre les 2 algos
 
+    t.start();
+    for(double i=0; i<sampletest; i++){
+        poly00 = Convexe2D(poly0.getPoints());
+    }
+    qDebug()<<t.elapsed()/sampletest << " secondes";
+
+    t.start();
+    for(double i=0; i<sampletest; i++){
+        poly00 = JarvisConvex(poly0.getPoints());
+    }
+    qDebug()<<t.elapsed()/sampletest << " secondes";
+
+
+    Polygone poly2 = Convexe2D(poly1.getPoints());
     std::cout << "nombre de points du polygone : " << poly1.getNbPoints() << std::endl;
     std::cout << "nombre de points de l'enveloppe convexe : " << poly2.getNbPoints() << std::endl;
     poly2.name = QString("Convex");
@@ -63,10 +88,12 @@ int main(int argc, char *argv[])
     glWin.addPoly(poly1);
     glWin.addPoly(poly2);
 
-    ///////////////////////////////////
+    /////////////////////////////////// jarvis est plus efficace si nb points < 100 000
+
 
     Polygone poly3 = poly1;
     poly3.translate(0,-2);
+
     Polygone poly4 = JarvisConvex(poly3.getPoints());
 
 
