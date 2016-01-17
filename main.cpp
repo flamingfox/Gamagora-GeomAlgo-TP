@@ -11,7 +11,7 @@ int main(int argc, char *argv[])
 
     myWindow glWin;
 
-#define TEST 3
+#define TEST 0
 
 #if TEST == 0
     //enveloppe convexe normale
