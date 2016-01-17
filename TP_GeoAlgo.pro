@@ -13,12 +13,14 @@ SOURCES += main.cpp \
     geometrie/vector2d.cpp \
     geometrie/unionconvex.cpp \
     geometrie/convexe2d.cpp \
-    geometrie/polygone.cpp
+    geometrie/polygone.cpp \
+    geometrie/jarvisconvex.cpp
 
 HEADERS += OpenGL/myglwidget.h \
     OpenGL/mywindow.h \
     geometrie/vector2d.h \
     geometrie/unionconvex.h \
     geometrie/convexe2d.h \
-    geometrie/polygone.h
+    geometrie/polygone.h \
+    geometrie/jarvisconvex.h
 

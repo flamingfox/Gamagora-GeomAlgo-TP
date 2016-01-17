@@ -27,6 +27,7 @@ public:
     Vector2D getMax() const {return _max;}
 
     int getNbPoints() const {return _points.size();}
+    void reservePoints(int nb)  {_points.reserve(nb);}
 
 protected:
     QVector<Vector2D> _points;

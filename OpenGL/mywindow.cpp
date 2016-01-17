@@ -279,11 +279,11 @@ void myWindow::paintGL()
     foreach(const Polygone& poly, _polyList){
         if(poly.isLinked()) {
             glBegin(GL_LINE_LOOP);
-            glColor3f(0,1,0);
+            glColor3f(1,0,0);
         }
         else    {
             glBegin(GL_POINTS);
-            glColor3f(1,0,0);
+            glColor3f(0,1,0);
         }
         for(const Vector2D& p: poly.getPoints())
             glVertex2f(XY(p));

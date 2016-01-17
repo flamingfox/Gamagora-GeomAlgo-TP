@@ -26,7 +26,7 @@ Convexe2D::Convexe2D(const QVector<Vector2D>& points)
         ajoutPointConvex(points[i]);
 
 #ifdef DEBUG_PROBLEME
-        if(i == 3)    //pour le débug, retrouver un indice précis où il y a un problème
+        if(i == -1)    //pour le débug, retrouver un indice précis où il y a un problème
             std::cout << "ici" << std::endl;
         else
             for(int i3 = 0; i3 < getNbPoints();  i3++)
@@ -153,31 +153,12 @@ void Convexe2D::ajoutPointConvex(const Vector2D& p)
             }
         }
     }
-    /*
-    bool debutCoupe = 0;
-
-    for(int i=0; i<convexe._points.length(); i++){
-        if(inHalfSpaceDroit(convexe._points[i],convexe._points[(i+1)%convexe._points.length()], point)){
-            if(debutCoupe){
-                _points.push_back(convexe._points[i]);
-                _points.push_back(point);
-            }
-        }
-        else{
-            _points.push_back(convexe._points[i]);
-            debutCoupe = 1;
-        }
-    }
-
-    if(_points.empty()){
-        _points = convexe._points;
-    }*/
 }
 
 /**si 3 points sont alignés, on veut savoir si le premier est sur le segment des deux autres points, plus proche du deuxième point ou plus proche du troisième*/
 int coteAlignement(const Vector2D& p, const Vector2D& extrem0, const Vector2D& extrem1)
 {
-    if(dot(p-extrem0, p-extrem1) < 0)  //le point est entre extrem0 et extrem1
+    if(dot(p-extrem0, p-extrem1) <= 0)  //le point est entre extrem0 et extrem1
         return 0;
     else if(dot(p-extrem0, extrem1-extrem0) < 0)
         return -1;   //plus proche de extrem0
@@ -209,20 +190,24 @@ bool Convexe2D::findIndicesCoupe(const Vector2D& p, int& deb, int& fin)
 
 
     if(startOut)    {
-        for(i = 1;  i < getNbPoints();  i++)
-        {
-            i2 = (i+1)%getNbPoints();
-            cote = inHalfSpaceDroit(_points[i], _points[i2], p);
-            if(cote == ALIGNEE){
-                if(coteAlignement(p, _points[i], _points[i2]) == 0)         return false;  //le point à ajouter est sur l'enveloppe convexe. Il n'y a pas à l'ajouter à l'enveloppe.
-                else                                                        break;  //on commence la coupe au point i
+        if(cote == ALIGNEE)
+            deb = 0;
+        else    {
+            for(i = 1;  i < getNbPoints();  i++)
+            {
+                i2 = (i+1)%getNbPoints();
+                int cote1 = inHalfSpaceDroit(_points[i], _points[i2], p);
+                if(cote1 == ALIGNEE){
+                    if(coteAlignement(p, _points[i], _points[i2]) == 0)         return false;  //le point à ajouter est sur l'enveloppe convexe. Il n'y a pas à l'ajouter à l'enveloppe.
+                    else                                                        break;  //on commence la coupe au point i
+                }
+                else if(cote1 == DROIT)
+                    break;  //on conmmence la coupe au point i
             }
-            else if(cote == DROIT)
-                break;  //on conmmence la coupe au point i
+            if(i == getNbPoints())
+                return false;  //le points est à l'interieur de l'enveloppe
+            deb = i;
         }
-        if(i == getNbPoints())
-            return false;  //le points est à l'interieur de l'enveloppe
-        deb = i;
 
         for(i = deb+1;  i < getNbPoints();  i++)
         {
@@ -248,7 +233,9 @@ bool Convexe2D::findIndicesCoupe(const Vector2D& p, int& deb, int& fin)
             cote = inHalfSpaceDroit(_points[i], _points[i2], p);
             if(cote == ALIGNEE){
                 if(coteAlignement(p, _points[i], _points[i2]) == 0)         return false;  //le point à ajouter est sur l'enveloppe convexe. Il n'y a pas à l'ajouter à l'enveloppe.
-                else                                                        break;  //on commence la coupe au point i2
+                else    {
+                    i--;    break;  //on commence la coupe au point i2
+                }
             }
             else if(cote == GAUCHE)
                 break;  //on conmmence la coupe au point i2
