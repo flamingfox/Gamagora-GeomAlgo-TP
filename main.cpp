@@ -1,7 +1,7 @@
 #include <iostream>
 
 #include "OpenGL/mywindow.h"
-#include "geometrie/jarvisconvex.h"
+#include "geometrie/grahamconvex.h"
 
 #include <QTime>
 #include <QDebug>
@@ -77,9 +77,9 @@ int main(int argc, char *argv[])
 
     t.start();
     for(int i=0; i<sampletest; i++){
-        poly00 = JarvisConvex(poly0.getPoints());
+        poly00 = GrahamConvex(poly0.getPoints());
     }
-    qDebug()<< "Jarvis : " << t.elapsed()/(float)sampletest << " ms";
+    qDebug()<< "Graham : " << t.elapsed()/(float)sampletest << " ms";
 
     //////////////////////////////////////////
 
@@ -91,18 +91,18 @@ int main(int argc, char *argv[])
     glWin.addPoly(poly1);
     glWin.addPoly(poly2);
 
-    /////////////////////////////////// jarvis est plus efficace si nb points < 100 000
+    /////////////////////////////////// Graham est plus efficace si nb points < 100 000
 
 
     Polygone poly3 = poly1;
     poly3.translate(0,-2);
 
-    Polygone poly4 = JarvisConvex(poly3.getPoints());
+    Polygone poly4 = GrahamConvex(poly3.getPoints());
 
 
     std::cout << "nombre de points du polygone : " << poly3.getNbPoints() << std::endl;
-    std::cout << "nombre de points de l'enveloppe convexe de Jarvis : " << poly4.getNbPoints() << std::endl;
-    poly4.name = QString("Jarvis Convex");
+    std::cout << "nombre de points de l'enveloppe convexe de Graham : " << poly4.getNbPoints() << std::endl;
+    poly4.name = QString("Graham Convex");
 
     glWin.addPoly(poly3);
     glWin.addPoly(poly4);
@@ -239,7 +239,7 @@ int main(int argc, char *argv[])
     glWin.addUnionConvexMorph(uc4);
 
 #elif TEST == 3
-//marche de jarvis
+//Graham
 
     Polygone poly1;
 
@@ -257,7 +257,7 @@ int main(int argc, char *argv[])
     QTime timer;
     timer.start();
 
-    Polygone poly2 = JarvisConvex(poly1.getPoints());
+    Polygone poly2 = GrahamConvex(poly1.getPoints());
 
     int time = timer.elapsed();
     std::cout<< time << " ms" << std::endl;
@@ -267,7 +267,7 @@ int main(int argc, char *argv[])
     std::cout << "nombre de points de l'enveloppe convexe : " << poly2.getNbPoints() << std::endl;
     //poly2.translate(Vector2D(1.5,0));
 
-    poly2.name = QString("Jarvis");
+    poly2.name = QString("Graham");
 
     glWin.addPoly(poly1);
     glWin.addPoly(poly2);

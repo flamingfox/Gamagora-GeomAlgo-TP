@@ -1,4 +1,4 @@
-#include "jarvisconvex.h"
+#include "grahamconvex.h"
 
 
 bool cmpVec2Xless(const Vector2D& l, const Vector2D& r)
@@ -23,7 +23,7 @@ bool cmpVec2Xmore(const Vector2D& l, const Vector2D& r)
     return false;
 }
 
-JarvisConvex::JarvisConvex(const QVector<Vector2D>& points)
+GrahamConvex::GrahamConvex(const QVector<Vector2D>& points)
 {
 
     if(points.size() < 3)    {
@@ -118,7 +118,7 @@ JarvisConvex::JarvisConvex(const QVector<Vector2D>& points)
 
 
 /*//première version avec plus de calcul
-JarvisConvex::JarvisConvex(const QVector<Vector2D>& points)
+GrahamConvex::GrahamConvex(const QVector<Vector2D>& points)
 {
     if(points.size() < 3)    {
         _points = points;

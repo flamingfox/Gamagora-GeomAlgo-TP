@@ -14,7 +14,7 @@ SOURCES += main.cpp \
     geometrie/unionconvex.cpp \
     geometrie/convexe2d.cpp \
     geometrie/polygone.cpp \
-    geometrie/jarvisconvex.cpp
+    geometrie/grahamconvex.cpp
 
 HEADERS += OpenGL/myglwidget.h \
     OpenGL/mywindow.h \
@@ -22,5 +22,5 @@ HEADERS += OpenGL/myglwidget.h \
     geometrie/unionconvex.h \
     geometrie/convexe2d.h \
     geometrie/polygone.h \
-    geometrie/jarvisconvex.h
+    geometrie/grahamconvex.h
 

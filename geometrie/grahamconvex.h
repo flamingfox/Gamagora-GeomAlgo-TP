@@ -3,10 +3,10 @@
 
 #include "convexe2d.h"
 
-class JarvisConvex : public Convexe2D
+class GrahamConvex : public Convexe2D
 {
 public:
-    JarvisConvex(const QVector<Vector2D>& points);
+    GrahamConvex(const QVector<Vector2D>& points);
 };
 
 #endif // JARVISCONVEX_H
