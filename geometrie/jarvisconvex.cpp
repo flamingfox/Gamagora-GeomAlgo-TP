@@ -35,6 +35,99 @@ JarvisConvex::JarvisConvex(const QVector<Vector2D>& points)
 
     QVector<Vector2D> ps2;  //liste des points que l'on va utiliser pour fermer l'enveloppe convexe au retour du dernier au premier point
     ps2.reserve(points.size());
+    ps2.push_back(ps.first());
+
+    _points.push_back(ps.first());
+    int i;
+    for(i = 1;  i < ps.size()-1;  i++)
+    {
+        const Vector2D& p = ps[i];
+        int cote = inHalfSpaceDroit(_points.first(), ps.last(), p);
+        if(cote == DROIT)
+            break;
+        else    {
+            if(cote == GAUCHE)
+                ps2.push_back(p);
+            //si alignée, le point ne sera jamais dans l'enveloppe convexe
+        }
+    }
+    if(i != ps.size()-1)    {
+        _points.push_back(ps[i]);
+        //construction de la première moitié de l'enveloppe convexe dans sa partie basse
+        for(    ;  i < ps.size();  i++)
+        {
+            const Vector2D& p = ps[i];
+            int cote2 = inHalfSpaceDroit(ps.first(),ps.last(),p);
+            if(cote2 == DROIT || i == ps.size()-1)            {
+                int cote = inHalfSpaceDroit(_points[_points.size()-2],_points.last(),p);
+                if(cote == ALIGNEE)
+                    _points.last() = p;
+                else if(cote == GAUCHE)
+                    _points.push_back(p);
+                else    //DROIT
+                {
+                    _points.removeLast();
+                    while(_points.size() > 1 && inHalfSpaceDroit(_points[_points.size()-2], _points.last(), p) != GAUCHE)   {
+                        _points.removeLast();
+                    }
+                    _points.push_back(p);
+                }
+            }
+            else    {
+                if(cote2 == GAUCHE)
+                    ps2.push_back(p);
+                //si alignée, le point ne sera jamais dans l'enveloppe convexe
+            }
+        }
+    }
+    else
+        _points.push_back(ps.last());
+
+    if(ps2.size() > 1)    {
+        std::reverse(ps2.begin(), ps2.end());  //les points on été inséré dans l'ordre lexicographique dans ps2. En les inversant, on pourra le parcourir dans l'autre sans.
+        _points.push_back(ps2.first());
+        //construction de la seconde moitié de l'enveloppe convexe dans sa partie haute
+        for(int i = 1;  i < ps2.size(); i++)
+        {
+            const Vector2D& p = ps2[i];
+            int cote = inHalfSpaceDroit(_points[_points.size()-2],_points.last(),p);
+            if(cote == ALIGNEE)
+                _points.last() = p;
+            else if(cote == GAUCHE)
+                _points.push_back(p);
+            else    //DROIT
+            {
+                _points.removeLast();
+                while(_points.size() > 1 && inHalfSpaceDroit(_points[_points.size()-2], _points.last(), p) != GAUCHE)
+                    _points.removeLast();
+                _points.push_back(p);
+            }
+        }
+        //on supprime le point de départ et le point d'arrivée qui sont déjà dans la moitié du bas.
+        _points.removeLast();
+
+        //_points << ps3;
+    }
+    initMinMaxCentre();
+    this->setLinked(true);
+}
+
+
+
+/*//première version avec plus de calcul
+JarvisConvex::JarvisConvex(const QVector<Vector2D>& points)
+{
+    if(points.size() < 3)    {
+        _points = points;
+        initMinMaxCentre();
+        this->setLinked(true);
+        return;
+    }
+    QVector<Vector2D> ps = points;
+    qSort(ps.begin(),ps.end(), cmpVec2Xless); //liste des points ordonnée de celui avec le plus petit x à celui avec le plus grand.
+
+    QVector<Vector2D> ps2;  //liste des points que l'on va utiliser pour fermer l'enveloppe convexe au retour du dernier au premier point
+    ps2.reserve(points.size());
 
     _points.push_back(ps.first());
     _points.push_back(ps[1]);
@@ -92,3 +185,4 @@ JarvisConvex::JarvisConvex(const QVector<Vector2D>& points)
     initMinMaxCentre();
     this->setLinked(true);
 }
+*/

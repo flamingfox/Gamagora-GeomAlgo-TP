@@ -22,6 +22,8 @@ int main(int argc, char *argv[])
     for(int i=0; i < nb; i++){
         poly1.addPoint(Vector2D((rand()%1000)/1000.0f,(rand()%1000)/1000.0f));
     }
+    poly1.translate(-0.5,-0.5);
+    poly1.scale(3);
 
     poly1.name = QString("Non Convex");
 
@@ -52,6 +54,22 @@ int main(int argc, char *argv[])
 
     glWin.addPoly(poly1);
     glWin.addPoly(poly2);
+
+    ///////////////////////////////////
+
+    Polygone poly3 = poly1;
+    poly3.translate(0,-2);
+    Polygone poly4 = JarvisConvex(poly3.getPoints());
+
+
+    std::cout << "nombre de points du polygone : " << poly3.getNbPoints() << std::endl;
+    std::cout << "nombre de points de l'enveloppe convexe de Jarvis : " << poly4.getNbPoints() << std::endl;
+    poly4.name = QString("Jarvis Convex");
+
+    glWin.addPoly(poly3);
+    glWin.addPoly(poly4);
+
+    ///////////////////////////////////
 
     Polygone carre;
     Polygone triangle;
@@ -191,12 +209,11 @@ int main(int argc, char *argv[])
     for(int i=0; i < nb; i++){
         poly1.addPoint(Vector2D((rand()%1000)/1000.0f,(rand()%1000)/1000.0f));
     }
+    poly1.translate(-0.5,-0.5);
+    poly1.scale(3);
 
-    poly1.translate(Vector2D(-0.5,-0.5));
-    poly1.scale(1.5);
     poly1.name = QString("Non Convex");
 
-    //Polygone poly2 = Convexe2D(poly1.getPoints());
     Polygone poly2 = JarvisConvex(poly1.getPoints());
 
     std::cout << "nombre de points du polygone : " << poly1.getNbPoints() << std::endl;

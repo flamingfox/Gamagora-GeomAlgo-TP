@@ -303,7 +303,7 @@ void myWindow::paintGL()
         if(poly.isLinked())
             _draw_text(poly.getMin().x,poly.getMin().y-0.5f,0.0f,QString(poly.name));
         else
-            _draw_text(poly.getMin().x,poly.getMin().y-1.f,0.0f,QString(poly.name));
+            _draw_text(poly.getMin().x,poly.getMin().y-0.75f,0.0f,QString(poly.name));
     }
 
     foreach(const UnionConvex& uC, _unionConvexList)
