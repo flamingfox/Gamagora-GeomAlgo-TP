@@ -27,8 +27,16 @@ int main(int argc, char *argv[])
 
     poly1.name = QString("Non Convex");
 
+
+    QTime timer;
+    timer.start();
+
     //Polygone poly2 = Convexe2D(poly1.getPoints());
     Polygone poly2 = Convexe2D(poly1.getPoints());
+
+    int time = timer.elapsed();
+    std::cout << time/1000 << "." << time%1000<< " secondes" << std::endl;
+
 
     std::cout << "nombre de points du polygone : " << poly1.getNbPoints() << std::endl;
     std::cout << "nombre de points de l'enveloppe convexe : " << poly2.getNbPoints() << std::endl;
@@ -170,6 +178,7 @@ int main(int argc, char *argv[])
     octogone.addPoint(Vector2D(0,-1.5));
     octogone.addPoint(Vector2D(1.0,-1.0));
     octogone.addPoint(Vector2D(1.5,0.0));
+    octogone.scale(0.5);
 
     //glWin.addPoly(octogone);
 
@@ -214,7 +223,15 @@ int main(int argc, char *argv[])
 
     poly1.name = QString("Non Convex");
 
+
+    QTime timer;
+    timer.start();
+
     Polygone poly2 = JarvisConvex(poly1.getPoints());
+
+    int time = timer.elapsed();
+    std::cout << std::endl << time/1000 << "." << time%1000<< " secondes" << std::endl;
+
 
     std::cout << "nombre de points du polygone : " << poly1.getNbPoints() << std::endl;
     std::cout << "nombre de points de l'enveloppe convexe : " << poly2.getNbPoints() << std::endl;
