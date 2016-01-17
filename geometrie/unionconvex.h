@@ -18,7 +18,7 @@ public:
     //friend Convexe2D;
     friend UnionConvex Morph(const UnionConvex& c1, const UnionConvex& c2, float t);
 
-
+    QString name;
 
 protected:
     std::vector<Convexe2D> convexs;

@@ -9,6 +9,18 @@ UnionConvex::UnionConvex()
 void UnionConvex::add(const Convexe2D& c)
 {
     convexs.push_back(c);
+
+    /*
+    QVector<Vector2D> points;
+    foreach(const Convexe2D& poly, convexs)
+    {
+        foreach(const Vector2D& p, poly.getPoints()){
+            points.append(p);
+        }
+    }
+    Convexe2D tmp(points);
+    convexs.clear();
+    convexs.push_back(tmp);*/
 }
 
 

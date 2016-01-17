@@ -1,7 +1,7 @@
 ﻿#include "myWindow.h"
 #include <QDebug>
 #include "stdio.h"
-
+#define PI 3.14159265359
 
 myWindow::myWindow(QWidget *parent)
     : myGLWidget(60, parent, "Polygone Convexe")
@@ -21,9 +21,6 @@ void myWindow::_draw_text(double x, double y, double z, QString txt)
 
 void myWindow::initializeGL()
 {
-
-
-
 
     _zoom = -2.0f;
     _fx = 0.0;
@@ -58,35 +55,44 @@ void myWindow::loadTexture(QString textureName){
     glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR );
 }
 
+void myWindow::mousePressEvent( QMouseEvent *mouseEvent ){
+    if(mouseEvent->button() == Qt::LeftButton){
+        meshUpToDate = false;
+    }
+}
+
 void myWindow::keyReleaseEvent(QKeyEvent *keyEvent){
     switch(keyEvent->key())
     {
             //zoom
-        case Qt::Key_Z:
+        case Qt::Key_Up:
             _zooming = false;
         break;
-        case Qt::Key_S:
+        case Qt::Key_Down:
             _dezooming = false;
         break;
             //rotation
         case Qt::Key_Left:
+            _movingAlongXLeft = false;
             _turningright = false;
         break;
         case Qt::Key_Right:
+            _movingAlongXRight = false;
             _turningleft = false;
         break;
             //angle
+            /*
         case Qt::Key_Up:
             //_plonger = false;
         break;
         case Qt::Key_Down:
             //_deplonger = false;
-        break;
+        break;*/
             //hauteur camera
-        case Qt::Key_E:
+        case Qt::Key_Z:
             _monter = false;
         break;
-        case Qt::Key_A:
+        case Qt::Key_S:
             _demonter = false;
         break;
 
@@ -114,10 +120,10 @@ void myWindow::keyPressEvent(QKeyEvent *keyEvent)
             _speed -= 0.05;
         break;
             //zoom
-        case Qt::Key_Z:
+        case Qt::Key_Up:
             _zooming = true;
         break;
-        case Qt::Key_S:
+        case Qt::Key_Down:
             _dezooming = true;
         break;
             //zoom
@@ -132,12 +138,15 @@ void myWindow::keyPressEvent(QKeyEvent *keyEvent)
 
             //rotation
         case Qt::Key_Left:
+            _movingAlongXLeft = true;
             _turningright = true;
         break;
         case Qt::Key_Right:
+            _movingAlongXRight = true;
             _turningleft = true;
         break;
             //angle
+            /*
         case Qt::Key_Up:
             _plonger = true;
             //_angle -= 5.0;
@@ -145,12 +154,12 @@ void myWindow::keyPressEvent(QKeyEvent *keyEvent)
         case Qt::Key_Down:
             _deplonger = true;
             //_angle += 5.0;
-        break;
+        break;*/
             //hauteur camera
-        case Qt::Key_E:
+        case Qt::Key_Z:
             _monter = true;
         break;
-        case Qt::Key_A:
+        case Qt::Key_S:
             _demonter = true;
         break;
     }
@@ -272,25 +281,30 @@ void myWindow::paintGL()
 
     glEnable(GL_LIGHTING);
     glDisable(GL_LIGHTING);
+
+
     glPointSize(5.0f);
+    glLineWidth(5.0f);
 
 
-    glPointSize(3.0f);
     foreach(const Polygone& poly, _polyList){
         if(poly.isLinked()) {
             glBegin(GL_LINE_LOOP);
             glColor3f(1,0,0);
         }
-        else    {
+        else{
             glBegin(GL_POINTS);
             glColor3f(0,1,0);
         }
-        for(const Vector2D& p: poly.getPoints())
-            glVertex2f(XY(p));
+        for(const Vector2D& p: poly.getPoints()){
+            glVertex2f(p.x,p.y);
+        }
         glEnd();
-        _draw_text(poly.getCentre().x,poly.getMin().y-0.5f,0.0f,QString(poly.name));
-    }
+        _draw_text(0.0f,-0.5f,0.0f,QString(poly.name));
 
+        //if(poly.isLinked()) //on affiche l'enveloppe convexe par dessus les points. problème, les draw_text se superpose
+            glTranslatef(2.0f, 0.0f, 0.0f);
+    }
 
     foreach(const UnionConvex& uC, _unionConvexList)
     {
@@ -298,11 +312,15 @@ void myWindow::paintGL()
         {
             glBegin(GL_LINE_LOOP);
             for(const Vector2D& p: poly.getPoints())
-                glVertex2f(XY(p));
+                glVertex2f(p.x,p.y);
             glEnd();
+            _draw_text(0.0f,-0.5f,0.0f,QString(poly.name));
         }
+
+        glTranslatef(2.0f, 0.0f, 0.0f);
     }
 
+    glTranslatef(1.0f, 0.0f, 0.0f);
     //morph
     int nbMorph = _unionConvexMorphList.size();
     if(nbMorph == 1)    {
@@ -331,6 +349,8 @@ void myWindow::paintGL()
             glEnd();
         }
     }
+
+    _draw_text(0.0f,-0.5f,0.0f,QString("Morphing"));
 }
 
 
