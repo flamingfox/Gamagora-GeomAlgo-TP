@@ -301,10 +301,15 @@ void Convexe2D::scale(float s)
 {
     for(Vector2D& p: this->_points)
         p *= s;
-    _centre *= s;
-    _min *= s;
-    _max *= s;
-    if(s < 0)
+    if(s >= 0)  {
+        _min *= s;
+        _max *= s;
+    }
+    else    {
         std::reverse(_points.begin(), _points.end());
+        _min = _max*s;
+        _max = _min*s;
+    }
+    _centre *= s;
 
 }

@@ -13,6 +13,7 @@ public:
     std::vector<Convexe2D> getConvexes() const {    return convexs; }
 
     void translate(const Vector2D& trans);
+    void translate(float x, float y);
     void scale(float s);
 
     //friend Convexe2D;

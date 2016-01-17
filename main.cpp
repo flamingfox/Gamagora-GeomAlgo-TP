@@ -56,7 +56,6 @@ int main(int argc, char *argv[])
     Polygone carre;
     Polygone triangle;
     Polygone cercle;
-    UnionConvex uc1, uc2, uc3, uc4, uc5;
 
     carre.addPoint(Vector2D(0,0));
     carre.addPoint(Vector2D(1,0));
@@ -86,12 +85,8 @@ int main(int argc, char *argv[])
     carrePtriangle.name = QString("Carre + Triangle");
     carrePcercle.name = QString("Carre + Cercle");
 
-    carreConv.translate(2,0);
-    triangleConv.translate(4,0);
-    cercleConv.translate(6,0);
-    carrePtriangle.translate(8,0);
-    carrePcercle.translate(10,0);
 
+    UnionConvex uc1, uc2, uc3, uc4, uc5;
     uc1.add(carreConv);
     uc2.add(cercleConv);
     uc3.add(triangleConv);
@@ -104,17 +99,25 @@ int main(int argc, char *argv[])
     uc4.name = carrePtriangle.name;
     uc5.name = carrePcercle.name;
 
+    glWin.addUnionConvexMorph(uc1);
+    glWin.addUnionConvexMorph(uc2);
+    glWin.addUnionConvexMorph(uc3);
+    glWin.addUnionConvexMorph(uc4);
+    glWin.addUnionConvexMorph(uc5);
+    glWin.translateMorph(Vector2D(13,0));
+
+    uc1.translate(2,0);
+    uc2.translate(4,0);
+    uc3.translate(6,0);
+    uc4.translate(8,0);
+    uc5.translate(10,0);
+
     glWin.addUnionConvex(uc1);
     glWin.addUnionConvex(uc2);
     glWin.addUnionConvex(uc3);
     glWin.addUnionConvex(uc4);
     glWin.addUnionConvex(uc5);
 
-    glWin.addUnionConvexMorph(uc1);
-    glWin.addUnionConvexMorph(uc2);
-    glWin.addUnionConvexMorph(uc3);
-    glWin.addUnionConvexMorph(uc4);
-    glWin.addUnionConvexMorph(uc5);
 
 
 

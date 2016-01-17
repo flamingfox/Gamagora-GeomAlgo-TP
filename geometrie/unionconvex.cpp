@@ -72,11 +72,23 @@ void UnionConvex::translate(const Vector2D& trans)
     _centre += trans;
 }
 
+void UnionConvex::translate(float x, float y)
+{
+    this->translate(Vector2D(x,y));
+}
+
 void UnionConvex::scale(float s)
 {
     for(Convexe2D& conv:  this->convexs)
         conv.scale(s);
-    _min *= s;
-    _max *= s;
+
     _centre *= s;
+    if(s >= 0){
+        _min *= s;
+        _max *= s;
+    }
+    else     {
+        _min = _max*s;
+        _max = _min*s;
+    }
 }

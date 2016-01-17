@@ -41,8 +41,14 @@ void Polygone::scale(float s)
     for(Vector2D& p: this->_points)
         p *= s;
     _centre *= s;
-    _min *= s;
-    _max *= s;
+    if(s >= 0)  {
+        _min *= s;
+        _max *= s;
+    }
+    else    {
+        _min = _max*s;
+        _max = _min*s;
+    }
 }
 
 

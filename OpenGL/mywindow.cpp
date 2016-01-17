@@ -301,9 +301,9 @@ void myWindow::paintGL()
         }
         glEnd();
         if(poly.isLinked())
-            _draw_text(poly.getCentre().x,poly.getMin().y-0.5f,0.0f,QString(poly.name));
+            _draw_text(poly.getMin().x,poly.getMin().y-0.5f,0.0f,QString(poly.name));
         else
-            _draw_text(poly.getCentre().x,poly.getMin().y-1.f,0.0f,QString(poly.name));
+            _draw_text(poly.getMin().x,poly.getMin().y-1.f,0.0f,QString(poly.name));
     }
 
     foreach(const UnionConvex& uC, _unionConvexList)
@@ -315,7 +315,7 @@ void myWindow::paintGL()
                 glVertex2f(p.x,p.y);
             glEnd();
         }
-        _draw_text(uC.getCentre().x, uC.getMin().y-0.5,0.0f,QString(uC.name));
+        _draw_text(uC.getMin().x, uC.getMin().y-0.5,0.0f,QString(uC.name));
     }
 
     //morph
@@ -328,7 +328,7 @@ void myWindow::paintGL()
                 glVertex2f(XY(p));
             glEnd();
         }
-        _draw_text(_unionConvexMorphList[0].getCentre().x, _unionConvexMorphList[0].getMin().y-0.5,0.0f,QString("Morphing"));
+        _draw_text(_unionConvexMorphList[0].getMin().x, _unionConvexMorphList[0].getMin().y-0.5,0.0f,QString("Morphing"));
     }
     else if(nbMorph > 1)    {
         static float temps = 0.f;
@@ -347,7 +347,7 @@ void myWindow::paintGL()
             glEnd();
         }
         //_draw_text(uCMorph.getCentre().x, uCMorph.getMin().y-0.5,0.0f,QString("Morphing"));
-        _draw_text(uCMorph.getCentre().x, uCMorph.getMin().y-0.5,0.0f,QString("Morphing"));
+        _draw_text(uCMorph.getMin().x, uCMorph.getMin().y-0.5,0.0f,QString("Morphing"));
     }
 
 }
@@ -364,4 +364,10 @@ void myWindow::addUnionConvex(const UnionConvex& convex){
 
 void myWindow::addUnionConvexMorph(const UnionConvex& convex){
     _unionConvexMorphList.push_back(convex);
+}
+
+void myWindow::translateMorph(const Vector2D& trans)
+{
+    for(UnionConvex& UC : _unionConvexMorphList)
+        UC.translate(trans);
 }

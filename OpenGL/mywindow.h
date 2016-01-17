@@ -25,6 +25,7 @@ public:
     void addPoly(const Polygone& poly);
     void addUnionConvex(const UnionConvex& convex);
     void addUnionConvexMorph(const UnionConvex& convex);
+    void translateMorph(const Vector2D& trans);
 
 private:
     float multiplicateurovertimezoom=1.0;
