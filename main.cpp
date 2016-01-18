@@ -55,19 +55,19 @@ int main(int argc, char *argv[])
 
     Polygone poly1;
 
-    for(int i=0; i < 1000000; i++){
+    for(int i=0; i < 10000000; i++){
         poly0.addPoint(Vector2D((rand()%1000)/1000.0f,(rand()%1000)/1000.0f));
     }
 
-    for(int i=0; i < 100; i++){
+    for(int i=0; i < 10; i++){
         poly1.addPoint(Vector2D((rand()%1000)/1000.0f,(rand()%1000)/1000.0f));
     }
 
-    poly1.name = QString("Non Convex");
+    poly1.name = QString("Non Convexe");
 
     ///////////////////////////////////////////
     //calcul du temps de génération moyenne.
-    int sampletest = 10; //nombre de creations de convexe pour la comparaison entre les 2 algos
+    int sampletest = 100; //nombre de creations de convexe pour la comparaison entre les 2 algos
 
     t.start();
     for(int i=0; i<sampletest; i++){
@@ -86,7 +86,7 @@ int main(int argc, char *argv[])
     Polygone poly2 = Convexe2D(poly1.getPoints());
     std::cout << "nombre de points du polygone : " << poly1.getNbPoints() << std::endl;
     std::cout << "nombre de points de l'enveloppe convexe : " << poly2.getNbPoints() << std::endl;
-    poly2.name = QString("Convex");
+    poly2.name = QString("Convexe Incrémental");
 
     glWin.addPoly(poly1);
     glWin.addPoly(poly2);
@@ -102,7 +102,7 @@ int main(int argc, char *argv[])
 
     std::cout << "nombre de points du polygone : " << poly3.getNbPoints() << std::endl;
     std::cout << "nombre de points de l'enveloppe convexe de Graham : " << poly4.getNbPoints() << std::endl;
-    poly4.name = QString("Graham Convex");
+    poly4.name = QString("Graham Convexe");
 
     glWin.addPoly(poly3);
     glWin.addPoly(poly4);
