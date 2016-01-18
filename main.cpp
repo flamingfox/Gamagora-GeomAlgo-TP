@@ -15,6 +15,7 @@ int main(int argc, char *argv[])
     myWindow glWin;
 
 #define TEST 1
+#define TEST2 1
 
 #if TEST == 0
     //enveloppe convexe normale
@@ -52,29 +53,35 @@ int main(int argc, char *argv[])
     QTime t;
     Polygone poly0;
     Polygone poly00;
-
     Polygone poly1;
-
-    for(int i=0; i < 10000000; i++){
-        poly0.addPoint(Vector2D((rand()%1000)/1000.0f,(rand()%1000)/1000.0f));
-    }
-
-    for(int i=0; i < 10; i++){
-        poly1.addPoint(Vector2D((rand()%1000)/1000.0f,(rand()%1000)/1000.0f));
-    }
-
-    poly1.name = QString("Non Convexe");
 
     ///////////////////////////////////////////
     //calcul du temps de génération moyenne.
-    int sampletest = 100; //nombre de creations de convexe pour la comparaison entre les 2 algos
 
+    int sampletest = 10; //nombre de creations de convexes pour la comparaison entre les 2 algos
+
+    #if TEST2 == 0 //points aléatoires le long d'un cercle
+        double nbpoints = 10000; //nombres de points le long du cercle
+        double angle = 360/nbpoints;
+        for(double i = 0; i< 360; i+=angle){
+            poly0.addPoint(Vector2D((std::cos((i*2*PI)/360)/1.5f)+0.5f,(std::sin((i*2*PI)/360)/1.5f)+0.5f));
+        }
+    #elif TEST2 == 1 //points aléatoires dans un carré
+        double nbpoints = 1000000; //nombre de points dans le carré
+        for(int i=0; i < nbpoints; i++){
+            poly0.addPoint(Vector2D((rand()%1000)/1000.0f,(rand()%1000)/1000.0f));
+        }
+    #endif
+
+
+    qDebug()<<"calcul incremental";
     t.start();
     for(int i=0; i<sampletest; i++){
         poly00 = Convexe2D(poly0.getPoints());
     }
     qDebug()<< "Convexe : " << t.elapsed()/(float)sampletest << " ms";
 
+    qDebug()<<"calcul graham";
     t.start();
     for(int i=0; i<sampletest; i++){
         poly00 = GrahamConvex(poly0.getPoints());
@@ -82,6 +89,11 @@ int main(int argc, char *argv[])
     qDebug()<< "Graham : " << t.elapsed()/(float)sampletest << " ms";
 
     //////////////////////////////////////////
+
+    for(int i=0; i < 100; i++){
+        poly1.addPoint(Vector2D((rand()%1000)/1000.0f,(rand()%1000)/1000.0f));
+    }
+    poly1.name = QString("Non Convexe");
 
     Polygone poly2 = Convexe2D(poly1.getPoints());
     std::cout << "nombre de points du polygone : " << poly1.getNbPoints() << std::endl;
