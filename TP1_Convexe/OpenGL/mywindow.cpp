@@ -1,7 +1,7 @@
-#include "myWindow.h"
+﻿#include "myWindow.h"
 #include <QDebug>
 #include "stdio.h"
-
+#define PI 3.14159265359
 
 myWindow::myWindow(QWidget *parent)
     : myGLWidget(60, parent, "Polygone Convexe")
@@ -10,36 +10,23 @@ myWindow::myWindow(QWidget *parent)
 
 void myWindow::_draw_text(double x, double y, double z, QString txt)
 {
-    glDisable(GL_LIGHTING);
     glDisable(GL_DEPTH_TEST);
     glColor3f(1.0,1.0,1.0);
-    renderText(x, y, z, txt, QFont("Arial", 12, QFont::Bold, false) );
+    int coeefzoom = std::abs(_zoom)/3;
+    if(coeefzoom <= 1)coeefzoom = 1;
+    renderText(x, y, z, txt, QFont("Arial", 12/coeefzoom, QFont::Bold, false) );
     glEnable(GL_DEPTH_TEST);
-    glEnable(GL_LIGHTING);
 }
 
 
 void myWindow::initializeGL()
 {
 
-    /*
-    _poly.addPoint(Vector2D(0,0));
-    _poly.addPoint(Vector2D(1,0));
-    _poly.addPoint(Vector2D(1,1));
-    _poly.addPoint(Vector2D(0,1));
-    _poly.addPoint(Vector2D(0.5,0.5));
-    _poly.addPoint(Vector2D(0.2,0.2));
-
-
-    _poly = Convexe2D(_poly.getPoints());
-
-    */
-
-
+    _zoom = -2.0f;
     _fx = 0.0;
     _speed =0.1;
-    _angle = -50.0;
-    _hauteurcam = -2.0;
+    _angle = 0.0;
+    _hauteurcam = 0.0;
     glEnable(GL_LIGHTING);
     glEnable(GL_LIGHT0);
     glEnable(GL_LIGHT1);
@@ -68,36 +55,52 @@ void myWindow::loadTexture(QString textureName){
     glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR );
 }
 
+void myWindow::mousePressEvent( QMouseEvent *mouseEvent ){
+    if(mouseEvent->button() == Qt::LeftButton){
+        meshUpToDate = false;
+    }
+}
+
 void myWindow::keyReleaseEvent(QKeyEvent *keyEvent){
     switch(keyEvent->key())
     {
             //zoom
-        case Qt::Key_Z:
+        case Qt::Key_Up:
             _zooming = false;
         break;
-        case Qt::Key_S:
+        case Qt::Key_Down:
             _dezooming = false;
         break;
             //rotation
         case Qt::Key_Left:
+            _movingAlongXLeft = false;
             _turningright = false;
         break;
         case Qt::Key_Right:
+            _movingAlongXRight = false;
             _turningleft = false;
         break;
             //angle
+            /*
         case Qt::Key_Up:
-            _plonger = false;
+            //_plonger = false;
         break;
         case Qt::Key_Down:
-            _deplonger = false;
-        break;
+            //_deplonger = false;
+        break;*/
             //hauteur camera
-        case Qt::Key_E:
+        case Qt::Key_Z:
             _monter = false;
         break;
-        case Qt::Key_A:
+        case Qt::Key_S:
             _demonter = false;
+        break;
+
+        case Qt::Key_Q:
+            _movingAlongXLeft = false;
+        break;
+        case Qt::Key_D:
+            _movingAlongXRight = false;
         break;
     }
 }
@@ -117,21 +120,33 @@ void myWindow::keyPressEvent(QKeyEvent *keyEvent)
             _speed -= 0.05;
         break;
             //zoom
-        case Qt::Key_Z:
+        case Qt::Key_Up:
             _zooming = true;
         break;
-        case Qt::Key_S:
+        case Qt::Key_Down:
             _dezooming = true;
         break;
-            //zoom       
+            //zoom
+
+        case Qt::Key_Q:
+            _movingAlongXLeft = true;
+        break;
+        case Qt::Key_D:
+            _movingAlongXRight = true;
+        break;
+
+
             //rotation
         case Qt::Key_Left:
+            _movingAlongXLeft = true;
             _turningright = true;
         break;
         case Qt::Key_Right:
+            _movingAlongXRight = true;
             _turningleft = true;
         break;
             //angle
+            /*
         case Qt::Key_Up:
             _plonger = true;
             //_angle -= 5.0;
@@ -139,12 +154,12 @@ void myWindow::keyPressEvent(QKeyEvent *keyEvent)
         case Qt::Key_Down:
             _deplonger = true;
             //_angle += 5.0;
-        break;
+        break;*/
             //hauteur camera
-        case Qt::Key_E:
+        case Qt::Key_Z:
             _monter = true;
         break;
-        case Qt::Key_A:
+        case Qt::Key_S:
             _demonter = true;
         break;
     }
@@ -208,6 +223,14 @@ void myWindow::paintGL()
     }else{
         multiplicateurovertimezoom = 1.0;
     }
+    //déplacmeent axe X
+    if(_movingAlongXRight){
+        _positionX -= _zoomspeed * deltaTime;
+    }
+    if(_movingAlongXLeft){
+        _positionX += _zoomspeed * deltaTime;
+    }
+
     //rotation
     if(_turningleft){
         multiplicateurovertimerotation += 0.15;
@@ -218,6 +241,8 @@ void myWindow::paintGL()
     }else{
         multiplicateurovertimerotation = 1.0;
     }
+
+    /*
     //angle
     if(_plonger){
         multiplicateurovertimeplonger += 0.15;
@@ -227,7 +252,9 @@ void myWindow::paintGL()
         _angle -= _rotationspeed* multiplicateurovertimeplonger *deltaTime;
     }else{
         multiplicateurovertimeplonger = 1.0;
-    }
+    }*/
+
+
     //hauteur camera
     if(_monter){
         multiplicateurovertimemonter += 0.15;
@@ -240,8 +267,9 @@ void myWindow::paintGL()
     }
 
     glTranslatef(0.f, _hauteurcam, _zoom);
+    glTranslatef(_positionX, 0.0f, 0.0f);
     glRotated(_angle,1,0,0);
-    glRotated(_fx,0,0,1);
+    //glRotated(_fx,0,0,1);
 
     //***************************************//
     //************* Création Mesh ***********//
@@ -253,13 +281,93 @@ void myWindow::paintGL()
 
     glEnable(GL_LIGHTING);
     glDisable(GL_LIGHTING);
+
+
     glPointSize(5.0f);
-    glBegin(GL_POINTS);
-    for(int i=0; i<_poly.getPoints().size();i++){
-        glVertex2f(_poly.getPoints().at(i).x,_poly.getPoints().at(i).y);
+    glLineWidth(5.0f);
+
+
+    foreach(const Polygone& poly, _polyList){
+        if(poly.isLinked()) {
+            glBegin(GL_LINE_LOOP);
+            glColor3f(1,0,0);
+        }
+        else{
+            glBegin(GL_POINTS);
+            glColor3f(0,1,0);
+        }
+        for(const Vector2D& p: poly.getPoints()){
+            glVertex2f(p.x,p.y);
+        }
+        glEnd();
+        if(poly.isLinked())
+            _draw_text(poly.getMin().x,poly.getMin().y-0.5f,0.0f,QString(poly.name));
+        else
+            _draw_text(poly.getMin().x,poly.getMin().y-0.75f,0.0f,QString(poly.name));
     }
-    glEnd();
+
+    foreach(const UnionConvex& uC, _unionConvexList)
+    {
+        foreach(const Convexe2D& poly, uC.getConvexes())
+        {
+            glBegin(GL_LINE_LOOP);
+            for(const Vector2D& p: poly.getPoints())
+                glVertex2f(p.x,p.y);
+            glEnd();
+        }
+        _draw_text(uC.getMin().x, uC.getMin().y-0.5,0.0f,QString(uC.name));
+    }
+
+    //morph
+    int nbMorph = _unionConvexMorphList.size();
+    if(nbMorph == 1)    {
+        foreach(const Convexe2D& poly, _unionConvexMorphList[0].getConvexes())
+        {
+            glBegin(GL_LINE_LOOP);
+            for(const Vector2D& p: poly.getPoints())
+                glVertex2f(XY(p));
+            glEnd();
+        }
+        _draw_text(_unionConvexMorphList[0].getMin().x, _unionConvexMorphList[0].getMin().y-0.5,0.0f,QString("Morphing"));
+    }
+    else if(nbMorph > 1)    {
+        static float temps = 0.f;
+        temps += deltaTime;
+        float t = fmodf(temps, nbMorph);
+        int i = floor(t);
+        t -= i;
+
+        UnionConvex uCMorph = Morph(_unionConvexMorphList[i],_unionConvexMorphList[(i+1)%nbMorph],t);
+
+        foreach(const Convexe2D& poly, uCMorph.getConvexes())
+        {
+            glBegin(GL_LINE_LOOP);
+            for(const Vector2D& p: poly.getPoints())
+                glVertex2f(XY(p));
+            glEnd();
+        }
+        //_draw_text(uCMorph.getCentre().x, uCMorph.getMin().y-0.5,0.0f,QString("Morphing"));
+        _draw_text(uCMorph.getMin().x, uCMorph.getMin().y-0.5,0.0f,QString("Morphing"));
+    }
+
+}
 
 
-    //_draw_text(_par.hauteurEtageLePlusHaut.x,_par.hauteurEtageLePlusHaut.y,_par.hauteurEtageLePlusHaut.z,QString(QString::number(_par.etageLePlusHaut)));
+void myWindow::addPoly(const Polygone& poly){
+    _polyList.push_back(poly);
+}
+
+void myWindow::addUnionConvex(const UnionConvex& convex){
+    _unionConvexList.push_back(convex);
+}
+
+
+void myWindow::addUnionConvexMorph(const UnionConvex& convex){
+    _unionConvexMorphList.push_back(convex);
+}
+
+void myWindow::translateMorph(const Vector2D& trans)
+{
+    for(UnionConvex& UC : _unionConvexMorphList)
+        UC.translate(trans);
 }

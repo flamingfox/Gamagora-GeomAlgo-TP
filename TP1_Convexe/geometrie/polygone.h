@@ -3,23 +3,43 @@
 
 #include <QVector>
 #include "vector2d.h"
-
+#include <QString>
 
 class Polygone
 {
 public:
     Polygone();
-    Polygone(QVector<Vector2D> points): _points(points) {}
-    inline bool isLinked(){return _linked;}
+    Polygone(QVector<Vector2D> points);
+    inline bool isLinked() const {return _linked;}
     inline void setLinked(bool linked){_linked = linked;}
-    inline QVector<Vector2D> getPoints(){return _points;}
+    QVector<Vector2D> getPoints() const {return _points;}
+
+    
     inline void addPoint(const Vector2D& point){_points.push_back(point);}
+
+    void translate(const Vector2D& trans);
+    void translate(float x, float y);
+    virtual void scale(float s);
+
+    QString name;
+
+    Vector2D getCentre() const {return _centre;}
+    Vector2D getMin() const {return _min;}
+    Vector2D getMax() const {return _max;}
+
+    int getNbPoints() const {return _points.size();}
+    void reservePoints(int nb)  {_points.reserve(nb);}
 
 protected:
     QVector<Vector2D> _points;
+    Vector2D _centre;    //peut aussi servir à afficher le nom au bon endroit.
+    Vector2D _min;
+    Vector2D _max;
+    bool _linked = false;
+
+    void initMinMaxCentre();
 
 private:
-    bool _linked;
 };
 
 #endif // POLYGONE_H
