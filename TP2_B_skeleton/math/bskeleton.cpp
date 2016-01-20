@@ -36,12 +36,10 @@ float distanceHauteur(Vector3D a, Vector3D b, TerrainTab &terrain){
     float hauteur;
     for(float i =0; i< nbPas; i+=1.0){
         hauteur = terrain.getHauteur((a+pas).x,(a+pas).y);
-        /*if(hauteur>50)
-            cout += 1000;
-        cout += 100;*/
+        //hauteur = sqrtf(hauteur);
         cout += hauteur;
     }
-    return cout;
+    return cout/100000.0f;
 }
 
 bool bSkeleton::relierVilleHauteur(const float &gamma, TerrainTab &terrain){
