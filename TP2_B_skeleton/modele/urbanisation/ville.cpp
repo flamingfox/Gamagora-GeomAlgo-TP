@@ -6,6 +6,9 @@ Ville::Ville(){}
 Ville::Ville(const Vector3D &position):
     _position(position){}
 
+Ville::Ville(const float &x, const float &y, const float &z):
+    _position(Vector3D(x, y, z)){}
+
 /*
 bool Ville::isConnected(const Ville &voisin) const
 {

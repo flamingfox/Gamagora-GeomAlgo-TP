@@ -13,6 +13,7 @@ class Ville
 public:
     Ville();
     Ville(const Vector3D& position);
+    Ville(const float& x, const float& y, const float& z);
 
     inline Vector3D getPosition() const {return _position;}
     //inline std::vector<Route> getRoutes() const {return _routes;}

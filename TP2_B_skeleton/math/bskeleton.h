@@ -13,9 +13,9 @@ public:
 
     inline void addVille(Ville& ville) {villes.push_back(ville);}
     inline std::vector<Route> getRoutes() const {return routes;}
-    inline std::vector<Route> getVilles() const {return villes;}
+    inline std::vector<Ville> getVilles() const {return villes;}
 
-    bool calcul(const float& gamma);
+    bool relierVille(const float& gamma);
 
 };
 
