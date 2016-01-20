@@ -21,18 +21,17 @@ int main(int argc, char *argv[])
     //QImage img = QImage("map2.jpg");
 
     img = img.convertToFormat(QImage::Format_RGB888);
-    int taille = 1000, tailleTerrain = 5000;
+    int taille = 1000, tailleTerrain = 1000;
     img = img.scaled(taille, taille);
     TerrainTab terrain = TerrainTab(img, taille,taille, tailleTerrain,tailleTerrain, 500);
 
     bSkeleton bS;
 
-    int nb = 50;
+    int nb = 200;
     bS.reserveVilles(nb);
     for(int i=0; i < nb; i++){
         Vector2D pos((rand()%(tailleTerrain+1)),(rand()%(tailleTerrain+1)));
         Ville ville(Vector3D(XY(pos), terrain.getHauteur(XY(pos))));
-        //Ville ville(Vector3D(XY(pos), 0 ));
 
         bS.addVille(ville);
     }
