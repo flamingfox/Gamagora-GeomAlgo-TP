@@ -126,7 +126,7 @@ public:
      * @param[in] pointXYZ Un point comprenant uniquement les axes \e x, \e y, \e z.
      * @return la normal du terrain au point \e pointXYZ.
      */
-    Vector3D getNormal(const Vector3D& pointXYZ, float eps = 0.02) const;
+    Vector3D getNormal(const Vector3D& pointXYZ, float eps = RAYON_NORMAL) const;
 
     /**
      * @brief Test si le point \e pointXYZ est sous le terrain.
@@ -137,6 +137,9 @@ public:
 
     float distance(const Vector3D& p) const;
     float potentiel(const Vector3D& p) const;
+
+#define DISTANCE_PROGRESSION_CHEMIN 2
+    float distance(const Vector3D& p1, const Vector3D& p2, float eps = DISTANCE_PROGRESSION_CHEMIN) const;
 
 protected:
 

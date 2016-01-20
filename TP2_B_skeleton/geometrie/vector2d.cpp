@@ -36,6 +36,13 @@ float Vector2D::getNorm2() const{
     return Norm2(*this);
 }
 
+float Vector2D::length() const{
+    return Norm(*this);
+}
+float Vector2D::length2() const{
+    return Norm2(*this);
+}
+
 /****************************************************************************************/
 
 void Vector2D::normalise(){

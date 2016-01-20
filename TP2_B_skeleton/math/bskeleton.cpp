@@ -2,29 +2,67 @@
 
 bSkeleton::bSkeleton(){}
 
-bool bSkeleton::relierVille(const float &gamma)
+void bSkeleton::reserveVilles(unsigned int size)
+{
+    villes.reserve(size);
+}
+
+bool bSkeleton::relierVille(float gamma)
 {
     routes.clear();
+    if(gamma > 0)
+        routes.reserve(villes.size()/gamma);
 
-    Vector3D a, b, p;
-    bool creationOK;
-    for(int i=0; i<villes.size(); i++){
-        a = villes[i].getPosition();
+    //#pragma omp parallel for schedule(dynamic,1)
+    for(unsigned int i=0; i<villes.size(); i++){
+        const Vector3D a = villes[i].getPosition();
 
-        for(int j=i+1; j<villes.size(); j++){
-            b = villes[j].getPosition();
-            creationOK = true;
+        for(unsigned int j=i+1; j<villes.size(); j++){
+            const Vector3D b = villes[j].getPosition();
+            float distAB = powf(distance(a, b), gamma);
 
-            for(int k=0; k<villes.size(); k++){
+            unsigned int k = 0;
+            for(    ; k<villes.size(); k++){
                 if(k!=i && k!=j){
-                    p = villes[k].getPosition();
-                    creationOK =  (powf(distance(a, b), gamma) > (powf(distance(a, p), gamma) + powf(distance(b, p), gamma)))? false : creationOK;
-
+                    const Vector3D p = villes[k].getPosition();
+                    if(distAB > (powf(distance(a, p), gamma) + powf(distance(b, p), gamma)))
+                        break;
                 }
             }
-            if(creationOK)
+            if(k == villes.size())
                 routes.push_back(Route(villes[i], villes[j]));
         }
     }
+    return true;
 }
 
+bool bSkeleton::relierVille(const Terrain& terrain, float gamma)
+{
+    routes.clear();
+    if(gamma > 0)
+        routes.reserve(villes.size()/gamma);
+
+
+    //#pragma omp parallel for schedule(dynamic,1)
+    for(unsigned int i=0; i<villes.size(); i++){
+        const Vector3D a = villes[i].getPosition();
+
+        for(unsigned int j=i+1; j<villes.size(); j++){
+            const Vector3D b = villes[j].getPosition();
+            float distAB = powf(terrain.distance(a, b), gamma);
+
+            unsigned int k = 0;
+            for(    ; k<villes.size(); k++){
+                if(k!=i && k!=j){
+                    const Vector3D p = villes[k].getPosition();
+                    if(distAB > (powf(terrain.distance(a, p), gamma) + powf(terrain.distance(b, p), gamma)))
+                        break;
+
+                }
+            }
+            if(k == villes.size())
+                routes.push_back(Route(villes[i], villes[j]));
+        }
+    }
+    return true;
+}

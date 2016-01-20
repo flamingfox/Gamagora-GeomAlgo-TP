@@ -3,7 +3,7 @@
 #include <cmath>
 #include <iostream>
 
-#define XYZ(p)  p.x, p.y, p.z
+#define XYZ(p)  (p).x, (p).y, (p).z
 
 class Vector3D
 {
@@ -160,7 +160,7 @@ inline Vector3D operator/ (const Vector3D& u, const Vector3D& v){
         if(v.x==0.0 || v.y==0.0 || v.z==0.0)
             std::cerr << "erreur: division d'un Vector3D avec 0" << std::endl;
     #endif
-    return Vector3D(u.x/v.x, u.y/v.y);
+    return Vector3D(u.x/v.x, u.y/v.y, u.z/v.z);
 }
 inline Vector3D operator/ (const Vector3D& u, float a){
     #ifndef QT_NO_DEBUG

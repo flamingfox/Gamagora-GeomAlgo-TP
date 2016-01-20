@@ -35,10 +35,10 @@ float Terrain::getHauteur(const Vector3D& pointXYZ) const
 /**********************************************************/
 
 
-/*Vector3D Terrain::getNormal(const vec2& pointXY, float eps) const
+Vector3D Terrain::getNormal(const Vector2D& pointXY, float eps) const
 {
     return getNormal(pointXY.x, pointXY.y, eps);
-}*/
+}
 
 
 Vector3D Terrain::getNormal(const Vector3D& pointXYZ, float eps) const
@@ -59,6 +59,34 @@ bool Terrain::inOut(const Vector3D& pointXYZ) const
 float Terrain::potentiel(const Vector3D& p) const
 {
     return inOut(p) ?   1.f :   0.f;
+}
+
+float Terrain::distance(const Vector3D &p1, const Vector3D &p2, float eps) const
+{
+    Vector2D pDeb(XY(p1));
+    Vector2D pFin(XY(p2));
+    Vector2D v(pFin-pDeb);  //vecteur direction entre le point de départ et le point d'arrivée
+    float distXY2 = v.length2();
+    float eps2 = eps*eps;
+
+    float h = p1.z;
+    if(distXY2 <= eps2)
+        return sqrtf(distXY2 + (h-p2.z)*(h-p2.z));
+    else{
+        float dist = 0; //distance à retourner
+        float distXY = sqrtf(distXY2);
+        v.normalise();
+
+        float d;
+        for(d = eps;    d < distXY-eps; d += eps)        {
+            Vector2D p = pDeb + v*d;
+            float h2 = getHauteur(p);
+            dist += sqrtf(eps2 + (h-h2)*(h-h2));
+
+            h = h2;
+        }
+        return dist + hypotf(distXY-d, h-p2.z);
+    }
 }
 
 /*

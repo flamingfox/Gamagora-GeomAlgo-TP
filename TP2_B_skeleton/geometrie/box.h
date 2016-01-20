@@ -80,6 +80,8 @@ public:
 
     Vector3D getNormal(const Vector3D& p) const;
 
+    Vector3D getMin() const {   return min; }
+    Vector3D getMax() const {   return max; }
 
 protected:
 

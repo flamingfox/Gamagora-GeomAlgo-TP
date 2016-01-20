@@ -4,8 +4,8 @@
 #include <iostream>
 
 
-#define XY(p)   p.x, p.y
-#define XY0(p)  p.x, p.y, 0
+#define XY(p)   (p).x, (p).y
+#define XY0(p)  (p).x, (p).y, 0
 
 //! \class Vector2D Vector2D.h
 //! \brief Cette classe définit des vecteurs et des sommets dans l'espace.
@@ -35,6 +35,8 @@ public:
 
     float getNorm() const;
     float getNorm2() const;
+    float length() const;
+    float length2() const;
 
     void normalise();
     Vector2D normalised() const;

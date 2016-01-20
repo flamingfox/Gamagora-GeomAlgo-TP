@@ -3,6 +3,7 @@
 
 #include "./modele/urbanisation/route.h"
 #include "./modele/urbanisation/ville.h"
+#include "./modele/terrain/terrain.h"
 
 class bSkeleton
 {
@@ -15,7 +16,10 @@ public:
     inline std::vector<Route> getRoutes() const {return routes;}
     inline std::vector<Ville> getVilles() const {return villes;}
 
-    bool relierVille(const float& gamma);
+    bool relierVille(float gamma);
+    bool relierVille(const Terrain& terrain, float gamma);
+
+    void reserveVilles(unsigned int size);
 
 };
 

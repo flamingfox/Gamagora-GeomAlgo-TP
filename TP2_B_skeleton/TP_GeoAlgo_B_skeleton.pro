@@ -7,8 +7,14 @@ QT += gui
 QT += opengl
 LIBS += -lopengl32 -lglu32
 
+QMAKE_CXXFLAGS += -fopenmp
+LIBS += -fopenmp
+
+
+
 SOURCES += main.cpp \
     geometrie/box.cpp \
+    geometrie/vector2d.cpp \
     geometrie/vector3d.cpp \
     modele/terrain/terrain.cpp \
     modele/terrain/terraintab.cpp \
@@ -19,6 +25,7 @@ SOURCES += main.cpp \
 
 HEADERS += \
     geometrie/box.h \
+    geometrie/vector2d.h \
     geometrie/vector3d.h \
     modele/terrain/terrain.h \
     modele/terrain/terraintab.h \
