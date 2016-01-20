@@ -3,6 +3,7 @@
 
 #include "geometrie/box.h"
 #include "geometrie/vector3d.h"
+#include "geometrie/vector2d.h"
 
 /**
   * @def HAUTEUR_HORS_MAP Code d'information pour une sortie de MAP. (cf. intersect())
@@ -45,10 +46,6 @@ public:
      */
     float largeur;
 
-    /**
-     * @brief Conteneur de tableau de couleur. (cf. ColorGradient)
-     */
-    //ColorGradient heatMapGradient;    // Used to create a nice array of different colors.
 
 
     /**
@@ -74,7 +71,7 @@ public:
      * @param[in] pointXY Un point comprenant uniquement les axes \e x, \e y.
      * @return la hauteur du terrain au point \e pointXY.
      */
-    //float getHauteur(const vec2& pointXY) const;
+    float getHauteur(const Vector2D& pointXY) const;
     /**
      * @brief Surchage de la methode getHauteur(const vec2& pointXY).
      * @param[in] pointXYZ Un point comprenant uniquement les axes \e x, \e y, \e z.
@@ -108,6 +105,8 @@ public:
     inline float getMinElevation() const {return hauteurMin;}
     inline float getMaxElevation() const {return hauteurMax;}
 
+#define RAYON_NORMAL 0.02
+
     /**
      * @brief Détermine la normal du terrain à la position \e x, \e y. \n
      * Regarde si les positions sont sur ou en dehors du terrain.
@@ -115,13 +114,13 @@ public:
      * @param[in] y position en \e y de la normal à déterminer.
      * @return la hauteur du terrain à la position \e x, \e y. Si la position est hors map, la valeur sera un vecteur nul.
      */
-    virtual Vector3D getNormal(float x, float y, float eps = 0.02) const = 0;
+    virtual Vector3D getNormal(float x, float y, float eps = RAYON_NORMAL) const = 0;
     /**
      * @brief Surchage de la methode getNormal(float x, float y).
      * @param[in] pointXY Un point comprenant uniquement les axes \e x, \e y.
      * @return la normal du terrain au point \e pointXY.
      */
-    //Vector3D getNormal(const vec2& pointXY, float eps = RAYON_NORMAL) const;
+    Vector3D getNormal(const Vector2D& pointXY, float eps = RAYON_NORMAL) const;
     /**
      * @brief Surchage de la methode getHauteur(const vec2& pointXY).
      * @param[in] pointXYZ Un point comprenant uniquement les axes \e x, \e y, \e z.

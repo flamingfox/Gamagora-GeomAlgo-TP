@@ -40,7 +40,6 @@ public:
 
     ~TerrainTab();
 
-protected:
 
     /**
      * @brief Détermine la hauteur du terrain à la position \e x, \e y. \n

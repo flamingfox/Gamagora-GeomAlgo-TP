@@ -12,12 +12,14 @@ SOURCES += main.cpp \
     geometrie/vector3d.cpp \
     modele/terrain/terrain.cpp \
     modele/terrain/terraintab.cpp \
-    math/interpolation.cpp
+    math/interpolation.cpp \
+    ville.cpp
 
 HEADERS += \
     geometrie/box.h \
     geometrie/vector3d.h \
     modele/terrain/terrain.h \
     modele/terrain/terraintab.h \
-    math/interpolation.h
+    math/interpolation.h \
+    ville.h
 

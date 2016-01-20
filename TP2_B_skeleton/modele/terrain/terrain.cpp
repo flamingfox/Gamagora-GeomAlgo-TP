@@ -21,10 +21,10 @@ Terrain::Terrain(float longueur, float largeur, float amplitude):
 /**********************************************************/
 
 
-/*float Terrain::getHauteur(const vec2& pointXY) const
+float Terrain::getHauteur(const Vector2D& pointXY) const
 {
     return getHauteur(pointXY.x, pointXY.y);
-}*/
+}
 
 float Terrain::getHauteur(const Vector3D& pointXYZ) const
 {
