@@ -2,9 +2,11 @@
 #include <QImage>
 #include <QPainter>
 #include <iostream>
-#include "ville.h"
+#include "modele/urbanisation/ville.h"
+#include "geometrie/vector2d.h"
 
 #include "modele/terrain/terraintab.h"
+#include "math/bskeleton.h"
 
 int main(int argc, char *argv[])
 {
@@ -14,38 +16,38 @@ int main(int argc, char *argv[])
 
     QPainter paint(&res);
 
-    std::vector<Ville> villes;
-    int nb = 1000;
-    villes.reserve(nb);
+    bSkeleton bS;
+
+    int nb = 100;
     for(int i=0; i < nb; i++){
         Vector2D pos((rand()%1001),(rand()%1001));
-        Ville ville(Vector3D(XY(pos), terrain.getHauteur(XY(pos)))); //t.getHauteur(pos)
-        /*for(int j = 0;  j < villes.size();  j++)   {
-            Ville& ville2 = villes[j];
-            float dist2 = distance2(ville.pos, ville2.pos);
-            if(dist2 < 900){
-                if(rand()%900 > dist2){
-                    ville.idVilles.push_back(j);
-                    ville2.idVilles.push_back(i);
-                }
-            }
-        }*/
+        Ville ville(Vector3D(XY(pos), terrain.getHauteur(XY(pos))));
 
-        villes.push_back(ville);
+        bS.addVille(ville);
     }
 
-    for(int i = 0;  i < villes.size();  i++)
+    bS.relierVille(2);
+
+
+    QPen pen(Qt::red);
+    pen.setWidthF(1);
+    paint.setPen(pen);
+    //paint.setBrush(QColor(255, 0, 0));
+
+    for(const Route& r : bS.getRoutes())
     {
-        const Ville& ville = villes[i];
-        paint.setBrush(QColor(0, 255, 0));
-        paint.drawPoint(XY(ville.pos));
-        for(int j : ville.idVilles) {
-            if(j > i)
-            {
-                paint.setBrush(QColor(255, 0, 0));
-                paint.drawLine(XY(ville.pos), XY(villes[j].pos));
-            }
-        }
+        const Ville& v1 = r._ville1;
+        const Ville& v2 = r._ville2;
+        paint.drawLine(XY(v1.getPosition()), XY(v2.getPosition()));
+    }
+
+    QPen pen2(Qt::green);
+    pen2.setWidthF(2.5);
+    paint.setPen(pen2);
+    //paint.setBrush(QColor(0, 255, 0));
+    for(const Ville& v: bS.getVilles())
+    {
+        paint.drawPoint(XY(v.getPosition()));
     }
     paint.end();
     res.save("resultat.png");

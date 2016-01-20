@@ -23,7 +23,6 @@ HEADERS += \
     modele/terrain/terrain.h \
     modele/terrain/terraintab.h \
     math/interpolation.h \
-    ville.h
     math/bskeleton.h \
     modele/urbanisation/ville.h \
     modele/urbanisation/route.h

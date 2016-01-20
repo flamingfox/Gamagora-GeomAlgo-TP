@@ -6,11 +6,12 @@
 class Ville;
 
 class Route
-{
-    Ville _ville1, _ville2;
+{    
 public:
     Route();
     Route(Ville& ville1, Ville& ville2);
+
+    Ville _ville1, _ville2;
 };
 
 #endif // ROUTE_H
