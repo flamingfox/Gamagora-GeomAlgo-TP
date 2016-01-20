@@ -3,6 +3,7 @@
 
 #include "./modele/urbanisation/route.h"
 #include "./modele/urbanisation/ville.h"
+#include "modele/terrain/terraintab.h"
 
 class bSkeleton
 {
@@ -16,6 +17,7 @@ public:
     inline std::vector<Ville> getVilles() const {return villes;}
 
     bool relierVille(const float& gamma);
+    bool relierVilleHauteur(const float &gamma, TerrainTab &terrain);
 
 };
 
