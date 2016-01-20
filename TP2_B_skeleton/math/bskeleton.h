@@ -11,7 +11,7 @@ class bSkeleton
 public:
     bSkeleton();
 
-    inline void addVille(Ville& ville) {villes.push_back(ville);}
+    inline void addVille(const Ville& ville) {villes.push_back(ville);}
     inline std::vector<Route> getRoutes() const {return routes;}
     inline std::vector<Ville> getVilles() const {return villes;}
 
