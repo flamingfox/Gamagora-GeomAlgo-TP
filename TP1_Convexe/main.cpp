@@ -2,6 +2,7 @@
 
 #include "OpenGL/mywindow.h"
 #include "geometrie/grahamconvex.h"
+#include "geometrie/jarvisconvex.h"
 
 #include <QTime>
 #include <QDebug>
@@ -21,7 +22,7 @@ int main(int argc, char *argv[])
     //enveloppe convexe normale
     Polygone poly1;
 
-    int nb = 50000000;
+    int nb = 10000000;
     poly1.reservePoints(nb);
     for(int i=0; i < nb; i++){
         poly1.addPoint(Vector2D((rand()%1000)/1000.0f,(rand()%1000)/1000.0f));
@@ -61,18 +62,22 @@ int main(int argc, char *argv[])
     int sampletest = 10; //nombre de creations de convexes pour la comparaison entre les 2 algos
 
     #if TEST2 == 0 //points aléatoires le long d'un cercle
-        double nbpoints = 10000; //nombres de points le long du cercle
-        double angle = 360/nbpoints;
-        for(double i = 0; i< 360; i+=angle){
-            poly0.addPoint(Vector2D((std::cos((i*2*PI)/360)/1.5f)+0.5f,(std::sin((i*2*PI)/360)/1.5f)+0.5f));
+        int nbpoints = 10000; //nombres de points le long du cercle
+        poly0.reservePoints(nbpoints);
+        double angle = 360.0/nbpoints;
+        for(int i = 0; i< nbpoints; i++){
+            double a = angle*i;
+            poly0.addPoint(Vector2D((std::cos((a*2*PI)/360)/1.5f)+0.5f,(std::sin((a*2*PI)/360)/1.5f)+0.5f));
         }
     #elif TEST2 == 1 //points aléatoires dans un carré
-        double nbpoints = 1000000; //nombre de points dans le carré
+        int nbpoints = 1000000; //nombre de points dans le carré
+        poly0.reservePoints(nbpoints);
         for(int i=0; i < nbpoints; i++){
-            poly0.addPoint(Vector2D((rand()%1000)/1000.0f,(rand()%1000)/1000.0f));
+            poly0.addPoint(Vector2D((rand()%1001)/1000.0f,(rand()%1001)/1000.0f));
         }
     #endif
 
+    poly1.name = QString("Non Convex");
 
     qDebug()<<"calcul incremental";
     t.start();
@@ -88,17 +93,26 @@ int main(int argc, char *argv[])
     }
     qDebug()<< "Graham : " << t.elapsed()/(float)sampletest << " ms";
 
+    qDebug()<<"calcul jarvis";
+    t.start();
+    for(int i=0; i<sampletest; i++){
+        poly00 = JarvisConvex(poly0.getPoints());
+    }
+    qDebug()<< "Jarvis : " << t.elapsed()/(float)sampletest << " ms";
+
     //////////////////////////////////////////
 
-    for(int i=0; i < 100; i++){
-        poly1.addPoint(Vector2D((rand()%1000)/1000.0f,(rand()%1000)/1000.0f));
+    int nb = 100;
+    poly1.reservePoints(nb);
+    for(int i=0; i < nb; i++){
+        poly1.addPoint(Vector2D((rand()%1001)/1000.0f,(rand()%1001)/1000.0f));
     }
-    poly1.name = QString("Non Convexe");
+    poly1.name = "Non Convexe";
 
     Polygone poly2 = Convexe2D(poly1.getPoints());
     std::cout << "nombre de points du polygone : " << poly1.getNbPoints() << std::endl;
     std::cout << "nombre de points de l'enveloppe convexe : " << poly2.getNbPoints() << std::endl;
-    poly2.name = QString("Convexe Incrémental");
+    poly2.name = "Convex incrémental";
 
     glWin.addPoly(poly1);
     glWin.addPoly(poly2);
@@ -118,6 +132,21 @@ int main(int argc, char *argv[])
 
     glWin.addPoly(poly3);
     glWin.addPoly(poly4);
+
+    ///////////////////////////////////
+
+    Polygone poly5 = poly1;
+    poly5.translate(0,-4);
+
+    Polygone poly6 = JarvisConvex(poly5.getPoints());
+
+
+    std::cout << "nombre de points du polygone : " << poly5.getNbPoints() << std::endl;
+    std::cout << "nombre de points de l'enveloppe convexe de Jarvis : " << poly6.getNbPoints() << std::endl;
+    poly6.name = QString("Jarvis Convexe");
+
+    glWin.addPoly(poly5);
+    glWin.addPoly(poly6);
 
     ///////////////////////////////////
 
@@ -258,7 +287,7 @@ int main(int argc, char *argv[])
     int nb = 50000000;
     poly1.reservePoints(nb);
     for(int i=0; i < nb; i++){
-        poly1.addPoint(Vector2D((rand()%1000)/1000.0f,(rand()%1000)/1000.0f));
+        poly1.addPoint(Vector2D((rand()%1001)/1000.0f,(rand()%1001)/1000.0f));
     }
     poly1.translate(-0.5,-0.5);
     poly1.scale(3);
@@ -280,6 +309,49 @@ int main(int argc, char *argv[])
     //poly2.translate(Vector2D(1.5,0));
 
     poly2.name = QString("Graham");
+
+    glWin.addPoly(poly1);
+    glWin.addPoly(poly2);
+
+#elif TEST == 4
+    //enveloppe convexe normale
+    Polygone poly1;
+
+//#define TEST2 1
+    #if TEST2 == 0 //points aléatoires le long d'un cercle
+        int nb = 10000; //nombres de points le long du cercle
+        poly1.reservePoints(nb);
+        double angle = 360.0/nb;
+        for(int i = 0; i< nb; i++){
+            double a = angle*i;
+            poly1.addPoint(Vector2D((std::cos((a*2*PI)/360)/1.5f),(std::sin((a*2*PI)/360)/1.5f)));
+        }
+    #elif TEST2 == 1 //points aléatoires dans un carré
+        int nb = 10000000; //nombre de points dans le carré
+        poly1.reservePoints(nb);
+        for(int i=0; i < nb; i++){
+            poly1.addPoint(Vector2D((rand()%1001)/1000.0f,(rand()%1001)/1000.0f));
+        }
+        poly1.translate(-0.5,-0.5);
+    #endif
+    poly1.scale(3);
+
+    poly1.name = QString("Non Convex");
+
+
+    QTime timer;
+    timer.start();
+
+    //Polygone poly2 = Convexe2D(poly1.getPoints());
+    Polygone poly2 = JarvisConvex(poly1.getPoints());
+
+    int time = timer.elapsed();
+    std::cout << time << " ms" << std::endl;
+
+
+    std::cout << "nombre de points du polygone : " << poly1.getNbPoints() << std::endl;
+    std::cout << "nombre de points de l'enveloppe convexe : " << poly2.getNbPoints() << std::endl;
+    poly2.name = QString("Jarvis convexe");
 
     glWin.addPoly(poly1);
     glWin.addPoly(poly2);

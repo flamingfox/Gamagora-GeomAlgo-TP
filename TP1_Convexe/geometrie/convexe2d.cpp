@@ -228,36 +228,42 @@ bool Convexe2D::findIndicesCoupe(const Vector2D& p, int& deb, int& fin)
     }
     else
     {
-        for(i = getNbPoints()-1;  i > 1;  i--)
+        for(i = getNbPoints()-1;  i > 2;  i--)
         {
             i2 = (i+1)%getNbPoints();
-            cote = inHalfSpaceDroit(_points[i], _points[i2], p);
-            if(cote == ALIGNEE){
+            int cote1 = inHalfSpaceDroit(_points[i], _points[i2], p);
+            if(cote1 == ALIGNEE){
                 if(coteAlignement(p, _points[i], _points[i2]) == 0)         return false;  //le point à ajouter est sur l'enveloppe convexe. Il n'y a pas à l'ajouter à l'enveloppe.
                 else    {
                     i--;    break;  //on commence la coupe au point i2
                 }
             }
-            else if(cote == GAUCHE)
+            else if(cote1 == GAUCHE)
                 break;  //on conmmence la coupe au point i2
         }
         deb = (i+1)%getNbPoints();
 
-        for(i = 1;  i < getNbPoints()-1;  i++)
+
+        if(cote == ALIGNEE)
+            fin = 1;
+        else
         {
-            i2 = (i+1)%getNbPoints();
-            cote = inHalfSpaceDroit(_points[i], _points[i2], p);
-            if(cote == ALIGNEE){
-                if(coteAlignement(p, _points[i], _points[i2]) == 0)
-                    return false;  //le point à ajouter est sur l'enveloppe convexe. Il n'y a pas à l'ajouter à l'enveloppe.
-                else{
-                    i++;    break;  //on termine la coupe au point i
+            for(i = 1;  i < getNbPoints()-1;  i++)
+            {
+                i2 = (i+1)%getNbPoints();
+                cote = inHalfSpaceDroit(_points[i], _points[i2], p);
+                if(cote == ALIGNEE){
+                    if(coteAlignement(p, _points[i], _points[i2]) == 0)
+                        return false;  //le point à ajouter est sur l'enveloppe convexe. Il n'y a pas à l'ajouter à l'enveloppe.
+                    else{
+                        i++;    break;  //on termine la coupe au point i
+                    }
                 }
+                else if(cote == GAUCHE)
+                    break;  //on termine la coupe au point i
             }
-            else if(cote == GAUCHE)
-                break;  //on termine la coupe au point i
+            fin = i;
         }
-        fin = i;
     }
     return true;
 }

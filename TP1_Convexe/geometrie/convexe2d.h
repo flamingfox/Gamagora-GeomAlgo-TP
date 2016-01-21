@@ -34,4 +34,6 @@ protected :
 #define DROIT 1
 int inHalfSpaceDroit(const Vector2D &extrem0, const Vector2D &extrem1, const Vector2D &p);
 
+int coteAlignement(const Vector2D& p, const Vector2D& extrem0, const Vector2D& extrem1);
+
 #endif // CONVEXE2D_H

@@ -1,5 +1,5 @@
-#ifndef JARVISCONVEX_H
-#define JARVISCONVEX_H
+#ifndef GRAHAMCONVEX_H
+#define GRAHAMCONVEX_H
 
 #include "convexe2d.h"
 
@@ -9,4 +9,4 @@ public:
     GrahamConvex(const QVector<Vector2D>& points);
 };
 
-#endif // JARVISCONVEX_H
+#endif // GRAHAMCONVEX_H
