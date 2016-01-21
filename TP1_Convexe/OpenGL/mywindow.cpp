@@ -215,10 +215,10 @@ void myWindow::paintGL()
 
     //zoom
     if(_zooming){
-        multiplicateurovertimezoom += 0.15;
+        multiplicateurovertimezoom += 0.05;
         _zoom += _zoomspeed * multiplicateurovertimezoom * deltaTime;
     }else if(_dezooming){
-        multiplicateurovertimezoom += 0.15;
+        multiplicateurovertimezoom += 0.05;
         _zoom -= _zoomspeed * multiplicateurovertimezoom * deltaTime;
     }else{
         multiplicateurovertimezoom = 1.0;

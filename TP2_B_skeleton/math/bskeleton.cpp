@@ -49,7 +49,7 @@ bool bSkeleton::relierVille(const Terrain& terrain, float gamma)
 
         for(unsigned int j=i+1; j<villes.size(); j++){
             const Vector3D b = villes[j].getPosition();
-            float distAB = powf(terrain.distance(a, b), gamma);
+            float distAB = pow(terrain.distance(a, b), gamma);
 
             unsigned int k = 0;
             for(    ; k<villes.size(); k++){
@@ -100,14 +100,14 @@ bool bSkeleton::relierVilleHauteur2(const float &gamma, TerrainTab &terrain){
 
     Vector3D a, b, p;
     bool creationOK;
-    for(int i=0; i<villes.size(); i++){
+    for(unsigned int i=0; i<villes.size(); i++){
         a = villes[i].getPosition();
 
-        for(int j=i+1; j<villes.size(); j++){
+        for(unsigned int j=i+1; j<villes.size(); j++){
             b = villes[j].getPosition();
             creationOK = true;
 
-            for(int k=0; k<villes.size(); k++){
+            for(unsigned int k=0; k<villes.size(); k++){
                 if(k!=i && k!=j){
                     p = villes[k].getPosition();
                     creationOK =  (pow(coutConstruction(a, b, terrain), gamma) > (pow(coutConstruction(a, p, terrain), gamma) + pow(coutConstruction(b, p, terrain), gamma)))? false : creationOK;

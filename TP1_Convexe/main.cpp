@@ -15,21 +15,31 @@ int main(int argc, char *argv[])
 
     myWindow glWin;
 
+    std::cout << "Déplacement : z,q,s,d" << std::endl << "Zoom : UP/DOWN" << std::endl << std::endl;
+
 #define TEST 1
-#define TEST2 1
+#define SPHERE 0
 
 #if TEST == 0
     //enveloppe convexe normale
     Polygone poly1;
 
-    int nb = 10000000;
-    poly1.reservePoints(nb);
-    for(int i=0; i < nb; i++){
-        poly1.addPoint(Vector2D((rand()%1000)/1000.0f,(rand()%1000)/1000.0f));
-    }
-    poly1.translate(-0.5,-0.5);
+    #if SPHERE == 1 //points aléatoires le long d'un cercle
+        int nbpoints = 10000; //nombres de points le long du cercle
+        poly1.reservePoints(nbpoints);
+        for(int i = 0; i< nbpoints; i++){
+            double a = (i*360.0)/nbpoints;
+            poly1.addPoint(Vector2D( std::cos((a*2*PI)/360)/2,std::sin((a*2*PI)/360)/2 ));
+        }
+    #elif SPHERE == 0 //points aléatoires dans un carré
+        int nbpoints = 10000000; //nombre de points dans le carré
+        poly1.reservePoints(nbpoints);
+        for(int i=0; i < nbpoints; i++){
+            poly1.addPoint(Vector2D((rand()%1001)/1000.0f,(rand()%1001)/1000.0f));
+        }
+        poly1.translate(-0.5,-0.5);
+    #endif
     poly1.scale(3);
-
     poly1.name = QString("Non Convex");
 
 
@@ -61,15 +71,14 @@ int main(int argc, char *argv[])
 
     int sampletest = 10; //nombre de creations de convexes pour la comparaison entre les 2 algos
 
-    #if TEST2 == 0 //points aléatoires le long d'un cercle
+    #if SPHERE == 1 //points aléatoires le long d'un cercle
         int nbpoints = 10000; //nombres de points le long du cercle
         poly0.reservePoints(nbpoints);
-        double angle = 360.0/nbpoints;
         for(int i = 0; i< nbpoints; i++){
-            double a = angle*i;
-            poly0.addPoint(Vector2D((std::cos((a*2*PI)/360)/1.5f)+0.5f,(std::sin((a*2*PI)/360)/1.5f)+0.5f));
+            double a = (i*360.0)/nbpoints;
+            poly0.addPoint(Vector2D( std::cos((a*2*PI)/360)/2,std::sin((a*2*PI)/360)/2 ));
         }
-    #elif TEST2 == 1 //points aléatoires dans un carré
+    #elif SPHERE == 0 //points aléatoires dans un carré
         int nbpoints = 1000000; //nombre de points dans le carré
         poly0.reservePoints(nbpoints);
         for(int i=0; i < nbpoints; i++){
@@ -77,7 +86,8 @@ int main(int argc, char *argv[])
         }
     #endif
 
-    poly1.name = QString("Non Convex");
+    qDebug() << "Calcul de performances moyennes sur " << sampletest << " test et " << nbpoints << " points.";
+
 
     qDebug()<<"calcul incremental";
     t.start();
@@ -102,11 +112,25 @@ int main(int argc, char *argv[])
 
     //////////////////////////////////////////
 
-    int nb = 100;
-    poly1.reservePoints(nb);
-    for(int i=0; i < nb; i++){
+    /*int nbpoints = 100;
+    poly1.reservePoints(nbpoints);
+    for(int i=0; i < nbpoints; i++){
         poly1.addPoint(Vector2D((rand()%1001)/1000.0f,(rand()%1001)/1000.0f));
-    }
+    }*/
+    #if SPHERE == 1 //points aléatoires le long d'un cercle
+        nbpoints = 100; //nombres de points le long du cercle
+        poly1.reservePoints(nbpoints);
+        for(int i = 0; i< nbpoints; i++){
+            double a = (i*360.0)/nbpoints;
+            poly1.addPoint(Vector2D( std::cos((a*2*PI)/360)/2,std::sin((a*2*PI)/360)/2 ));
+        }
+    #elif SPHERE == 0 //points aléatoires dans un carré
+        nbpoints = 100; //nombre de points dans le carré
+        poly1.reservePoints(nbpoints);
+        for(int i=0; i < nbpoints; i++){
+            poly1.addPoint(Vector2D((rand()%1001)/1000.0f,(rand()%1001)/1000.0f));
+        }
+    #endif
     poly1.name = "Non Convexe";
 
     Polygone poly2 = Convexe2D(poly1.getPoints());
@@ -284,14 +308,22 @@ int main(int argc, char *argv[])
 
     Polygone poly1;
 
-    int nb = 50000000;
-    poly1.reservePoints(nb);
-    for(int i=0; i < nb; i++){
-        poly1.addPoint(Vector2D((rand()%1001)/1000.0f,(rand()%1001)/1000.0f));
-    }
-    poly1.translate(-0.5,-0.5);
+    #if SPHERE == 1 //points aléatoires le long d'un cercle
+        int nbpoints = 10000; //nombres de points le long du cercle
+        poly1.reservePoints(nbpoints);
+        for(int i = 0; i< nbpoints; i++){
+            double a = (i*360.0)/nbpoints;
+            poly1.addPoint(Vector2D(std::cos((a*2*PI)/360)/2,std::sin((a*2*PI)/360)/2));
+        }
+    #elif SPHERE == 0 //points aléatoires dans un carré
+        int nbpoints = 10000000; //nombre de points dans le carré
+        poly1.reservePoints(nbpoints);
+        for(int i=0; i < nbpoints; i++){
+            poly1.addPoint(Vector2D((rand()%1001)/1000.0f,(rand()%1001)/1000.0f));
+        }
+        poly1.translate(-0.5,-0.5);
+    #endif
     poly1.scale(3);
-
     poly1.name = QString("Non Convex");
 
 
@@ -317,19 +349,17 @@ int main(int argc, char *argv[])
     //enveloppe convexe normale
     Polygone poly1;
 
-//#define TEST2 1
-    #if TEST2 == 0 //points aléatoires le long d'un cercle
-        int nb = 10000; //nombres de points le long du cercle
-        poly1.reservePoints(nb);
-        double angle = 360.0/nb;
-        for(int i = 0; i< nb; i++){
-            double a = angle*i;
-            poly1.addPoint(Vector2D((std::cos((a*2*PI)/360)/1.5f),(std::sin((a*2*PI)/360)/1.5f)));
+    #if SPHERE == 1 //points aléatoires le long d'un cercle
+        int nbpoints = 10000; //nombres de points le long du cercle
+        poly1.reservePoints(nbpoints);
+        for(int i = 0; i< nbpoints; i++){
+            double a = (i*360.0)/nbpoints;
+            poly1.addPoint(Vector2D(std::cos((a*2*PI)/360)/2,std::sin((a*2*PI)/360)/2));
         }
-    #elif TEST2 == 1 //points aléatoires dans un carré
-        int nb = 10000000; //nombre de points dans le carré
-        poly1.reservePoints(nb);
-        for(int i=0; i < nb; i++){
+    #elif SPHERE == 0 //points aléatoires dans un carré
+        int nbpoints = 10000000; //nombre de points dans le carré
+        poly1.reservePoints(nbpoints);
+        for(int i=0; i < nbpoints; i++){
             poly1.addPoint(Vector2D((rand()%1001)/1000.0f,(rand()%1001)/1000.0f));
         }
         poly1.translate(-0.5,-0.5);

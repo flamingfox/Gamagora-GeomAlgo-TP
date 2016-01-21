@@ -15,7 +15,7 @@ public:
     QVector<Vector2D> getPoints() const {return _points;}
 
     
-    inline void addPoint(const Vector2D& point){_points.push_back(point);}
+    void addPoint(const Vector2D& point);
 
     void translate(const Vector2D& trans);
     void translate(float x, float y);
