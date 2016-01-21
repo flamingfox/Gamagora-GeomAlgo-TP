@@ -21,8 +21,8 @@ public:
 
     bool relierVille(float gamma);
     bool relierVille(const Terrain& terrain, float gamma);
-
     bool relierVilleHauteur(const float &gamma, TerrainTab &terrain);
+    bool relierVilleHauteur2(const float &gamma, TerrainTab &terrain);
 
 };
 
