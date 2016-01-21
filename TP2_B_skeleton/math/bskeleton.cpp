@@ -98,8 +98,8 @@ float distance2(Vector3D a, Vector3D b, TerrainTab &terrain){//prend en compte l
         hauteurnext = terrain.getHauteur(pb.x,pb.y);
         float c = hauteur/1000.0f;
         float zp = fabs((hauteurnext-hauteur)/pas.getNorm());
-        c += zp<0.15 ? zp/0.15 : 40;
-        cout += nbPas * (1 + c);
+        c += zp<0.15 ? zp/0.15 : 200;
+        cout += pas.getNorm() * (1 + c);
         pa = pb;
     }
     //cout += distance(a,b);

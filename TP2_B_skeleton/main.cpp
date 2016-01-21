@@ -17,20 +17,21 @@ void dessineBskeleton(QImage* res, const bSkeleton& bS, const Terrain& terrain, 
 int main(int argc, char *argv[])
 {
     (void) argc;    (void) argv;
-    QImage img("map.png");
+    QImage img("map2.jpg");
     //QImage img = QImage("map2.jpg");
 
     img = img.convertToFormat(QImage::Format_RGB888);
-    int taille = 1000, tailleTerrain = 1000;
+    int taille = 1000, tailleTerrain = 2000;
     img = img.scaled(taille, taille);
-    TerrainTab terrain = TerrainTab(img, taille,taille, tailleTerrain,tailleTerrain, 2000);
-    TerrainTab terrain2 = TerrainTab(img, taille,taille, tailleTerrain,tailleTerrain, 200);
+    TerrainTab terrain = TerrainTab(img, taille,taille, tailleTerrain,tailleTerrain, 1000);
+    TerrainTab terrain2 = TerrainTab(img, taille,taille, tailleTerrain,tailleTerrain, 50);
 
     bSkeleton bS;
     bSkeleton bS2;
 
     int nb = 20;
     bS.reserveVilles(nb);
+    bS2.reserveVilles(nb);
     for(int i=0; i < nb; i++){
         Vector2D pos((rand()%(tailleTerrain+1)),(rand()%(tailleTerrain+1)));
         Ville ville(Vector3D(XY(pos), terrain.getHauteur(XY(pos))));
@@ -53,7 +54,7 @@ int main(int argc, char *argv[])
     QImage res;
 
     /*-------------------------------------------------------------------------*/
-/*
+
     res = QImage(img);
     timer.start();
     bS.relierVille(1);
@@ -61,11 +62,11 @@ int main(int argc, char *argv[])
     time = timer.elapsed();
     std::cout << time/1000.f << " secondes" << std::endl;
 
-    res.save("resultat1.png");
+    res.save("resultat1Bird.png");
     std::cout << "sauvegarde resultat1.png terminée" << std::endl;
-*/
+
     /*========================================================*/
-/*
+
     res = QImage(img);
     timer.start();
     bS.relierVille(2);
@@ -73,11 +74,11 @@ int main(int argc, char *argv[])
     time = timer.elapsed();
     std::cout << time/1000.f << " secondes" << std::endl;
 
-    res.save("resultat2.png");
+    res.save("resultat2Bird.png");
     std::cout << "sauvegarde resultat2.png terminée" << std::endl;
-*/
+
     /*========================================================*/
-/*
+
     res = QImage(img);
     timer.start();
     bS.relierVille(8);
@@ -85,11 +86,11 @@ int main(int argc, char *argv[])
     time = timer.elapsed();
     std::cout << time/1000.f << " secondes" << std::endl;
 
-    res.save("resultat8.png");
+    res.save("resultat8Bird.png");
     std::cout << "sauvegarde resultat8.png terminée" << std::endl;
-*/
+
     /*-------------------------------------------------------------------------*/
-/*
+
     res = QImage(img);
     timer.start();
     bS.relierVille(terrain, 1);
@@ -97,11 +98,11 @@ int main(int argc, char *argv[])
     time = timer.elapsed();
     std::cout << time/1000.f << " secondes" << std::endl;
 
-    res.save("resultat1Terrain.png");
+    res.save("resultat1BRoadLength.png");
     std::cout << "sauvegarde resultatTerrain1.png terminée" << std::endl;
-*/
+
     /*========================================================*/
-/*
+
     res = QImage(img);
     timer.start();
     bS.relierVille(terrain, 2);
@@ -109,11 +110,11 @@ int main(int argc, char *argv[])
     time = timer.elapsed();
     std::cout << time/1000.f << " secondes" << std::endl;
 
-    res.save("resultat2Terrain.png");
+    res.save("resultat2BRoadLength.png");
     std::cout << "sauvegarde resultatTerrain2.png terminée" << std::endl;
-*/
+
     /*========================================================*/
-/*
+
     res = QImage(img);
     timer.start();
     bS.relierVille(terrain, 8);
@@ -121,9 +122,9 @@ int main(int argc, char *argv[])
     time = timer.elapsed();
     std::cout << time/1000.f << " secondes" << std::endl;
 
-    res.save("resultat8Terrain.png");
+    res.save("resultat8BRoadLength.png");
     std::cout << "sauvegarde resultatTerrain8.png terminée" << std::endl;
-*/
+
 
     /*-------------------------------------------------------------------------*/
 
@@ -134,7 +135,7 @@ int main(int argc, char *argv[])
     time = timer.elapsed();
     std::cout << time/1000.f << " secondes" << std::endl;
 
-    res.save("resultat1HauteurDenivele1.png");
+    res.save("resultat1HauteurDenivele1000m.png");
     std::cout << "sauvegarde resultatTerrain1.png terminée" << std::endl;
 
     /*========================================================*/
@@ -146,7 +147,7 @@ int main(int argc, char *argv[])
     time = timer.elapsed();
     std::cout << time/1000.f << " secondes" << std::endl;
 
-    res.save("resultat2HauteurDenivele1.png");
+    res.save("resultat2HauteurDenivele1000m.png");
     std::cout << "sauvegarde resultatTerrain2.png terminée" << std::endl;
 
     /*========================================================*/
@@ -158,7 +159,7 @@ int main(int argc, char *argv[])
     time = timer.elapsed();
     std::cout << time/1000.f << " secondes" << std::endl;
 
-    res.save("resultat8HauteurDenivele1.png");
+    res.save("resultat8HauteurDenivele1000m.png");
     std::cout << "sauvegarde resultatTerrain8.png terminée" << std::endl;
 
     /*-------------------------------------------------------------------------*/
@@ -171,7 +172,7 @@ int main(int argc, char *argv[])
     time = timer.elapsed();
     std::cout << time/1000.f << " secondes" << std::endl;
 
-    res.save("resultat1HauteurDenivele2.png");
+    res.save("resultat1HauteurDenivele50m.png");
     std::cout << "sauvegarde resultatTerrain1.png terminée" << std::endl;
 
     /*========================================================*/
@@ -183,7 +184,7 @@ int main(int argc, char *argv[])
     time = timer.elapsed();
     std::cout << time/1000.f << " secondes" << std::endl;
 
-    res.save("resultat2HauteurDenivele2.png");
+    res.save("resultat2HauteurDenivele50m.png");
     std::cout << "sauvegarde resultatTerrain2.png terminée" << std::endl;
 
     /*========================================================*/
@@ -195,7 +196,7 @@ int main(int argc, char *argv[])
     time = timer.elapsed();
     std::cout << time/1000.f << " secondes" << std::endl;
 
-    res.save("resultat8HauteurDenivele2.png");
+    res.save("resultat8HauteurDenivele50m.png");
     std::cout << "sauvegarde resultatTerrain8.png terminée" << std::endl;
 
 
