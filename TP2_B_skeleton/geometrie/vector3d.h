@@ -110,7 +110,7 @@ public:
     friend Vector3D Normalized(const Vector3D&);
 
     friend float distance(const Vector3D& u, const Vector3D& v);
-    friend float distance2(const Vector3D& u, const Vector3D& v);
+    friend float coutConstruction(const Vector3D& u, const Vector3D& v);
 
     friend Vector3D Random3D();
 
@@ -242,7 +242,7 @@ inline Vector3D Orthogonal(const Vector3D& u, const Vector3D& v){
 inline float distance(const Vector3D& u, const Vector3D& v){
     return (v-u).getNorm();
 }
-inline float distance2(const Vector3D& u, const Vector3D& v){
+inline float coutConstruction(const Vector3D& u, const Vector3D& v){
     return (v-u).getNorm2();
 }
 

@@ -97,7 +97,7 @@ public:
     friend Vector2D Normalized(const Vector2D&);
 
     friend float distance(const Vector2D& u, const Vector2D& v);
-    friend float distance2(const Vector2D& u, const Vector2D& v);
+    friend float coutConstruction(const Vector2D& u, const Vector2D& v);
 
     friend Vector2D Random2D();
     friend float orientation(const Vector2D& a, const Vector2D& b, const Vector2D& c);
@@ -256,7 +256,7 @@ inline Vector2D Orthogonal(const Vector2D& u){
 inline float distance(const Vector2D& u, const Vector2D& v){
     return (v-u).getNorm();
 }
-inline float distance2(const Vector2D& u, const Vector2D& v){
+inline float coutConstruction(const Vector2D& u, const Vector2D& v){
     return (v-u).getNorm2();
 }
 

@@ -18,12 +18,11 @@ int main(int argc, char *argv[])
 {
     (void) argc;    (void) argv;
     QImage img("map2.jpg");
-    //QImage img = QImage("map2.jpg");
 
     img = img.convertToFormat(QImage::Format_RGB888);
-    int taille = 1000, tailleTerrain = 2000;
+    int taille = 1000, tailleTerrain = 5000;
     img = img.scaled(taille, taille);
-    TerrainTab terrain = TerrainTab(img, taille,taille, tailleTerrain,tailleTerrain, 1000);
+    TerrainTab terrain = TerrainTab(img, taille,taille, tailleTerrain,tailleTerrain, 500);
     TerrainTab terrain2 = TerrainTab(img, taille,taille, tailleTerrain,tailleTerrain, 50);
 
     bSkeleton bS;
@@ -62,8 +61,8 @@ int main(int argc, char *argv[])
     time = timer.elapsed();
     std::cout << time/1000.f << " secondes" << std::endl;
 
-    res.save("resultat1Bird.png");
-    std::cout << "sauvegarde resultat1.png terminée" << std::endl;
+    res.save("Gamma1Bird.png");
+    std::cout << "sauvegarde Gamma1Bird.png terminée" << std::endl;
 
     /*========================================================*/
 
@@ -74,8 +73,8 @@ int main(int argc, char *argv[])
     time = timer.elapsed();
     std::cout << time/1000.f << " secondes" << std::endl;
 
-    res.save("resultat2Bird.png");
-    std::cout << "sauvegarde resultat2.png terminée" << std::endl;
+    res.save("Gamma2Bird.png");
+    std::cout << "sauvegarde Gamma2Bird.png terminée" << std::endl;
 
     /*========================================================*/
 
@@ -86,8 +85,8 @@ int main(int argc, char *argv[])
     time = timer.elapsed();
     std::cout << time/1000.f << " secondes" << std::endl;
 
-    res.save("resultat8Bird.png");
-    std::cout << "sauvegarde resultat8.png terminée" << std::endl;
+    res.save("Gamma8Bird.png");
+    std::cout << "sauvegarde Gamma8Bird.png terminée" << std::endl;
 
     /*-------------------------------------------------------------------------*/
 
@@ -98,8 +97,8 @@ int main(int argc, char *argv[])
     time = timer.elapsed();
     std::cout << time/1000.f << " secondes" << std::endl;
 
-    res.save("resultat1BRoadLength.png");
-    std::cout << "sauvegarde resultatTerrain1.png terminée" << std::endl;
+    res.save("Gamma1BRoadLength.png");
+    std::cout << "sauvegarde Gamma1BRoadLength.png terminée" << std::endl;
 
     /*========================================================*/
 
@@ -110,8 +109,8 @@ int main(int argc, char *argv[])
     time = timer.elapsed();
     std::cout << time/1000.f << " secondes" << std::endl;
 
-    res.save("resultat2BRoadLength.png");
-    std::cout << "sauvegarde resultatTerrain2.png terminée" << std::endl;
+    res.save("Gamma2BRoadLength.png");
+    std::cout << "sauvegarde Gamma2BRoadLength.png terminée" << std::endl;
 
     /*========================================================*/
 
@@ -122,8 +121,8 @@ int main(int argc, char *argv[])
     time = timer.elapsed();
     std::cout << time/1000.f << " secondes" << std::endl;
 
-    res.save("resultat8BRoadLength.png");
-    std::cout << "sauvegarde resultatTerrain8.png terminée" << std::endl;
+    res.save("Gamma8BRoadLength.png");
+    std::cout << "sauvegarde Gamma8BRoadLength.png terminée" << std::endl;
 
 
     /*-------------------------------------------------------------------------*/
@@ -135,8 +134,8 @@ int main(int argc, char *argv[])
     time = timer.elapsed();
     std::cout << time/1000.f << " secondes" << std::endl;
 
-    res.save("resultat1HauteurDenivele1000m.png");
-    std::cout << "sauvegarde resultatTerrain1.png terminée" << std::endl;
+    res.save("Gamma1CoutRouteHauteurMax500m.png");
+    std::cout << "sauvegarde Gamma1CoutRouteHauteurMax500m.png terminée" << std::endl;
 
     /*========================================================*/
 
@@ -147,8 +146,8 @@ int main(int argc, char *argv[])
     time = timer.elapsed();
     std::cout << time/1000.f << " secondes" << std::endl;
 
-    res.save("resultat2HauteurDenivele1000m.png");
-    std::cout << "sauvegarde resultatTerrain2.png terminée" << std::endl;
+    res.save("Gamma2CoutRouteHauteurMax500m.png");
+    std::cout << "sauvegarde Gamma2CoutRouteHauteurMax500m.png terminée" << std::endl;
 
     /*========================================================*/
 
@@ -159,8 +158,8 @@ int main(int argc, char *argv[])
     time = timer.elapsed();
     std::cout << time/1000.f << " secondes" << std::endl;
 
-    res.save("resultat8HauteurDenivele1000m.png");
-    std::cout << "sauvegarde resultatTerrain8.png terminée" << std::endl;
+    res.save("Gamma8CoutRouteHauteurMax500m.png");
+    std::cout << "sauvegarde Gamma8CoutRouteHauteurMax500m.png terminée" << std::endl;
 
     /*-------------------------------------------------------------------------*/
     /*-------------------------------------------------------------------------*/
@@ -172,8 +171,8 @@ int main(int argc, char *argv[])
     time = timer.elapsed();
     std::cout << time/1000.f << " secondes" << std::endl;
 
-    res.save("resultat1HauteurDenivele50m.png");
-    std::cout << "sauvegarde resultatTerrain1.png terminée" << std::endl;
+    res.save("Gamma1CoutRouteHauteurMax50m.png");
+    std::cout << "sauvegarde Gamma1CoutRouteHauteurMax50m.png terminée" << std::endl;
 
     /*========================================================*/
 
@@ -184,8 +183,8 @@ int main(int argc, char *argv[])
     time = timer.elapsed();
     std::cout << time/1000.f << " secondes" << std::endl;
 
-    res.save("resultat2HauteurDenivele50m.png");
-    std::cout << "sauvegarde resultatTerrain2.png terminée" << std::endl;
+    res.save("Gamma2CoutRouteHauteurMax50m.png");
+    std::cout << "sauvegarde Gamma2CoutRouteHauteurMax50m.png terminée" << std::endl;
 
     /*========================================================*/
 
@@ -196,8 +195,8 @@ int main(int argc, char *argv[])
     time = timer.elapsed();
     std::cout << time/1000.f << " secondes" << std::endl;
 
-    res.save("resultat8HauteurDenivele50m.png");
-    std::cout << "sauvegarde resultatTerrain8.png terminée" << std::endl;
+    res.save("Gamma8CoutRouteHauteurMax50m.png");
+    std::cout << "sauvegarde Gamma8CoutRouteHauteurMax50m.png terminée" << std::endl;
 
 
     return 0;
