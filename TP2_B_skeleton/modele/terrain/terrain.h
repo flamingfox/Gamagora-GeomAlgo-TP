@@ -138,7 +138,7 @@ public:
     float distance(const Vector3D& p) const;
     float potentiel(const Vector3D& p) const;
 
-#define DISTANCE_PROGRESSION_CHEMIN 2
+#define DISTANCE_PROGRESSION_CHEMIN 5
     float distance(const Vector3D& p1, const Vector3D& p2, float eps = DISTANCE_PROGRESSION_CHEMIN) const;
 
 protected:

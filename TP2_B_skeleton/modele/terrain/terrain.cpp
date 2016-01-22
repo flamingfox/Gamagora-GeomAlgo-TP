@@ -72,21 +72,21 @@ float Terrain::distance(const Vector3D &p1, const Vector3D &p2, float eps) const
     float h = p1.z;
     if(distXY2 <= eps2)
         return sqrtf(distXY2 + (h-p2.z)*(h-p2.z));
-    else{
-        float dist = 0; //distance à retourner
-        float distXY = sqrtf(distXY2);
-        v.normalise();
 
-        float d;
-        for(d = eps;    d < distXY-eps; d += eps)        {
-            Vector2D p = pDeb + v*d;
-            float h2 = getHauteur(p);
-            dist += sqrtf(eps2 + (h-h2)*(h-h2));
 
-            h = h2;
-        }
-        return dist + hypotf(distXY-d, h-p2.z);
+    float dist = 0; //distance à retourner
+    float distXY = sqrtf(distXY2);
+    v.normalise();
+
+    float d;
+    for(d = eps;    d < distXY-eps; d += eps)        {
+        Vector2D p = pDeb + v*d;
+        float h2 = getHauteur(p);
+        dist += sqrtf(eps2 + (h-h2)*(h-h2));
+
+        h = h2;
     }
+    return dist + hypotf(distXY-d, h-p2.z);
 }
 
 /*

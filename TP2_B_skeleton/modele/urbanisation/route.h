@@ -9,9 +9,9 @@ class Route
 {    
 public:
     Route();
-    Route(Ville& ville1, Ville& ville2);
+    Route(Ville* const ville1, Ville* const ville2);
 
-    Ville _ville1, _ville2;
+    Ville* _ville1, * _ville2;
 };
 
 #endif // ROUTE_H

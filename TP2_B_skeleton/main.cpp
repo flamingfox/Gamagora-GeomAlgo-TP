@@ -18,6 +18,7 @@ int main(int argc, char *argv[])
 {
     (void) argc;    (void) argv;
     QImage img("map2.jpg");
+    //QImage img("map.png");
 
     img = img.convertToFormat(QImage::Format_RGB888);
     int taille = 1000, tailleTerrain = 5000;
@@ -28,13 +29,13 @@ int main(int argc, char *argv[])
     bSkeleton bS;
     bSkeleton bS2;
 
-    int nb = 20;
+    int nb = 50;
     bS.reserveVilles(nb);
     bS2.reserveVilles(nb);
     for(int i=0; i < nb; i++){
         Vector2D pos((rand()%(tailleTerrain+1)),(rand()%(tailleTerrain+1)));
-        Ville ville(Vector3D(XY(pos), terrain.getHauteur(XY(pos))));
-        Ville ville2(Vector3D(XY(pos), terrain2.getHauteur(XY(pos))));
+        Ville* ville = new Ville(Vector3D(XY(pos), terrain.getHauteur(XY(pos))));
+        Ville* ville2 = new Ville(Vector3D(XY(pos), terrain2.getHauteur(XY(pos))));
 
         bS.addVille(ville);
         bS2.addVille(ville2);
@@ -48,7 +49,7 @@ int main(int argc, char *argv[])
     penRoute.setWidthF(1);
 
     QPen penVille(Qt::green);
-    penVille.setWidthF(5);
+    penVille.setWidthF(6);
 
     QImage res;
 
@@ -212,16 +213,16 @@ void dessineBskeleton(QImage* res, const bSkeleton& bS, const Terrain& terrain, 
     paint.setPen(penRoute);
     for(const Route& r : bS.getRoutes())
     {
-        const Ville& v1 = r._ville1;
-        const Ville& v2 = r._ville2;
-        paint.drawLine(XY((v1.getPosition()*redim)), XY((v2.getPosition()*redim)));
+        const Ville* v1 = r._ville1;
+        const Ville* v2 = r._ville2;
+        paint.drawLine(XY((v1->getPosition()*redim)), XY((v2->getPosition()*redim)));
     }
 
 
     paint.setPen(penVille);
-    for(const Ville& v: bS.getVilles())
+    for(const Ville* v: bS.getVilles())
     {
-        paint.drawPoint(XY((v.getPosition()*redim)));
+        paint.drawPoint(XY((v->getPosition()*redim)));
     }
     paint.end();
 }
